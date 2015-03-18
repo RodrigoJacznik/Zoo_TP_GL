@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:id="@+id/mainactivity_zooimg"
+        android:src="@drawable/zooimg"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/mainactivity_name"
+        android:ems="10"
+        android:id="@+id/mainactivity_user"
+        android:layout_below="@id/mainactivity_zooimg"
+        android:layout_centerInParent="true"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/mainactivity_pass"
+        android:ems="10"
+        android:id="@+id/mainactivity_pass"
+        android:layout_below="@id/mainactivity_user"
+        android:layout_centerInParent="true"/>
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/mainactivity_radiogroup"
+        android:layout_below="@id/mainactivity_pass"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mainactivity_femenino"
+            android:id="@+id/mainactivity_femenino"
+            android:layout_gravity="center"
+            android:checked="true"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mainactivity_masculino"
+            android:id="@+id/mainactivity_masculino"
+            android:layout_gravity="center"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mainactivity_error"
+        android:id="@+id/mainactivity_error"
+        android:layout_below="@id/mainactivity_radiogroup"
+        android:layout_centerInParent="true"
+        android:enabled="false"
+        android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mainactivity_signin"
+        android:id="@+id/mainactivity_siging"
+        android:layout_below="@id/mainactivity_error"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

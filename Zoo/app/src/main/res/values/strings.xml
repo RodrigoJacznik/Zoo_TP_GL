@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Zoo</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="mainactivity_name">User</string>
+    <string name="mainactivity_pass">Password</string>
+    <string name="mainactivity_femenino">Femenino</string>
+    <string name="mainactivity_masculino">Masculino</string>
+    <string name="mainactivity_signin">Sign In</string>
+    <string name="mainactivity_error">User or Password incorrect</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="welcomeactivity_signout">Bienvenido </string>
+
+</resources>
