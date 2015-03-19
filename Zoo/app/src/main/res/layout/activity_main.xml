@@ -39,28 +39,27 @@
         android:layout_centerInParent="true"/>
 
     <RadioGroup
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center|left"
         android:id="@+id/mainactivity_radiogroup"
         android:layout_below="@id/mainactivity_pass"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mainactivity_femenino"
             android:id="@+id/mainactivity_femenino"
-            android:layout_gravity="center"
             android:checked="true"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mainactivity_masculino"
-            android:id="@+id/mainactivity_masculino"
-            android:layout_gravity="center"/>
+            android:id="@+id/mainactivity_masculino"/>
     </RadioGroup>
 
     <TextView
@@ -71,7 +70,8 @@
         android:layout_below="@id/mainactivity_radiogroup"
         android:layout_centerInParent="true"
         android:enabled="false"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:textColor="@color/red"/>
 
     <Button
         android:layout_width="wrap_content"

@@ -9,6 +9,11 @@
     <string name="mainactivity_signin">Sign In</string>
     <string name="mainactivity_error">User or Password incorrect</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="welcomeactivity_signout">Bienvenido </string>
+    <string name="welcomeactivity_signout">Sign Out</string>
+    <string name="welcomeactivity_welcome">Bienvenido %1$s %2$s!!!</string>
+    <string name="welcomeactivity_sra">Sra.</string>
+    <string name="welcomeactivity_sr">Sr.</string>
+    <string name="title_activity_animal_list">AnimalListActivity</string>
 
+    <string name="hello_world">Hello world!</string>
 </resources>

@@ -3,12 +3,15 @@ package com.globallogic.zoo;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements TextWatcher{
     private final static String PASS = "Android";
     private final static String USER = "GL";
 
@@ -17,18 +20,22 @@ public class MainActivity extends ActionBarActivity {
 
     private EditText pass;
     private EditText user;
+    private Button signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.mainactivity_siging).setOnClickListener(new View.OnClickListener() {
+        signin = (Button) findViewById(R.id.mainactivity_siging);
+        signin.setEnabled(false);
+        pass = (EditText) findViewById(R.id.mainactivity_pass);
+        pass.addTextChangedListener(this);
+        user = (EditText) findViewById(R.id.mainactivity_user);
+        user.addTextChangedListener(this);
+        signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pass = ((EditText) findViewById(R.id.mainactivity_pass));
-                user = ((EditText) findViewById(R.id.mainactivity_user));
-
                 String passInput = pass.getText().toString();
                 String userInput = user.getText().toString();
 
@@ -39,12 +46,28 @@ public class MainActivity extends ActionBarActivity {
                     Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
                     intent.putExtra(MainActivity.USERK, userInput);
                     intent.putExtra(MainActivity.IS_FEMM, index == R.id.mainactivity_femenino);
+                    pass.setText("");
+                    user.setText("");
                     startActivity(intent);
-                }
-                else {
+                } else {
                     findViewById(R.id.mainactivity_error).setVisibility(View.VISIBLE);
                 }
             }
         });
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        signin.setEnabled(! user.getText().toString().isEmpty() && ! pass.getText().toString().isEmpty());
     }
 }
