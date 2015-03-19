@@ -8,6 +8,12 @@ public class Animal {
     private String especie;
     private String descripcion;
 
+    public Animal(String nombre, String especie, String descripcion) {
+        this.nombre = nombre;
+        this.especie = especie;
+        this.descripcion = descripcion;
+    }
+
     public String getNombre() {
         return nombre;
     }
