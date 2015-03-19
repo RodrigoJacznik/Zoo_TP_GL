@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher{
                         getCheckedRadioButtonId();
 
                 if (passInput.equals(PASS) && userInput.equals(USER)) {
-                    Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                    Intent intent = new Intent(MainActivity.this, AnimalListActivity.class);
                     intent.putExtra(MainActivity.USERK, userInput);
                     intent.putExtra(MainActivity.IS_FEMM, index == R.id.mainactivity_femenino);
                     pass.setText("");
