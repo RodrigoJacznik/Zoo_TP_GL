@@ -25,6 +25,10 @@
             android:name=".AnimalListActivity"
             android:label="@string/title_activity_animal_list" >
         </activity>
+        <activity
+            android:name=".AnimalDetailsActivity"
+            android:label="@string/title_activity_animal_detail" >
+        </activity>
     </application>
 
 </manifest>

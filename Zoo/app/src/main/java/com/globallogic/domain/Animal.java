@@ -1,5 +1,8 @@
 package com.globallogic.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by GL on 19/03/2015.
  */
@@ -45,5 +48,19 @@ public class Animal {
                 ", especie='" + especie + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
+    }
+
+    static public List<Animal> getAnimalList() {
+        List<Animal> animals = new ArrayList<>();
+        animals.add(new Animal("Leon", "Especie del leon", "descripcion del leon"));
+        animals.add(new Animal("Mono", "Especie del mono", "descripcion del mono"));
+        animals.add(new Animal("Vaca", "Especie del vaca", "descripcion del vaca"));
+        animals.add(new Animal("Gorila", "Especie del Gorila", "descripcion del Gorila"));
+        animals.add(new Animal("Leon", "Especie del leon", "descripcion del leon"));
+        animals.add(new Animal("Mono", "Especie del mono", "descripcion del mono"));
+        animals.add(new Animal("Vaca", "Especie del vaca", "descripcion del vaca"));
+        animals.add(new Animal("Gorila", "Especie del Gorila", "descripcion del Gorila"));
+
+        return animals;
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
 
 
 public class WelcomeActivity extends ActionBarActivity {
+    static final String NOMBRE = "NAME";
+    static final String ESPECIE = "ESPECIE";
+    static final String DESCRIPCION = "DESCRIPCION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +52,23 @@ public class WelcomeActivity extends ActionBarActivity {
             }
         });
 
-        ArrayList<Animal> animals = new ArrayList<>();
-        animals.add(new Animal("Leon", "Especie del leon", "descripcion del leon"));
-        animals.add(new Animal("Mono", "Especie del mono", "descripcion del mono"));
-        animals.add(new Animal("Vaca", "Especie del vaca", "descripcion del vaca"));
-        animals.add(new Animal("Gorila", "Especie del Gorila", "descripcion del Gorila"));
-        animals.add(new Animal("Leon", "Especie del leon", "descripcion del leon"));
-        animals.add(new Animal("Mono", "Especie del mono", "descripcion del mono"));
-        animals.add(new Animal("Vaca", "Especie del vaca", "descripcion del vaca"));
-        animals.add(new Animal("Gorila", "Especie del Gorila", "descripcion del Gorila"));
+        ArrayList<Animal> animals = (ArrayList) Animal.getAnimalList();
 
-        AnimalAdapter animalAdapter = new AnimalAdapter(this, animals);
+        final AnimalAdapter animalAdapter = new AnimalAdapter(this, animals);
         ListView lv = (ListView) findViewById(R.id.welcomeactivity_list);
         lv.setAdapter(animalAdapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Animal animalSelected = (Animal) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(WelcomeActivity.this, AnimalDetailsActivity.class);
+                intent.putExtra(NOMBRE, animalSelected.getNombre());
+                intent.putExtra(ESPECIE, animalSelected.getEspecie());
+                intent.putExtra(DESCRIPCION, animalSelected.getDescripcion());
+                startActivity(intent);
+            }
+        });
     }
 
     public class AnimalAdapter extends ArrayAdapter<Animal> {
@@ -75,9 +83,9 @@ public class WelcomeActivity extends ActionBarActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_animal_list, parent, false);
             }
-            ImageView imFoto = (ImageView) convertView.findViewById(R.id.activityanimallist_foto);
-            TextView tvName = (TextView) convertView.findViewById(R.id.activityanimallist_name);
-            TextView tvEspecie = (TextView) convertView.findViewById(R.id.activityanimallist_especie);
+            ImageView imFoto = (ImageView) convertView.findViewById(R.id.animallistactivity_foto);
+            TextView tvName = (TextView) convertView.findViewById(R.id.animallistactivity_name);
+            TextView tvEspecie = (TextView) convertView.findViewById(R.id.animallistactivity_especie);
 
             imFoto.setImageResource(R.drawable.grey_sheep);
             tvName.setText(animal.getNombre());

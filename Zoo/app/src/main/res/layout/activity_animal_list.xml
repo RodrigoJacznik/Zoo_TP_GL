@@ -4,32 +4,32 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/activityanimallist_foto"
+        android:id="@+id/animallistactivity_foto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
     <LinearLayout
-        android:id="@+id/activityanimallist_detalle"
+        android:id="@+id/animallistactivity_detalle"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/activityanimallist_foto">
+        android:layout_toRightOf="@id/animallistactivity_foto">
 
         <TextView
-            android:id="@+id/activityanimallist_name"
+            android:id="@+id/animallistactivity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/activityanimallist_especie"
+            android:id="@+id/animallistactivity_especie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/activityanimallist_flecha"
+        android:id="@+id/animallistactivity_flecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
