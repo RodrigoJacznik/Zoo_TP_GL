@@ -13,6 +13,13 @@
     <string name="welcomeactivity_welcome">Bienvenido %1$s %2$s!!!</string>
     <string name="welcomeactivity_sra">Sra.</string>
     <string name="welcomeactivity_sr">Sr.</string>
+    <string name="animalsdetailsactivity_more">Más Info</string>
     <string name="title_activity_animal_list">AnimalListActivity</string>
     <string name="title_activity_animal_detail">Detalle</string>
+    <string name="title_activity_more_info">Más Info</string>
+
+    <string name="animaldetailsactivity_descripcion">Descripción:</string>
+    <string name="animaldetailsactivity_especie">Especie:</string>
+    <string name="animaldetailsactivity_name">Nombre:</string>
+    <string name="title_activity_html_toast">HtmlToastActivity</string>
 </resources>
