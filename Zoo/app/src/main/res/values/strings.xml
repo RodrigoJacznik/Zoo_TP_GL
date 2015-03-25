@@ -18,8 +18,12 @@
     <string name="title_activity_animal_detail">Detalle</string>
     <string name="title_activity_more_info">Más Info</string>
 
-    <string name="animaldetailsactivity_descripcion">Descripción:</string>
-    <string name="animaldetailsactivity_especie">Especie:</string>
-    <string name="animaldetailsactivity_name">Nombre:</string>
-    <string name="title_activity_html_toast">HtmlToastActivity</string>
+    <string name="animaldetailsactivity_descripcion"><b>Descripción:</b></string>
+    <string name="animaldetailsactivity_especie"><b>Especie:</b></string>
+    <string name="animaldetailsactivity_name"><b>Nombre:</b></string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="favactivity_megusta">No me Gusta</string>
+    <string name="favactivity_nomegusta">Me Gusta</string>
 </resources>

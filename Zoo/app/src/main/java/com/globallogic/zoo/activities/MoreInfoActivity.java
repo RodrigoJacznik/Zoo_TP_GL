@@ -1,14 +1,12 @@
-package com.globallogic.zoo;
+package com.globallogic.zoo.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
+
+import com.globallogic.zoo.R;
 
 
 public class MoreInfoActivity extends ActionBarActivity {
@@ -21,7 +19,7 @@ public class MoreInfoActivity extends ActionBarActivity {
 
         WebView wv = (WebView) findViewById(R.id.moreinfoactivity_webview);
         wv.setWebViewClient(new MyBrowser());
-        wv.loadUrl("http://es.wikipedia.org/wiki/" + intent.getStringExtra(AnimalDetailsActivity.NOMBRE));
+        wv.loadUrl(intent.getStringExtra(AnimalDetailsActivity.URL));
     }
 
     private class MyBrowser extends WebViewClient {

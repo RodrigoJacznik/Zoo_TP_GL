@@ -31,8 +31,7 @@
                 android:ems="10"
                 android:id="@+id/mainactivity_user"
                 android:layout_below="@id/mainactivity_zooimg"
-                android:layout_centerInParent="true"
-                android:text="GL"/>
+                android:layout_centerInParent="true"/>
 
             <EditText
                 android:layout_width="fill_parent"
@@ -42,8 +41,7 @@
                 android:ems="10"
                 android:id="@+id/mainactivity_pass"
                 android:layout_below="@id/mainactivity_user"
-                android:layout_centerInParent="true"
-                android:text="Android"/>
+                android:layout_centerInParent="true"/>
 
             <RadioGroup
                 android:layout_width="wrap_content"

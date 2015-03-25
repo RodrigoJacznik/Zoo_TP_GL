@@ -1,4 +1,4 @@
-package com.globallogic.domain;
+package com.globallogic.zoo.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ public class Animal implements Serializable {
     private String nombre;
     private String especie;
     private String descripcion;
+    private String url;
+    private boolean favorite;
     private int especieCode;
 
     public int getEspecieCode() {
@@ -27,6 +29,8 @@ public class Animal implements Serializable {
         this.especie = especie;
         this.descripcion = descripcion;
         this.especieCode = especieCode;
+        this.url = "http://es.wikipedia.org/wiki/" + this.nombre;
+        this.favorite = false;
     }
 
     public String getNombre() {
@@ -51,6 +55,22 @@ public class Animal implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     @Override
