@@ -48,6 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:displayText="true"
+            app:is_favorite_text="Favorito"
+            app:is_not_favorite_text="Agregar a favorito"
             android:layout_below="@id/animaldetailsactivity_especie"
             android:layout_toRightOf="@id/animaldetailsactivity_img"/>
 

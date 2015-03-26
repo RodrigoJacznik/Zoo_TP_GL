@@ -2,5 +2,7 @@
 <resources>
     <declare-styleable name="FavView">
         <attr name="displayText" format="boolean"></attr>
+        <attr name="is_favorite_text" format="string"></attr>
+        <attr name="is_not_favorite_text" format="string"></attr>
     </declare-styleable>
 </resources>

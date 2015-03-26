@@ -1,41 +1,37 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.PaintDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.globallogic.zoo.FavViewCallback;
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.FavView;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Horario;
 
 
-public class AnimalDetailsActivity extends ActionBarActivity {
+public class AnimalDetailsActivity extends ActionBarActivity implements FavViewCallback {
+    private final static String FAVORITE = "FAVORITE";
+    private final static String COLOR = "COLOR";
+
     final static String URL = "URL";
+
     private TextView tvName;
     private TextView tvEspecie;
     private TextView tvDescripcion;
     private FavView favView;
     private TableLayout tbHorarios;
-    private View rootView;
 
-    private int backgroundcolor;
     private Animal animal;
+    private int favViewColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +39,11 @@ public class AnimalDetailsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_animal_details);
 
         animal = (Animal) getIntent().getSerializableExtra(WelcomeActivity.ANIMAL);
-
+        favView = (FavView) findViewById(R.id.animaldetailsactivity_fav);
         tvName = (TextView) findViewById(R.id.animaldetailsactivity_name);
         tvEspecie = (TextView) findViewById(R.id.animaldetailsactivity_especie);
         tvDescripcion = (TextView) findViewById(R.id.animaldetailsactivity_descripcion);
-        favView = (FavView) findViewById(R.id.animaldetailsactivity_fav);
         tbHorarios = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
-        rootView = findViewById(android.R.id.content).getRootView();
 
         tvName.append(" " + animal.getNombre());
         tvEspecie.append(" " + animal.getEspecie());
@@ -66,13 +60,23 @@ public class AnimalDetailsActivity extends ActionBarActivity {
         });
 
         favView.setFavoriteState(animal.isFavorite());
+        favView.setCallback(this);
         populateHorarioTable();
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        animal.setFavorite(savedInstanceState.getBoolean(FAVORITE));
+        favViewColor = savedInstanceState.getInt(COLOR);
+        favView.setBackgroundColor(favViewColor);
+    }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(FAVORITE, animal.isFavorite());
+        outState.putInt(COLOR, favViewColor);
     }
 
     private void populateHorarioTable() {
@@ -98,4 +102,9 @@ public class AnimalDetailsActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void callbackCall(boolean favorite, int color) {
+        animal.setFavorite(favorite);
+        favViewColor = color;
+    }
 }
