@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 import com.globallogic.zoo.R;
 
 
-public class MainActivity extends ActionBarActivity implements TextWatcher{
+public class MainActivity extends ActionBarActivity implements TextWatcher {
     private final static String PASS = "Android";
     private final static String USER = "GL";
 
@@ -30,10 +30,11 @@ public class MainActivity extends ActionBarActivity implements TextWatcher{
         setContentView(R.layout.activity_main);
 
         signin = (Button) findViewById(R.id.mainactivity_siging);
-        signin.setEnabled(false);
         pass = (EditText) findViewById(R.id.mainactivity_pass);
-        pass.addTextChangedListener(this);
         user = (EditText) findViewById(R.id.mainactivity_user);
+
+        signin.setEnabled(false);
+        pass.addTextChangedListener(this);
         user.addTextChangedListener(this);
         signin.setOnClickListener(new View.OnClickListener() {
             @Override

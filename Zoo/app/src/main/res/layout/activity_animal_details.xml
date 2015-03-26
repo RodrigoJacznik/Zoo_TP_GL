@@ -1,73 +1,96 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.globallogic.zoo.activities.AnimalDetailsActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/animaldetailsactivity_img"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:src="@drawable/sheep"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="16dp" />
+
+        <TextView
+            android:id="@+id/animaldetailsactivity_name"
+            android:text="@string/animaldetailsactivity_name"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/animaldetailsactivity_img"
+            android:paddingTop="30dp"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/animaldetailsactivity_especie"
+            android:text="@string/animaldetailsactivity_especie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/animaldetailsactivity_name"
+            android:layout_toRightOf="@id/animaldetailsactivity_img"
+            android:paddingBottom="16dp"/>
+
+        <com.globallogic.zoo.custom.views.FavView
+            android:id="@+id/animaldetailsactivity_fav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:displayText="true"
+            android:layout_below="@id/animaldetailsactivity_especie"
+            android:layout_toRightOf="@id/animaldetailsactivity_img"/>
+
+        <TextView
+            android:id="@+id/animaldetailsactivity_descripcion"
+            android:text="@string/animaldetailsactivity_descripcion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/animaldetailsactivity_img"
+            android:paddingBottom="16dp"/>
+
+        <Button
+            android:id="@+id/animalsdetailsactivity_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/animalsdetailsactivity_more"
+            android:layout_below="@id/animaldetailsactivity_descripcion"
+            android:layout_alignParentRight="true"/>
 
 
-            <ImageView
-                android:id="@+id/animaldetailsactivity_img"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:src="@drawable/sheep"
-                android:layout_marginTop="16dp"
-                android:paddingBottom="16dp" />
+        <TableLayout
+            android:id="@+id/animaldetailsactivity_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/animalsdetailsactivity_more"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
 
-            <TextView
-                android:id="@+id/animaldetailsactivity_name"
-                android:text="@string/animaldetailsactivity_name"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/animaldetailsactivity_img"
-                android:paddingTop="30dp"
-                android:paddingBottom="16dp"/>
-
-            <TextView
-                android:id="@+id/animaldetailsactivity_especie"
-                android:text="@string/animaldetailsactivity_especie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/animaldetailsactivity_name"
-                android:layout_toRightOf="@id/animaldetailsactivity_img"
-                android:paddingBottom="16dp"/>
-
-            <com.globallogic.zoo.custom.views.FavView
-                android:id="@+id/animaldetailsactivity_fav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/animaldetailsactivity_especie"
-                android:layout_toRightOf="@id/animaldetailsactivity_img"/>
-
-            <TextView
-                android:id="@+id/animaldetailsactivity_descripcion"
-                android:text="@string/animaldetailsactivity_descripcion"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/animaldetailsactivity_img"
-                android:paddingBottom="16dp"/>
-
-            <Button
-                android:id="@+id/animalsdetailsactivity_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/animalsdetailsactivity_more"
-                android:layout_below="@id/animaldetailsactivity_descripcion"
-                android:layout_alignParentRight="true"/>
-
-        </RelativeLayout>
-    </ScrollView>
-
-</LinearLayout>
+            <TableRow>
+                <TextView
+                    android:text="Dia"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:text="Hora inicio"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:text="Hora fin"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+</ScrollView>

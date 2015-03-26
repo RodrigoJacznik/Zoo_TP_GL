@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.globallogic.zoo.domain.Animal;
+import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.activities.AnimalDetailsActivity;
 import com.globallogic.zoo.R;
 

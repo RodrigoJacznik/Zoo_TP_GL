@@ -1,20 +1,25 @@
-package com.globallogic.zoo.domain;
+package com.globallogic.zoo.models;
+
+import android.text.format.Time;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by GL on 19/03/2015.
  */
 public class Animal implements Serializable {
-    private static final long serialVersionUID = -7060210544600464481L;
+    private static final long serialVersionUID = 1215489456L;
     private String nombre;
     private String especie;
     private String descripcion;
     private String url;
     private boolean favorite;
     private int especieCode;
+    private List<Horario> horarios;
 
     public int getEspecieCode() {
         return especieCode;
@@ -30,6 +35,7 @@ public class Animal implements Serializable {
         this.descripcion = descripcion;
         this.especieCode = especieCode;
         this.url = "http://es.wikipedia.org/wiki/" + this.nombre;
+        horarios = generateHorarios();
         this.favorite = false;
     }
 
@@ -73,6 +79,14 @@ public class Animal implements Serializable {
         this.favorite = favorite;
     }
 
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<Horario> horarios) {
+        this.horarios = horarios;
+    }
+
     @Override
     public String toString() {
         return "Animal{" +
@@ -82,8 +96,19 @@ public class Animal implements Serializable {
                 '}';
     }
 
+    static private List<Horario> generateHorarios() {
+        List<Horario> horarios = new ArrayList<>();
+        horarios.add(new Horario("Lunes", "10:30", "15:30"));
+        horarios.add(new Horario("Martes", "11:30", "15:30"));
+        horarios.add(new Horario("Miercoles", "9:30", "15:30"));
+        horarios.add(new Horario("Viernes", "10:30", "15:30"));
+
+        return horarios;
+    }
+
     static public List<Animal> getAnimalList() {
         List<Animal> animals = new ArrayList<>();
+
         String descripcion = "Lorem Ipsum is simply dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard dummy text ever since the" +
                 " 1500s, when an unknown printer took a galley of type and scrambled it to make a" +
