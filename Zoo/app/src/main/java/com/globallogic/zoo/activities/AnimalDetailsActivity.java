@@ -3,7 +3,6 @@ package com.globallogic.zoo.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -11,14 +10,14 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.globallogic.zoo.FavViewCallback;
+import com.globallogic.zoo.custom.views.FavoriteViewCallback;
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.custom.views.FavView;
+import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Horario;
 
 
-public class AnimalDetailsActivity extends ActionBarActivity implements FavViewCallback {
+public class AnimalDetailsActivity extends ActionBarActivity implements FavoriteViewCallback {
     private final static String FAVORITE = "FAVORITE";
     private final static String COLOR = "COLOR";
 
@@ -27,7 +26,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements FavViewC
     private TextView tvName;
     private TextView tvEspecie;
     private TextView tvDescripcion;
-    private FavView favView;
+    private FavoriteView favoriteView;
     private TableLayout tbHorarios;
 
     private Animal animal;
@@ -39,7 +38,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements FavViewC
         setContentView(R.layout.activity_animal_details);
 
         animal = (Animal) getIntent().getSerializableExtra(WelcomeActivity.ANIMAL);
-        favView = (FavView) findViewById(R.id.animaldetailsactivity_fav);
+        favoriteView = (FavoriteView) findViewById(R.id.animaldetailsactivity_fav);
         tvName = (TextView) findViewById(R.id.animaldetailsactivity_name);
         tvEspecie = (TextView) findViewById(R.id.animaldetailsactivity_especie);
         tvDescripcion = (TextView) findViewById(R.id.animaldetailsactivity_descripcion);
@@ -59,8 +58,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements FavViewC
            }
         });
 
-        favView.setFavoriteState(animal.isFavorite());
-        favView.setCallback(this);
+        favoriteView.setFavoriteState(animal.isFavorite());
+        favoriteView.setCallback(this);
         populateHorarioTable();
     }
 
@@ -69,7 +68,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements FavViewC
         super.onRestoreInstanceState(savedInstanceState);
         animal.setFavorite(savedInstanceState.getBoolean(FAVORITE));
         favViewColor = savedInstanceState.getInt(COLOR);
-        favView.setBackgroundColor(favViewColor);
+        favoriteView.setBackgroundColor(favViewColor);
     }
 
     @Override

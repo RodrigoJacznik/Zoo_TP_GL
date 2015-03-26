@@ -43,7 +43,7 @@
             android:layout_toRightOf="@id/animaldetailsactivity_img"
             android:paddingBottom="16dp"/>
 
-        <com.globallogic.zoo.custom.views.FavView
+        <com.globallogic.zoo.custom.views.FavoriteView
             android:id="@+id/animaldetailsactivity_fav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="FavView">
+    <declare-styleable name="FavoriteView">
         <attr name="displayText" format="boolean"></attr>
         <attr name="is_favorite_text" format="string"></attr>
         <attr name="is_not_favorite_text" format="string"></attr>
