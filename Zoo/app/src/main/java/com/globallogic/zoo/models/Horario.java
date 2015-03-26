@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class Horario implements Serializable {
 
-    private static final long serialVersionUID = 564984561L;
+    private static final long serialVersionUID = 4138897544516350399L;
     private String dia;
     private String horaInicio;
     private String horaFin;

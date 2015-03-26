@@ -2,13 +2,17 @@ package com.globallogic.zoo.custom.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
+
+import java.util.Random;
 
 /**
  * Created by GL on 25/03/2015.
@@ -21,6 +25,7 @@ public class FavView extends LinearLayout implements View.OnClickListener{
     private ImageView ivStar;
 
     private boolean favoriteState;
+
     private String meGusta;
     private String noMeGusta;
 
@@ -76,12 +81,21 @@ public class FavView extends LinearLayout implements View.OnClickListener{
     public void setFavoriteState(boolean favoriteState) {
         this.favoriteState = favoriteState;
         if (!favoriteState) {
+            getRootView().setBackgroundColor(getResources().getColor(android.R.color.background_light));
             ivStar.setImageResource(android.R.drawable.star_off);
-            tvFavorite.setText(meGusta);
-        } else {
-            ivStar.setImageResource(android.R.drawable.star_on);
             tvFavorite.setText(noMeGusta);
+        } else {
+            getRootView().setBackgroundColor(randomColor());
+            ivStar.setImageResource(android.R.drawable.star_on);
+            tvFavorite.setText(meGusta);
         }
+    }
+
+    private int randomColor() {
+        Random rnd = new Random();
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+        return color;
     }
 
     @Override

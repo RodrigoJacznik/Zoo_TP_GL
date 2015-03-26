@@ -12,7 +12,7 @@ import java.util.List;
  * Created by GL on 19/03/2015.
  */
 public class Animal implements Serializable {
-    private static final long serialVersionUID = 1215489456L;
+    private static final long serialVersionUID = 4851874892403066514L;
     private String nombre;
     private String especie;
     private String descripcion;

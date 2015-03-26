@@ -1,15 +1,23 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.PaintDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.FavView;
@@ -24,8 +32,11 @@ public class AnimalDetailsActivity extends ActionBarActivity {
     private TextView tvDescripcion;
     private FavView favView;
     private TableLayout tbHorarios;
+    private View rootView;
 
+    private int backgroundcolor;
     private Animal animal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +49,11 @@ public class AnimalDetailsActivity extends ActionBarActivity {
         tvDescripcion = (TextView) findViewById(R.id.animaldetailsactivity_descripcion);
         favView = (FavView) findViewById(R.id.animaldetailsactivity_fav);
         tbHorarios = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
+        rootView = findViewById(android.R.id.content).getRootView();
 
         tvName.append(" " + animal.getNombre());
         tvEspecie.append(" " + animal.getEspecie());
-        tvDescripcion.append(" " + animal.getDescripcion());
+        tvDescripcion.append("\n" + animal.getDescripcion());
 
         Button btnMoreInfo = (Button) findViewById(R.id.animalsdetailsactivity_more);
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +67,12 @@ public class AnimalDetailsActivity extends ActionBarActivity {
 
         favView.setFavoriteState(animal.isFavorite());
         populateHorarioTable();
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     private void populateHorarioTable() {
