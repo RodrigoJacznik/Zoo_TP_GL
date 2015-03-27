@@ -35,8 +35,8 @@
             android:paddingBottom="16dp"/>
 
         <TextView
-            android:id="@+id/animaldetailsactivity_especie"
-            android:text="@string/animaldetailsactivity_especie"
+            android:id="@+id/animaldetailsactivity_specie"
+            android:text="@string/animaldetailsactivity_specie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/animaldetailsactivity_name"
@@ -50,12 +50,12 @@
             app:displayText="true"
             app:is_favorite_text="Favorito"
             app:is_not_favorite_text="Agregar a favorito"
-            android:layout_below="@id/animaldetailsactivity_especie"
+            android:layout_below="@id/animaldetailsactivity_specie"
             android:layout_toRightOf="@id/animaldetailsactivity_img"/>
 
         <TextView
-            android:id="@+id/animaldetailsactivity_descripcion"
-            android:text="@string/animaldetailsactivity_descripcion"
+            android:id="@+id/animaldetailsactivity_description"
+            android:text="@string/animaldetailsactivity_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/animaldetailsactivity_img"
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/animalsdetailsactivity_more"
-            android:layout_below="@id/animaldetailsactivity_descripcion"
+            android:layout_below="@id/animaldetailsactivity_description"
             android:layout_alignParentRight="true"/>
 
 
@@ -82,15 +82,15 @@
 
             <TableRow>
                 <TextView
-                    android:text="Dia"
+                    android:text="@string/animaldetailsactivity_day"
                     android:gravity="center"
                     android:textStyle="bold"/>
                 <TextView
-                    android:text="Hora inicio"
+                    android:text="@string/animaldetailsactivity_initialhour"
                     android:gravity="center"
                     android:textStyle="bold"/>
                 <TextView
-                    android:text="Hora fin"
+                    android:text="@string/animaldetailsactivity_endhour"
                     android:gravity="center"
                     android:textStyle="bold"/>
             </TableRow>

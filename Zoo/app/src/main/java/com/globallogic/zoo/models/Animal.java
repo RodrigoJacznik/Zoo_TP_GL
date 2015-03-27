@@ -1,11 +1,7 @@
 package com.globallogic.zoo.models;
 
-import android.text.format.Time;
-
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,54 +9,54 @@ import java.util.List;
  */
 public class Animal implements Serializable {
     private static final long serialVersionUID = 4851874892403066514L;
-    private String nombre;
-    private String especie;
-    private String descripcion;
+    private String name;
+    private String specie;
+    private String description;
     private String url;
     private boolean favorite;
-    private int especieCode;
-    private List<Horario> horarios;
+    private int specieCode;
+    private List<Schudle> schudle;
 
-    public int getEspecieCode() {
-        return especieCode;
+    public int getSpecieCode() {
+        return specieCode;
     }
 
-    public void setEspecieCode(int especieCode) {
-        this.especieCode = especieCode;
+    public void setSpecieCode(int specieCode) {
+        this.specieCode = specieCode;
     }
 
-    public Animal(String nombre, String especie, String descripcion, int especieCode) {
-        this.nombre = nombre;
-        this.especie = especie;
-        this.descripcion = descripcion;
-        this.especieCode = especieCode;
-        this.url = "http://es.wikipedia.org/wiki/" + this.nombre;
-        horarios = generateHorarios();
+    public Animal(String name, String specie, String description, int specieCode) {
+        this.name = name;
+        this.specie = specie;
+        this.description = description;
+        this.specieCode = specieCode;
+        this.url = "http://es.wikipedia.org/wiki/" + this.name;
+        this.schudle = generateHorarios();
         this.favorite = false;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEspecie() {
-        return especie;
+    public String getSpecie() {
+        return specie;
     }
 
-    public void setEspecie(String especie) {
-        this.especie = especie;
+    public void setSpecie(String specie) {
+        this.specie = specie;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcion(String description) {
+        this.description = description;
     }
 
     public String getUrl() {
@@ -79,31 +75,31 @@ public class Animal implements Serializable {
         this.favorite = favorite;
     }
 
-    public List<Horario> getHorarios() {
-        return horarios;
+    public List<Schudle> getSchudle() {
+        return schudle;
     }
 
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
+    public void setSchudle(List<Schudle> schudle) {
+        this.schudle = schudle;
     }
 
     @Override
     public String toString() {
         return "Animal{" +
-                "nombre='" + nombre + '\'' +
-                ", especie='" + especie + '\'' +
-                ", descripcion='" + descripcion + '\'' +
+                "name='" + name + '\'' +
+                ", specie='" + specie + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 
-    static private List<Horario> generateHorarios() {
-        List<Horario> horarios = new ArrayList<>();
-        horarios.add(new Horario("Lunes", "10:30", "15:30"));
-        horarios.add(new Horario("Martes", "11:30", "15:30"));
-        horarios.add(new Horario("Miercoles", "9:30", "15:30"));
-        horarios.add(new Horario("Viernes", "10:30", "15:30"));
+    static private List<Schudle> generateHorarios() {
+        List<Schudle> schudles = new ArrayList<>();
+        schudles.add(new Schudle("Lunes", "10:30", "15:30"));
+        schudles.add(new Schudle("Martes", "11:30", "15:30"));
+        schudles.add(new Schudle("Miercoles", "9:30", "15:30"));
+        schudles.add(new Schudle("Viernes", "10:30", "15:30"));
 
-        return horarios;
+        return schudles;
     }
 
     static public List<Animal> getAnimalList() {

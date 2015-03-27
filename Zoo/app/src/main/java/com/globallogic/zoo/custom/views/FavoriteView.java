@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 
 import java.util.Random;
 
@@ -19,16 +19,16 @@ import java.util.Random;
  */
 public class FavoriteView extends LinearLayout implements View.OnClickListener {
 
-    private TextView tvFavorite;
-    private ImageView ivStar;
+    private TextView favorite;
+    private ImageView star;
     private View rootView;
 
     private FavoriteViewCallback callback;
 
     private boolean displayText;
     private boolean favoriteState;
-    private String meGusta;
-    private String noMeGusta;
+    private String like;
+    private String dontLike;
     private int actualBackgroundColor;
 
     public FavoriteView(Context context) {
@@ -52,21 +52,21 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
         inflate(getContext(), R.layout.activity_favorite, this);
         this.setOnClickListener(this);
 
-        tvFavorite = (TextView) findViewById(R.id.favactivity_text);
-        ivStar = (ImageView) findViewById(R.id.favactivity_img);
-        rootView = tvFavorite.getRootView();
+        favorite = (TextView) findViewById(R.id.favactivity_text);
+        star = (ImageView) findViewById(R.id.favactivity_img);
+        rootView = favorite.getRootView();
 
-        if (meGusta == null) {
-            meGusta = getResources().getString(R.string.favactivity_megusta);
+        if (like == null) {
+            like = getResources().getString(R.string.favactivity_like);
         }
-        if (noMeGusta == null) {
-            noMeGusta = getResources().getString(R.string.favactivity_nomegusta);
+        if (dontLike == null) {
+            dontLike = getResources().getString(R.string.favactivity_dontlike);
         }
 
         if (displayText) {
-            tvFavorite.setVisibility(VISIBLE);
+            favorite.setVisibility(VISIBLE);
         } else {
-            tvFavorite.setVisibility(INVISIBLE);
+            favorite.setVisibility(INVISIBLE);
         }
     }
 
@@ -76,8 +76,8 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
 
         try {
             displayText = a.getBoolean(R.styleable.FavoriteView_displayText, true);
-            meGusta = a.getString(R.styleable.FavoriteView_is_favorite_text);
-            noMeGusta = a.getString(R.styleable.FavoriteView_is_not_favorite_text);
+            like = a.getString(R.styleable.FavoriteView_is_favorite_text);
+            dontLike = a.getString(R.styleable.FavoriteView_is_not_favorite_text);
         } finally {
             a.recycle();
         }
@@ -91,13 +91,13 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
     private void changeViewState() {
         if (!favoriteState) {
             rootView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            ivStar.setImageResource(android.R.drawable.star_off);
-            tvFavorite.setText(noMeGusta);
+            star.setImageResource(android.R.drawable.star_off);
+            favorite.setText(dontLike);
         } else {
             actualBackgroundColor = randomColor();
             rootView.setBackgroundColor(actualBackgroundColor);
-            ivStar.setImageResource(android.R.drawable.star_on);
-            tvFavorite.setText(meGusta);
+            star.setImageResource(android.R.drawable.star_on);
+            favorite.setText(like);
         }
     }
 
@@ -110,7 +110,6 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
     public void onClick(View v) {
         this.setFavoriteState(!isFavoriteState());
         callback.callbackCall(favoriteState, actualBackgroundColor);
-        Log.d("fav_view", String.valueOf(actualBackgroundColor));
     }
 
 

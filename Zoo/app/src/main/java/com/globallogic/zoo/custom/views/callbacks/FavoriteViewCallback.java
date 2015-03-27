@@ -1,4 +1,4 @@
-package com.globallogic.zoo.custom.views;
+package com.globallogic.zoo.custom.views.callbacks;
 
 /**
  * Created by GL on 26/03/2015.

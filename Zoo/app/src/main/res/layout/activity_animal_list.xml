@@ -5,17 +5,17 @@
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/animallistactivity_foto"
+        android:id="@+id/animallistactivity_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
-        android:id="@+id/animallistactivity_detalle"
+        android:id="@+id/animallistactivity_detail"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/animallistactivity_foto">
+        android:layout_toRightOf="@id/animallistactivity_photo">
 
         <TextView
             android:id="@+id/animallistactivity_name"
@@ -24,7 +24,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/animallistactivity_especie"
+            android:id="@+id/animallistactivity_specie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -36,10 +36,9 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/animallistactivity_flecha"
+        android:id="@+id/animallistactivity_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:src="@drawable/right_arrow"/>
-
 </RelativeLayout>

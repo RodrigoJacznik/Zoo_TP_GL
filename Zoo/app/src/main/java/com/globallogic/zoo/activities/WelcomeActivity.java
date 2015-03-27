@@ -15,28 +15,26 @@ import com.globallogic.zoo.adapters.AnimalAdapter;
 
 
 public class WelcomeActivity extends ActionBarActivity {
+    final static String USERK = "USER";
+    final static String IS_FEMM = "IS_FEMM";
     static final String ANIMAL = "ANIMAL";
+
+    private Button signout;
+    private TextView welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        Button signout = (Button) findViewById(R.id.welcomeactivity_signout);
-        TextView tv = (TextView) findViewById(R.id.welcomeactivity_welcome);
-
-        Resources res = getResources();
+        bindViews();
 
         Intent intent = getIntent();
-        Boolean isFemm = intent.getBooleanExtra(MainActivity.IS_FEMM, true);
-        String name = intent.getStringExtra(MainActivity.USERK);
+        Boolean isFemm = intent.getBooleanExtra(IS_FEMM, true);
+        String name = intent.getStringExtra(USERK);
 
-        String sra = res.getString(R.string.welcomeactivity_sra);
-        String sr = res.getString(R.string.welcomeactivity_sr);
-
-        String welcome = String.format(res.getString(R.string.welcomeactivity_welcome),
-                isFemm ? sra : sr, name);
-        tv.setText(welcome);
+        String welcomeMessage = makeWelcomeMessage(isFemm, name);
+        welcome.setText(welcomeMessage);
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,5 +49,19 @@ public class WelcomeActivity extends ActionBarActivity {
         AnimalAdapter mAnimalAdapter = new AnimalAdapter(this);
 
         mRecyclerView.setAdapter(mAnimalAdapter);
+    }
+
+    private String makeWelcomeMessage(Boolean isFemm, String name) {
+        Resources res = getResources();
+        String sra = res.getString(R.string.welcomeactivity_sra);
+        String sr = res.getString(R.string.welcomeactivity_sr);
+
+        return String.format(res.getString(R.string.welcomeactivity_welcome),
+                isFemm ? sra : sr, name);
+    }
+
+    private void bindViews() {
+        signout = (Button) findViewById(R.id.welcomeactivity_signout);
+        welcome = (TextView) findViewById(R.id.welcomeactivity_welcome);
     }
 }

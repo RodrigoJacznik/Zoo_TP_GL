@@ -10,84 +10,88 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.globallogic.zoo.custom.views.FavoriteViewCallback;
+import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.models.Horario;
+import com.globallogic.zoo.models.Schudle;
 
 
 public class AnimalDetailsActivity extends ActionBarActivity implements FavoriteViewCallback {
+    public final static String ANIMAL = "ANIMAL";
+
     private final static String FAVORITE = "FAVORITE";
     private final static String COLOR = "COLOR";
 
-    final static String URL = "URL";
-
-    private TextView tvName;
-    private TextView tvEspecie;
-    private TextView tvDescripcion;
+    private TextView name;
+    private TextView specie;
+    private TextView description;
     private FavoriteView favoriteView;
-    private TableLayout tbHorarios;
+    private TableLayout schedule;
 
     private Animal animal;
-    private int favViewColor;
+    private int favoriteViewColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_details);
 
-        animal = (Animal) getIntent().getSerializableExtra(WelcomeActivity.ANIMAL);
-        favoriteView = (FavoriteView) findViewById(R.id.animaldetailsactivity_fav);
-        tvName = (TextView) findViewById(R.id.animaldetailsactivity_name);
-        tvEspecie = (TextView) findViewById(R.id.animaldetailsactivity_especie);
-        tvDescripcion = (TextView) findViewById(R.id.animaldetailsactivity_descripcion);
-        tbHorarios = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
+        bindViews();
 
-        tvName.append(" " + animal.getNombre());
-        tvEspecie.append(" " + animal.getEspecie());
-        tvDescripcion.append("\n" + animal.getDescripcion());
+        name.append(" " + animal.getName());
+        specie.append(" " + animal.getSpecie());
+        description.append("\n" + animal.getDescripcion());
 
         Button btnMoreInfo = (Button) findViewById(R.id.animalsdetailsactivity_more);
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AnimalDetailsActivity.this, MoreInfoActivity.class);
-                intent.putExtra(URL, animal.getUrl());
+                intent.putExtra(MoreInfoActivity.URL, animal.getUrl());
                 startActivity(intent);
            }
         });
 
         favoriteView.setFavoriteState(animal.isFavorite());
         favoriteView.setCallback(this);
-        populateHorarioTable();
+        populateScheduleTable();
+    }
+
+    private void bindViews() {
+        animal = (Animal) getIntent().getSerializableExtra(WelcomeActivity.ANIMAL);
+        favoriteView = (FavoriteView) findViewById(R.id.animaldetailsactivity_fav);
+        name = (TextView) findViewById(R.id.animaldetailsactivity_name);
+        specie = (TextView) findViewById(R.id.animaldetailsactivity_specie);
+        description = (TextView) findViewById(R.id.animaldetailsactivity_description);
+        schedule = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         animal.setFavorite(savedInstanceState.getBoolean(FAVORITE));
-        favViewColor = savedInstanceState.getInt(COLOR);
-        favoriteView.setBackgroundColor(favViewColor);
+        favoriteViewColor = savedInstanceState.getInt(COLOR);
+        favoriteView.setBackgroundColor(favoriteViewColor);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(FAVORITE, animal.isFavorite());
-        outState.putInt(COLOR, favViewColor);
+        outState.putInt(COLOR, favoriteViewColor);
     }
 
-    private void populateHorarioTable() {
-        for (Horario horario: animal.getHorarios()) {
+    private void populateScheduleTable() {
+        for (Schudle schudle : animal.getSchudle()) {
             TableRow horarioRow = new TableRow(this);
             TextView dia = new TextView(this);
             TextView horaInicio = new TextView(this);
             TextView horaFin = new TextView(this);
 
-            dia.setText(horario.getDia());
-            horaInicio.setText(horario.getHoraInicio());
-            horaFin.setText(horario.getHoraFin());
+            dia.setText(schudle.getDay());
+            horaInicio.setText(schudle.getInitialHour());
+            horaFin.setText(schudle.getFinalHour());
 
             dia.setGravity(Gravity.CENTER);
             horaInicio.setGravity(Gravity.CENTER);
@@ -97,13 +101,13 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
             horarioRow.addView(horaInicio);
             horarioRow.addView(horaFin);
 
-            tbHorarios.addView(horarioRow);
+            schedule.addView(horarioRow);
         }
     }
 
     @Override
     public void callbackCall(boolean favorite, int color) {
         animal.setFavorite(favorite);
-        favViewColor = color;
+        favoriteViewColor = color;
     }
 }

@@ -13,12 +13,9 @@ import android.widget.RadioGroup;
 import com.globallogic.zoo.R;
 
 
-public class MainActivity extends ActionBarActivity implements TextWatcher {
+public class LoginActivity extends ActionBarActivity implements TextWatcher {
     private final static String PASS = "Android";
     private final static String USER = "GL";
-
-    final static String USERK = "USER";
-    final static String IS_FEMM = "IS_FEMM";
 
     private EditText pass;
     private EditText user;
@@ -27,11 +24,9 @@ public class MainActivity extends ActionBarActivity implements TextWatcher {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        signin = (Button) findViewById(R.id.mainactivity_siging);
-        pass = (EditText) findViewById(R.id.mainactivity_pass);
-        user = (EditText) findViewById(R.id.mainactivity_user);
+        bindViews();
 
         signin.setEnabled(false);
         pass.addTextChangedListener(this);
@@ -46,17 +41,26 @@ public class MainActivity extends ActionBarActivity implements TextWatcher {
                         getCheckedRadioButtonId();
 
                 if (passInput.equals(PASS) && userInput.equals(USER)) {
-                    Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-                    intent.putExtra(MainActivity.USERK, userInput);
-                    intent.putExtra(MainActivity.IS_FEMM, index == R.id.mainactivity_femenino);
-                    pass.setText("");
-                    user.setText("");
+                    Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                    intent.putExtra(WelcomeActivity.USERK, userInput);
+                    intent.putExtra(WelcomeActivity.IS_FEMM, index == R.id.mainactivity_femenino);
+                    clearTextViews();
                     startActivity(intent);
                 } else {
                     findViewById(R.id.mainactivity_error).setVisibility(View.VISIBLE);
                 }
             }
         });
+    }
+
+    private void clearTextViews() {
+        pass.setText("");
+        user.setText("");
+    }
+    private void bindViews() {
+        signin = (Button) findViewById(R.id.mainactivity_siging);
+        pass = (EditText) findViewById(R.id.mainactivity_pass);
+        user = (EditText) findViewById(R.id.mainactivity_user);
     }
 
     @Override

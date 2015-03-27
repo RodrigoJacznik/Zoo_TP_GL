@@ -26,26 +26,26 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public View vLayout;
-        public ImageView ivFoto;
-        public TextView tvNombre;
-        public TextView tvEspecie;
-        public SurfaceView svColor;
+        public View rootView;
+        public ImageView photo;
+        public TextView name;
+        public TextView specie;
+        public SurfaceView color;
 
         public ViewHolder (View v) {
             super(v);
-            vLayout = v;
-            ivFoto = (ImageView) v.findViewById(R.id.animallistactivity_foto);
-            tvNombre = (TextView) v.findViewById(R.id.animallistactivity_name);
-            tvEspecie = (TextView) v.findViewById(R.id.animallistactivity_especie);
-            svColor = (SurfaceView) v.findViewById(R.id.animaldetailsactivity_color);
+            rootView = v;
+            photo = (ImageView) v.findViewById(R.id.animallistactivity_photo);
+            name = (TextView) v.findViewById(R.id.animallistactivity_name);
+            specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
+            color = (SurfaceView) v.findViewById(R.id.animaldetailsactivity_color);
         }
 
         public void load(Animal anAnimal) {
-            ivFoto.setImageResource(R.drawable.grey_sheep);
-            tvNombre.setText(anAnimal.getNombre());
-            tvEspecie.setText(anAnimal.getEspecie());
-            svColor.setBackgroundColor(selectBackgroundColor(anAnimal.getEspecieCode()));
+            photo.setImageResource(R.drawable.grey_sheep);
+            name.setText(anAnimal.getName());
+            specie.setText(anAnimal.getSpecie());
+            color.setBackgroundColor(selectBackgroundColor(anAnimal.getSpecieCode()));
         }
 
         public int selectBackgroundColor(int especieCode) {
@@ -80,13 +80,13 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final Animal animalSelected = animals.get(i);
         viewHolder.load(animalSelected);
-        viewHolder.vLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AnimalAdapter.this.context, AnimalDetailsActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("ANIMAL", animalSelected);
-                intent.putExtras(mBundle);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AnimalDetailsActivity.ANIMAL, animalSelected);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });

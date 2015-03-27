@@ -10,6 +10,7 @@ import com.globallogic.zoo.R;
 
 
 public class MoreInfoActivity extends ActionBarActivity {
+    public final static String URL = "URL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,7 @@ public class MoreInfoActivity extends ActionBarActivity {
 
         WebView wv = (WebView) findViewById(R.id.moreinfoactivity_webview);
         wv.setWebViewClient(new MyBrowser());
-        wv.loadUrl(intent.getStringExtra(AnimalDetailsActivity.URL));
+        wv.loadUrl(intent.getStringExtra(URL));
     }
 
     private class MyBrowser extends WebViewClient {
