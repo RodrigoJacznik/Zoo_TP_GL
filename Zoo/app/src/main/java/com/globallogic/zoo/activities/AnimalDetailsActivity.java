@@ -1,6 +1,8 @@
 package com.globallogic.zoo.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 import com.globallogic.zoo.R;
@@ -39,17 +42,21 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
 
         bindViews();
 
-        name.append(" " + animal.getName());
-        specie.append(" " + animal.getSpecie());
-        description.append("\n" + animal.getDescripcion());
+        name.setText(animal.getName());
+        specie.setText(animal.getSpecie());
+        description.setText(animal.getDescripcion());
 
         Button btnMoreInfo = (Button) findViewById(R.id.animalsdetailsactivity_more);
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AnimalDetailsActivity.this, MoreInfoActivity.class);
-                intent.putExtra(MoreInfoActivity.URL, animal.getUrl());
-                startActivity(intent);
+                if (checkConnection()) {
+                    Intent intent = new Intent(AnimalDetailsActivity.this, MoreInfoActivity.class);
+                    intent.putExtra(MoreInfoActivity.URL, animal.getUrl());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(AnimalDetailsActivity.this, "Problemas en su conexion", Toast.LENGTH_LONG).show();
+                }
            }
         });
 
@@ -65,6 +72,11 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         specie = (TextView) findViewById(R.id.animaldetailsactivity_specie);
         description = (TextView) findViewById(R.id.animaldetailsactivity_description);
         schedule = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
+    }
+
+    private boolean checkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return (cm.getActiveNetworkInfo() != null);
     }
 
     @Override

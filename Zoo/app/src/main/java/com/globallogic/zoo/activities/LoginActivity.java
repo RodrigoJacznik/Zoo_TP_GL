@@ -37,13 +37,9 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
                 String passInput = pass.getText().toString();
                 String userInput = user.getText().toString();
 
-                int index = ((RadioGroup) findViewById(R.id.mainactivity_radiogroup)).
-                        getCheckedRadioButtonId();
-
                 if (passInput.equals(PASS) && userInput.equals(USER)) {
                     Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                     intent.putExtra(WelcomeActivity.USERK, userInput);
-                    intent.putExtra(WelcomeActivity.IS_FEMM, index == R.id.mainactivity_femenino);
                     clearTextViews();
                     startActivity(intent);
                 } else {

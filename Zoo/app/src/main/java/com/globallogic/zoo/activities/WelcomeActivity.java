@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
+import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
+import com.globallogic.zoo.models.Animal;
 
 
-public class WelcomeActivity extends ActionBarActivity {
+public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterCallback {
     final static String USERK = "USER";
-    final static String IS_FEMM = "IS_FEMM";
     static final String ANIMAL = "ANIMAL";
 
     private Button signout;
@@ -30,11 +31,9 @@ public class WelcomeActivity extends ActionBarActivity {
         bindViews();
 
         Intent intent = getIntent();
-        Boolean isFemm = intent.getBooleanExtra(IS_FEMM, true);
         String name = intent.getStringExtra(USERK);
 
-        String welcomeMessage = makeWelcomeMessage(isFemm, name);
-        welcome.setText(welcomeMessage);
+        welcome.setText(makeWelcomeMessage(name));
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,22 +45,26 @@ public class WelcomeActivity extends ActionBarActivity {
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.welcomeactivity_recycleview);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        AnimalAdapter mAnimalAdapter = new AnimalAdapter(this);
+        AnimalAdapter mAnimalAdapter = new AnimalAdapter(this, this);
 
         mRecyclerView.setAdapter(mAnimalAdapter);
     }
 
-    private String makeWelcomeMessage(Boolean isFemm, String name) {
-        Resources res = getResources();
-        String sra = res.getString(R.string.welcomeactivity_sra);
-        String sr = res.getString(R.string.welcomeactivity_sr);
-
-        return String.format(res.getString(R.string.welcomeactivity_welcome),
-                isFemm ? sra : sr, name);
+    private String makeWelcomeMessage(String name) {
+        return String.format(getResources().getString(R.string.welcomeactivity_welcome), name);
     }
 
     private void bindViews() {
         signout = (Button) findViewById(R.id.welcomeactivity_signout);
         welcome = (TextView) findViewById(R.id.welcomeactivity_welcome);
+    }
+
+    @Override
+    public void onClick(Animal animal) {
+        Intent intent = new Intent(this, AnimalDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AnimalDetailsActivity.ANIMAL, animal);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.activities.AnimalDetailsActivity;
 import com.globallogic.zoo.R;
@@ -24,13 +25,14 @@ import java.util.List;
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
     private List<Animal> animals = Animal.getAnimalList();
     private Context context;
+    private AnimalAdapterCallback callbackObject;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View rootView;
         public ImageView photo;
         public TextView name;
         public TextView specie;
-        public SurfaceView color;
+        public View color;
 
         public ViewHolder (View v) {
             super(v);
@@ -38,7 +40,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             photo = (ImageView) v.findViewById(R.id.animallistactivity_photo);
             name = (TextView) v.findViewById(R.id.animallistactivity_name);
             specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
-            color = (SurfaceView) v.findViewById(R.id.animaldetailsactivity_color);
+            color = v.findViewById(R.id.animaldetailsactivity_color);
         }
 
         public void load(Animal anAnimal) {
@@ -70,6 +72,12 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         this.context = context;
     }
 
+    public AnimalAdapter(Context context, AnimalAdapterCallback animalAdapterCallback) {
+        super();
+        this.context = context;
+        this.callbackObject = animalAdapterCallback;
+    }
+
     @Override
     public AnimalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_animal_list, parent, false);
@@ -83,11 +91,9 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AnimalAdapter.this.context, AnimalDetailsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(AnimalDetailsActivity.ANIMAL, animalSelected);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                if (callbackObject != null) {
+                    callbackObject.onClick(animalSelected);
+                }
             }
         });
     }

@@ -21,14 +21,15 @@
             android:id="@+id/animallistactivity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            style="@style/TextMain"/>
 
         <TextView
             android:id="@+id/animallistactivity_specie"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/TextSecundary"/>
 
-        <SurfaceView
+        <View
             android:id="@+id/animaldetailsactivity_color"
             android:layout_width="10dp"
             android:layout_height="10dp"

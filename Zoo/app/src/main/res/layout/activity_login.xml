@@ -1,90 +1,64 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <RelativeLayout
+        android:layout_height="wrap_content">
+        <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="130dp"
-                android:id="@+id/mainactivity_zooimg"
-                android:src="@drawable/zooimg"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"/>
+            android:layout_height="130dp"
+            android:id="@+id/mainactivity_zooimg"
+            android:src="@drawable/zooimg"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"/>
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="@string/mainactivity_name"
-                android:ems="10"
-                android:id="@+id/mainactivity_user"
-                android:layout_below="@id/mainactivity_zooimg"
-                android:layout_centerInParent="true"/>
+        <EditText
+            android:id="@+id/mainactivity_user"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextMain"
+            android:layout_below="@id/mainactivity_zooimg"
+            android:layout_centerHorizontal="true"
+            android:inputType="textPersonName"
+            android:hint="@string/mainactivity_name"
+            android:ems="10"/>
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/mainactivity_pass"
-                android:ems="10"
-                android:id="@+id/mainactivity_pass"
-                android:layout_below="@id/mainactivity_user"
-                android:layout_centerInParent="true"/>
+        <EditText
+            android:id="@+id/mainactivity_pass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextMain"
+            android:layout_below="@id/mainactivity_user"
+            android:layout_centerHorizontal="true"
+            android:inputType="textPassword"
+            android:hint="@string/mainactivity_pass"
+            android:ems="10"/>
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:id="@+id/mainactivity_radiogroup"
-                android:layout_below="@id/mainactivity_pass"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerInParent="true">
+        <TextView
+            android:id="@+id/mainactivity_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecundary.error"
+            android:layout_below="@+id/mainactivity_pass"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/mainactivity_error"
+            android:visibility="invisible"/>
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mainactivity_femm"
-                    android:id="@+id/mainactivity_femenino"
-                    android:checked="true"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mainactivity_man"
-                    android:id="@+id/mainactivity_masculino"/>
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mainactivity_error"
-                android:id="@+id/mainactivity_error"
-                android:layout_below="@id/mainactivity_radiogroup"
-                android:layout_centerInParent="true"
-                android:enabled="false"
-                android:visibility="invisible"
-                android:textColor="@color/red"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mainactivity_signin"
-                android:id="@+id/mainactivity_siging"
-                android:layout_below="@id/mainactivity_error"
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+        <Button
+            android:id="@+id/mainactivity_siging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mainactivity_signin"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/mainactivity_error"/>
+    </RelativeLayout>
+</ScrollView>
