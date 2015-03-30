@@ -21,7 +21,6 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
 
     private TextView favorite;
     private ImageView star;
-    private View rootView;
 
     private FavoriteViewCallback callback;
 
@@ -54,7 +53,6 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
 
         favorite = (TextView) findViewById(R.id.favactivity_text);
         star = (ImageView) findViewById(R.id.favactivity_img);
-        rootView = favorite.getRootView();
 
         if (like == null) {
             like = getResources().getString(R.string.favactivity_like);
@@ -90,20 +88,23 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
 
     private void changeViewState() {
         if (!favoriteState) {
-            rootView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            actualBackgroundColor = getResources().getColor(android.R.color.transparent);
             star.setImageResource(android.R.drawable.star_off);
             favorite.setText(dontLike);
         } else {
-            actualBackgroundColor = randomColor();
-            rootView.setBackgroundColor(actualBackgroundColor);
+            actualBackgroundColor = randomPastelColor();
             star.setImageResource(android.R.drawable.star_on);
             favorite.setText(like);
         }
     }
 
+    private int randomPastelColor() {
+        return Color.rgb(randomColor(), randomColor(), randomColor());
+    }
+
     private int randomColor() {
         Random rnd = new Random();
-        return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        return rnd.nextInt(127) + 127;
     }
 
     @Override

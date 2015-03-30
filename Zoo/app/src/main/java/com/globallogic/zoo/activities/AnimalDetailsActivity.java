@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     private TextView description;
     private FavoriteView favoriteView;
     private TableLayout schedule;
+    private View rootView;
 
     private Animal animal;
     private int favoriteViewColor;
@@ -46,7 +50,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         specie.setText(animal.getSpecie());
         description.setText(animal.getDescripcion());
 
-        Button btnMoreInfo = (Button) findViewById(R.id.animalsdetailsactivity_more);
+        Button btnMoreInfo = (Button) findViewById(R.id.animaldetailsactivity_more);
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +76,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         specie = (TextView) findViewById(R.id.animaldetailsactivity_specie);
         description = (TextView) findViewById(R.id.animaldetailsactivity_description);
         schedule = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
+        rootView = findViewById(R.id.animaldetailsactivity_scrollview);
     }
 
     private boolean checkConnection() {
@@ -85,6 +90,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         animal.setFavorite(savedInstanceState.getBoolean(FAVORITE));
         favoriteViewColor = savedInstanceState.getInt(COLOR);
         favoriteView.setBackgroundColor(favoriteViewColor);
+        rootView.setBackgroundColor(favoriteViewColor);
     }
 
     @Override
@@ -121,5 +127,9 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     public void callbackCall(boolean favorite, int color) {
         animal.setFavorite(favorite);
         favoriteViewColor = color;
+        rootView.setBackgroundColor(color);
+        favoriteView.setBackgroundColor(favoriteViewColor);
     }
+
+
 }
