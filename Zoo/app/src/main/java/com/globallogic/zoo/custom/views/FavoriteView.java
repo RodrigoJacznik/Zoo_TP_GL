@@ -89,11 +89,11 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
     private void changeViewState() {
         if (!favoriteState) {
             actualBackgroundColor = getResources().getColor(android.R.color.transparent);
-            star.setImageResource(android.R.drawable.star_off);
+            star.setImageResource(R.drawable.star_off);
             favorite.setText(dontLike);
         } else {
             actualBackgroundColor = randomPastelColor();
-            star.setImageResource(android.R.drawable.star_on);
+            star.setImageResource(R.drawable.star_on);
             favorite.setText(like);
         }
     }

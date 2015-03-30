@@ -8,7 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.globallogic.zoo.R;
 
@@ -20,6 +20,7 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
     private EditText pass;
     private EditText user;
     private Button signin;
+    private TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +41,25 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
                 if (passInput.equals(PASS) && userInput.equals(USER)) {
                     Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                     intent.putExtra(WelcomeActivity.USERK, userInput);
-                    clearTextViews();
+                    restartDefaultViewState();
                     startActivity(intent);
                 } else {
-                    findViewById(R.id.mainactivity_error).setVisibility(View.VISIBLE);
+                    error.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
-    private void clearTextViews() {
+    private void restartDefaultViewState() {
         pass.setText("");
         user.setText("");
+        error.setVisibility(View.INVISIBLE);
     }
     private void bindViews() {
         signin = (Button) findViewById(R.id.mainactivity_siging);
         pass = (EditText) findViewById(R.id.mainactivity_pass);
         user = (EditText) findViewById(R.id.mainactivity_user);
+        error = (TextView) findViewById(R.id.mainactivity_error);
     }
 
     @Override
