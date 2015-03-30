@@ -1,12 +1,9 @@
 package com.globallogic.zoo.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 
 import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
 import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.activities.AnimalDetailsActivity;
 import com.globallogic.zoo.R;
 
 import java.util.List;

@@ -27,7 +27,7 @@
     </style>
 
     <style name="RowList">
-
+        <item name="android:background">@drawable/state_list_row</item>
     </style>
 
 </resources>
