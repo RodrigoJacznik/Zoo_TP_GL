@@ -1,6 +1,7 @@
 package com.globallogic.zoo.custom.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -17,7 +18,7 @@ import java.util.Random;
 /**
  * Created by GL on 25/03/2015.
  */
-public class FavoriteView extends LinearLayout implements View.OnClickListener {
+public class FavoriteView extends LinearLayout {
 
     private TextView favorite;
     private ImageView star;
@@ -49,10 +50,16 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
 
     private void init() {
         inflate(getContext(), R.layout.activity_favorite, this);
-        this.setOnClickListener(this);
 
         favorite = (TextView) findViewById(R.id.favactivity_text);
         star = (ImageView) findViewById(R.id.favactivity_img);
+        star.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFavoriteState(!isFavoriteState());
+                callback.callbackCall(favoriteState, actualBackgroundColor);
+            }
+        });
 
         if (like == null) {
             like = getResources().getString(R.string.favactivity_like);
@@ -61,11 +68,7 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
             dontLike = getResources().getString(R.string.favactivity_dontlike);
         }
 
-        if (displayText) {
-            favorite.setVisibility(VISIBLE);
-        } else {
-            favorite.setVisibility(INVISIBLE);
-        }
+        favorite.setVisibility(displayText ? VISIBLE : GONE);
     }
 
     private void setupAttributes(AttributeSet attrs) {
@@ -89,11 +92,11 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
     private void changeViewState() {
         if (!favoriteState) {
             actualBackgroundColor = getResources().getColor(android.R.color.transparent);
-            star.setImageResource(R.drawable.star_off);
+            star.setImageResource(R.drawable.state_list_start_off);
             favorite.setText(dontLike);
         } else {
             actualBackgroundColor = randomPastelColor();
-            star.setImageResource(R.drawable.star_on);
+            star.setImageResource(R.drawable.state_list_star_on);
             favorite.setText(like);
         }
     }
@@ -106,13 +109,6 @@ public class FavoriteView extends LinearLayout implements View.OnClickListener {
         Random rnd = new Random();
         return rnd.nextInt(127) + 127;
     }
-
-    @Override
-    public void onClick(View v) {
-        this.setFavoriteState(!isFavoriteState());
-        callback.callbackCall(favoriteState, actualBackgroundColor);
-    }
-
 
     public boolean isFavoriteState() {
         return favoriteState;

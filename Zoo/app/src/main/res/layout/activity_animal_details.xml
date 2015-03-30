@@ -26,39 +26,36 @@
 
         <TextView
             android:id="@+id/animaldetailsactivity_name"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextMain"
-            android:layout_toRightOf="@id/animaldetailsactivity_img"
-            android:paddingLeft="15dp"
+            android:layout_toRightOf="@+id/animaldetailsactivity_fav"
             android:paddingTop="30dp"
             android:paddingBottom="15dp"/>
 
         <TextView
             android:id="@+id/animaldetailsactivity_specie"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextSecundary"
-            android:layout_below="@id/animaldetailsactivity_name"
-            android:layout_toRightOf="@id/animaldetailsactivity_img"
-            android:paddingLeft="15dp"
-            android:paddingBottom="16dp"/>
+            android:layout_below="@+id/animaldetailsactivity_name"
+            android:layout_toRightOf="@+id/animaldetailsactivity_fav"
+            android:layout_marginTop="17dp"/>
 
         <com.globallogic.zoo.custom.views.FavoriteView
             android:id="@+id/animaldetailsactivity_fav"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:displayText="true"
-            android:layout_below="@id/animaldetailsactivity_specie"
+            app:displayText="false"
             android:layout_toRightOf="@id/animaldetailsactivity_img"
-            android:paddingLeft="15dp"/>
+            android:layout_below="@+id/animaldetailsactivity_name"/>
 
         <TextView
             android:id="@+id/animaldetailsactivity_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             style="@style/TextSecundary"
-            android:layout_below="@id/animaldetailsactivity_fav"
+            android:layout_below="@id/animaldetailsactivity_specie"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"/>
 
