@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="animals">
-        <item>Leon</item>
-        <item>Jirafa</item>
-        <item>Tigre</item>
-        <item>Mono</item>
-        <item>Leon</item>
-        <item>Jirafa</item>
-        <item>Tigre</item>
-        <item>Mono</item>
-        <item>Leon</item>
-        <item>Jirafa</item>
-        <item>Tigre</item>
-        <item>Mono</item>
-        <item>Leon</item>
-        <item>Jirafa</item>
-        <item>Tigre</item>
-        <item>Mono</item>
-        <item>Leon</item>
-        <item>Jirafa</item>
-        <item>Tigre</item>
-        <item>Mono</item>
-        <item>Leon</item>
-        <item>Jirafa</item>
-        <item>Tigre</item>
-        <item>Mono</item>
+    <string-array name="themes">
+        <item>Default</item>
+        <item>Extra</item>
     </string-array>
 </resources>
