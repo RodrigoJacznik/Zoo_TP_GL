@@ -40,7 +40,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
 
         public void load(Animal anAnimal) {
-            photo.setImageResource(R.drawable.grey_sheep);
+            photo.setImageResource(R.drawable.android);
             name.setText(anAnimal.getName());
             specie.setText(anAnimal.getSpecie());
             color.setBackgroundColor(selectBackgroundColor(anAnimal.getSpecieCode()));

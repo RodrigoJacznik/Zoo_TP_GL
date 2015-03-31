@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -35,6 +36,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     private FavoriteView favoriteView;
     private TableLayout schedule;
     private View rootView;
+    private ImageView share;
+    private ImageView photo;
 
     private Animal animal;
     private int favoriteViewColor;
@@ -64,6 +67,20 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
            }
         });
 
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AnimalDetailsActivity.this, "photo", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AnimalDetailsActivity.this, "share", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         favoriteView.setFavoriteState(animal.isFavorite());
         favoriteView.setCallback(this);
         populateScheduleTable();
@@ -77,6 +94,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         description = (TextView) findViewById(R.id.animaldetailsactivity_description);
         schedule = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
         rootView = findViewById(R.id.animaldetailsactivity_scrollview);
+        share = (ImageView) findViewById(R.id.animaldetailsactivity_share);
+        photo = (ImageView) findViewById(R.id.animaldetailsactivity_photo);
     }
 
     private boolean checkConnection() {
