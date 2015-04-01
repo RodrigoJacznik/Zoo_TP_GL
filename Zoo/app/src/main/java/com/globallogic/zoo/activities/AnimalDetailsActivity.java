@@ -26,6 +26,7 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schudle;
+import com.globallogic.zoo.utils.AnimalUtils;
 
 import org.apache.http.protocol.HTTP;
 
@@ -136,9 +137,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     }
 
     private void shareAnimal() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, animal.getName() + ": " + animal.getDescripcion());
-        intent.setType(HTTP.PLAIN_TEXT_TYPE);
+        Intent intent = AnimalUtils.getShareAnimalIntent(animal);
         startActivity(intent);
     }
 

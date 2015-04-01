@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.models.Animal;
 
 
 public class LoginActivity extends ActionBarActivity implements TextWatcher {
@@ -29,7 +30,7 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        Animal.populateAnimals();
         bindViews();
 
         signin.setEnabled(false);

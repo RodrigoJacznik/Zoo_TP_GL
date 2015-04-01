@@ -3,12 +3,14 @@ package com.globallogic.zoo.adapters;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.globallogic.zoo.activities.WelcomeActivity;
 import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.R;
@@ -19,11 +21,16 @@ import java.util.List;
  * Created by GL on 25/03/2015.
  */
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
+
     private List<Animal> animals = Animal.getAnimalList();
     private Context context;
     private AnimalAdapterCallback callbackObject;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    private int position;
+
+    public class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnCreateContextMenuListener, View.OnLongClickListener {
+
         public View rootView;
         public ImageView photo;
         public TextView name;
@@ -37,6 +44,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             name = (TextView) v.findViewById(R.id.animallistactivity_name);
             specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
             color = v.findViewById(R.id.animaldetailsactivity_color);
+            v.setOnCreateContextMenuListener(this);
+            v.setOnLongClickListener(this);
         }
 
         public void load(Animal anAnimal) {
@@ -44,6 +53,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             name.setText(anAnimal.getName());
             specie.setText(anAnimal.getSpecie());
             color.setBackgroundColor(selectBackgroundColor(anAnimal.getSpecieCode()));
+            getAdapterPosition();
         }
 
         public int selectBackgroundColor(int especieCode) {
@@ -61,6 +71,17 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                     return resources.getColor(android.R.color.background_light);
             }
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v,
+                                        ContextMenu.ContextMenuInfo menuInfo) {
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            setPosition(getAdapterPosition());
+            return false;
+        }
     }
 
     public AnimalAdapter(Context context) {
@@ -76,7 +97,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     @Override
     public AnimalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_animal_list, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_animal_list,
+                parent, false);
         return new ViewHolder(v);
     }
 
@@ -99,4 +121,15 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         return animals.size();
     }
 
+    public Animal getItem() {
+        return animals.get(position);
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 }

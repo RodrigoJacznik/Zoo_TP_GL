@@ -6,7 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +20,7 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
 import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
 import com.globallogic.zoo.models.Animal;
+import com.globallogic.zoo.utils.AnimalUtils;
 
 
 public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterCallback {
@@ -25,6 +30,8 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     private Button signout;
     private TextView welcome;
     private ImageView maps;
+    private RecyclerView recyclerView;
+    private AnimalAdapter animalAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,6 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
                 finish();
             }
         });
-
         maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +59,30 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
         });
 
         bindRecyclerView();
+        registerForContextMenu(recyclerView);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu_welcome, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cm_welcome_delete:
+                Animal.deleteAnimal(animalAdapter.getItem());
+                animalAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.cm_welcome_share:
+                Intent intent = AnimalUtils.getShareAnimalIntent(animalAdapter.getItem());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void viewPositionInMaps() {
@@ -67,12 +97,12 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     }
 
     private void bindRecyclerView() {
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.welcomeactivity_recycleview);
+        recyclerView = (RecyclerView) findViewById(R.id.welcomeactivity_recycleview);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        AnimalAdapter mAnimalAdapter = new AnimalAdapter(this, this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        animalAdapter = new AnimalAdapter(this, this);
 
-        mRecyclerView.setAdapter(mAnimalAdapter);
+        recyclerView.setAdapter(animalAdapter);
     }
 
     private String makeWelcomeMessage(String name) {

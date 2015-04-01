@@ -9,13 +9,18 @@ import java.util.List;
  */
 public class Animal implements Serializable {
     private static final long serialVersionUID = 4851874892403066514L;
+    private static int nextId = 0;
+
+    private int id;
     private String name;
     private String specie;
     private String description;
     private String url;
     private boolean favorite;
     private int specieCode;
+
     private List<Schudle> schudle;
+    public static List<Animal> animals;
 
     public int getSpecieCode() {
         return specieCode;
@@ -26,6 +31,7 @@ public class Animal implements Serializable {
     }
 
     public Animal(String name, String specie, String description, int specieCode) {
+        this.id = nextId++;
         this.name = name;
         this.specie = specie;
         this.description = description;
@@ -103,7 +109,15 @@ public class Animal implements Serializable {
     }
 
     static public List<Animal> getAnimalList() {
-        List<Animal> animals = new ArrayList<>();
+        return animals;
+    }
+
+    static public void populateAnimals() {
+        animals = generateAnimals();
+    }
+
+    static private List<Animal> generateAnimals() {
+        animals = new ArrayList<>();
 
         String descripcion = "Lorem Ipsum is simply dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard dummy text ever since the" +
@@ -123,5 +137,18 @@ public class Animal implements Serializable {
         animals.add(new Animal("Gorila", "Especie del Gorila", descripcion, 4));
 
         return animals;
+    }
+
+    static public boolean deleteAnimal(int animalID) {
+        Animal animal = animals.remove(animalID);
+        return animal != null;
+    }
+
+    static public boolean deleteAnimal(Animal animal) {
+        return animals.remove(animal);
+    }
+
+    public int getId() {
+        return id;
     }
 }
