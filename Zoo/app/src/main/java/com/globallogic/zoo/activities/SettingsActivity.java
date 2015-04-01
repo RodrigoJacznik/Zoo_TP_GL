@@ -1,6 +1,7 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,8 @@ public class SettingsActivity extends ActionBarActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         spinner = (Spinner) findViewById(R.id.settingsactivity_spinner);
         spinner.setSelection(ThemeUtils.getsTheme(), true);
         spinner.setOnItemSelectedListener(this);
@@ -33,7 +36,9 @@ public class SettingsActivity extends ActionBarActivity implements AdapterView.O
         dummy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SettingsActivity.this, "Posta, no hace nada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this,
+                        getResources().getString(R.string.settingsactivity_toast_msg),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

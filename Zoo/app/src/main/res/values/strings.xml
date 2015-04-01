@@ -28,10 +28,14 @@
 
 <string name="settingsactivity_theme">Tema</string>
 <string name="settingsactivity_button">Boton que no hace nada</string>
+<string name="settingsactivity_toast_msg">Posta, no hace nada</string>
 
 <string name="favactivity_like">Me gusta</string>
 <string name="favactivity_dontlike">No me gusta</string>
 
 <string name="context_menu_welcome_share">Compartir</string>
 <string name="context_menu_welcome_delete">Eliminar</string>
+
+<string name="menuanimal_share">Compartir</string>
+<string name="menumain_settings">Configuración</string>
 </resources>

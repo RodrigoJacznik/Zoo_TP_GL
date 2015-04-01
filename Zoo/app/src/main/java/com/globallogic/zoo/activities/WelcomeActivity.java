@@ -3,10 +3,14 @@ package com.globallogic.zoo.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,6 +41,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
         setContentView(R.layout.activity_welcome);
 
         bindViews();
+        setUpActionBar();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra(USERK);
@@ -61,12 +66,36 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menumain_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onClick(Animal animal) {
         Intent intent = new Intent(this, AnimalDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(AnimalDetailsActivity.ANIMAL, animal);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private void setUpActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
     }
 
     private void viewPositionInMaps() {

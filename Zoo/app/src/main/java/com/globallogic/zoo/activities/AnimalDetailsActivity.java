@@ -2,33 +2,31 @@ package com.globallogic.zoo.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.FavoriteView;
+import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schudle;
 import com.globallogic.zoo.utils.AnimalUtils;
-
-import org.apache.http.protocol.HTTP;
 
 import java.io.File;
 
@@ -59,6 +57,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         setContentView(R.layout.activity_animal_details);
 
         bindViews();
+        setUpActionBar();
 
         name.setText(animal.getName());
         specie.setText(animal.getSpecie());
@@ -92,6 +91,26 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_animal_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menumain_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.menuanimal_share:
+                shareAnimal();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         animal.setFavorite(savedInstanceState.getBoolean(FAVORITE));
@@ -121,6 +140,12 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
             default:
                 break;
         }
+    }
+
+    private void setUpActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
     }
 
     private void moreInfo() {
