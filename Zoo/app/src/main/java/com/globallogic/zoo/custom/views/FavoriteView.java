@@ -1,7 +1,6 @@
 package com.globallogic.zoo.custom.views;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -15,9 +14,7 @@ import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 
 import java.util.Random;
 
-/**
- * Created by GL on 25/03/2015.
- */
+
 public class FavoriteView extends LinearLayout {
 
     private TextView favorite;

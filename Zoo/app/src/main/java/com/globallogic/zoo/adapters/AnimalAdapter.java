@@ -1,7 +1,9 @@
 package com.globallogic.zoo.adapters;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
+import android.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -10,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.globallogic.zoo.activities.WelcomeActivity;
 import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
+import com.globallogic.zoo.custom.views.callbacks.ActionModeCallback;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.R;
 
@@ -37,6 +39,9 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         public TextView specie;
         public View color;
 
+        public ActionMode.Callback actionModeCallback = (ActionMode.Callback)
+                new ActionModeCallback(AnimalAdapter.this, context);
+
         public ViewHolder (View v) {
             super(v);
             rootView = v;
@@ -44,6 +49,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             name = (TextView) v.findViewById(R.id.animallistactivity_name);
             specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
             color = v.findViewById(R.id.animaldetailsactivity_color);
+
             v.setOnCreateContextMenuListener(this);
             v.setOnLongClickListener(this);
         }
@@ -79,8 +85,16 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
         @Override
         public boolean onLongClick(View v) {
+            ActionModeCallback am = (ActionModeCallback) actionModeCallback;
+            if (am.getActionMode() != null) {
+                return false;
+            }
+
             setPosition(getAdapterPosition());
-            return false;
+            am.setActionMode(v.startActionMode(actionModeCallback));
+            am.setCurrentView(v);
+            v.setSelected(true);
+            return true;
         }
     }
 
