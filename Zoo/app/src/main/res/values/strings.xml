@@ -13,12 +13,13 @@
     <string name="mainactivity_signin">Sign In</string>
     <string name="mainactivity_error">User or Password incorrect</string>
 
-    <string name="welcomeactivity_signout">Sign Out</string>
+    <string name="welcomeactivity_signout">LogOut</string>
     <string name="welcomeactivity_welcome">Bienvenido %1$s</string>
     <string name="welcomeactivity_sra">Sra.</string>
     <string name="welcomeactivity_sr">Sr.</string>
-    <string name="animalsdetailsactivity_more">Más Info</string>
+    <string name="welcomeactivity_without_maps">No tenes una app de mapas instalado. Instale una e intente más tarde</string>
 
+    <string name="animalsdetailsactivity_more">Más Info</string>
     <string name="animaldetailsactivity_day">Dia</string>
     <string name="animaldetailsactivity_initialhour">Hora Inicio</string>
     <string name="animaldetailsactivity_endhour">Hora fin</string>

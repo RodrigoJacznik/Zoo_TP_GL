@@ -40,7 +40,7 @@
             style="@style/TextSecundary"
             android:layout_below="@+id/animaldetailsactivity_name"
             android:layout_toRightOf="@+id/animaldetailsactivity_fav"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="15dp"/>
         
