@@ -1,11 +1,13 @@
 package com.globallogic.zoo.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,7 +36,7 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
 
         Animal.populateAnimals();
         bindViews();
-//        setUpActionBar();
+        setUpActionBar();
 
         signin.setEnabled(false);
         pass.addTextChangedListener(this);
@@ -76,23 +78,6 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
         }
     }
 
-    private void setUpActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayUseLogoEnabled(true);
-    }
-
-    private void restartDefaultViewState() {
-        pass.setText("");
-        user.setText("");
-        error.setVisibility(View.INVISIBLE);
-    }
-    private void bindViews() {
-        signin = (Button) findViewById(R.id.mainactivity_siging);
-        pass = (EditText) findViewById(R.id.mainactivity_pass);
-        user = (EditText) findViewById(R.id.mainactivity_user);
-        error = (TextView) findViewById(R.id.mainactivity_error);
-    }
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -106,5 +91,23 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         signin.setEnabled(! user.getText().toString().isEmpty() && ! pass.getText().toString().isEmpty());
+    }
+
+    private void setUpActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
+        actionBar.setIcon(R.drawable.ic_action_logo);
+    }
+
+    private void restartDefaultViewState() {
+        pass.setText("");
+        user.setText("");
+        error.setVisibility(View.INVISIBLE);
+    }
+    private void bindViews() {
+        signin = (Button) findViewById(R.id.mainactivity_siging);
+        pass = (EditText) findViewById(R.id.mainactivity_pass);
+        user = (EditText) findViewById(R.id.mainactivity_user);
+        error = (TextView) findViewById(R.id.mainactivity_error);
     }
 }

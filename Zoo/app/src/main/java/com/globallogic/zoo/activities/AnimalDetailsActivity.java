@@ -7,8 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,23 +49,20 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     private View rootView;
     private ImageView share;
     private ImageView photo;
+    private Button btnMoreInfo;
 
     private Animal animal;
+    private static Animal savedAnimal;
     private int favoriteViewColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_details);
-
+        Log.d("Life cycle", "AnimalDetailsActivity onCreate");
         bindViews();
         setUpActionBar();
 
-        name.setText(animal.getName());
-        specie.setText(animal.getSpecie());
-        description.setText(animal.getDescripcion());
-
-        Button btnMoreInfo = (Button) findViewById(R.id.animaldetailsactivity_more);
         btnMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,9 +84,26 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
             }
         });
 
-        favoriteView.setFavoriteState(animal.isFavorite());
         favoriteView.setCallback(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        animal = (Animal) getIntent().getSerializableExtra(WelcomeActivity.ANIMAL);
+        if (animal == null) {
+            animal = savedAnimal;
+        }
+
+        initAnimalViews();
         populateScheduleTable();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        savedAnimal = animal;
     }
 
     @Override
@@ -113,17 +129,23 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+
         animal.setFavorite(savedInstanceState.getBoolean(FAVORITE));
         favoriteViewColor = savedInstanceState.getInt(COLOR);
         favoriteView.setBackgroundColor(favoriteViewColor);
         rootView.setBackgroundColor(favoriteViewColor);
     }
 
+    /*
+    * Se llama solo cuando la activity es destruida (se gira la pantalla o el SO reclama memoria).
+    * Si la activity se pone en background, no se asegura que se llame a onSaveInstanceState.
+    * */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putBoolean(FAVORITE, animal.isFavorite());
         outState.putInt(COLOR, favoriteViewColor);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -144,8 +166,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
 
     private void setUpActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+        actionBar.setIcon(R.drawable.ic_action_logo);
     }
 
     private void moreInfo() {
@@ -184,7 +206,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     }
 
     private void bindViews() {
-        animal = (Animal) getIntent().getSerializableExtra(WelcomeActivity.ANIMAL);
+        btnMoreInfo = (Button) findViewById(R.id.animaldetailsactivity_more);
         favoriteView = (FavoriteView) findViewById(R.id.animaldetailsactivity_fav);
         name = (TextView) findViewById(R.id.animaldetailsactivity_name);
         specie = (TextView) findViewById(R.id.animaldetailsactivity_specie);
@@ -193,6 +215,14 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         rootView = findViewById(R.id.animaldetailsactivity_scrollview);
         share = (ImageView) findViewById(R.id.animaldetailsactivity_share);
         photo = (ImageView) findViewById(R.id.animaldetailsactivity_photo);
+    }
+
+    private void initAnimalViews() {
+        name.setText(animal.getName());
+        specie.setText(animal.getSpecie());
+        description.setText(animal.getDescripcion());
+
+        favoriteView.setFavoriteState(animal.isFavorite());
     }
 
     private boolean checkConnection() {

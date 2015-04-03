@@ -5,9 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,20 +33,16 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     private ImageView maps;
     private RecyclerView recyclerView;
     private AnimalAdapter animalAdapter;
-    private ActionMode actionMode;
+    private static String savedUserName;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
+        Log.d("Life cycle", "WelcomeActivity onCreate");
         bindViews();
         setUpActionBar();
-
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(USERK);
-
-        welcome.setText(makeWelcomeMessage(name));
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +50,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
                 finish();
             }
         });
+
         maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +60,24 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
 
         bindRecyclerView();
         registerForContextMenu(recyclerView);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        userName = getIntent().getStringExtra(USERK);
+        if (userName == null) {
+            userName = savedUserName;
+        }
+
+        welcome.setText(makeWelcomeMessage(userName));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        savedUserName = userName;
     }
 
     @Override
@@ -94,8 +109,8 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
 
     private void setUpActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+        actionBar.setIcon(R.drawable.ic_action_logo);
     }
 
     private void viewPositionInMaps() {
