@@ -120,7 +120,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
             startActivity(mapsIntent);
         } else {
             Toast.makeText(this, getResources().getString(R.string.welcomeactivity_without_maps),
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
         }
     }
 

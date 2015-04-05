@@ -49,8 +49,8 @@ public class ActionModeCallback implements ActionMode.Callback {
                 finishActionMode();
                 return true;
             case R.id.cm_welcome_share:
-                Intent intent = AnimalUtils.getShareAnimalIntent(animalAdapter.getItem());
-                context.startActivity(intent);
+                Intent shareIntent = AnimalUtils.getShareAnimalIntent(animalAdapter.getItem());
+                context.startActivity(shareIntent);
                 finishActionMode();
                 return true;
             default:

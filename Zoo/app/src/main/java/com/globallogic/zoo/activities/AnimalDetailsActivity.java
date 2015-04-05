@@ -1,5 +1,6 @@
 package com.globallogic.zoo.activities;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -7,10 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +24,7 @@ import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.FavoriteView;
+import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schudle;
@@ -33,7 +33,9 @@ import com.globallogic.zoo.utils.AnimalUtils;
 import java.io.File;
 
 
-public class AnimalDetailsActivity extends ActionBarActivity implements FavoriteViewCallback {
+public class AnimalDetailsActivity extends ActionBarActivity implements FavoriteViewCallback,
+        ShareDialog.NoticeShareDialogListener {
+
     public final static String ANIMAL = "ANIMAL";
 
     private final static String FAVORITE = "FAVORITE";
@@ -48,18 +50,19 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     private TableLayout schedule;
     private View rootView;
     private ImageView share;
-    private ImageView photo;
+    private ImageView animalThumb;
     private Button btnMoreInfo;
 
     private Animal animal;
     private static Animal savedAnimal;
     private int favoriteViewColor;
+    private File animalPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_details);
-        Log.d("Life cycle", "AnimalDetailsActivity onCreate");
+
         bindViews();
         setUpActionBar();
 
@@ -70,7 +73,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
             }
         });
 
-        photo.setOnClickListener(new View.OnClickListener() {
+        animalThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePhoto();
@@ -155,7 +158,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
                 if (resultCode == RESULT_OK) {
                     File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
                     if (f.exists()) {
-                        sendMail(f);
+                        animalPhoto = f;
+                        createShareDialog();
                     }
                 }
                 break;
@@ -184,8 +188,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     }
 
     private void shareAnimal() {
-        Intent intent = AnimalUtils.getShareAnimalIntent(animal);
-        startActivity(intent);
+        Intent shareIntent = AnimalUtils.getShareAnimalIntent(animal);
+        startActivity(shareIntent);
     }
 
     private void takePhoto() {
@@ -195,14 +199,9 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
-    private void sendMail(File file) {
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("application/image");
-        String subject = String.format(getResources().
-                getString(R.string.animaldetailsactivity_email_subject), animal.getName());
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        startActivity(emailIntent);
+    private void createShareDialog() {
+        ShareDialog dialog = new ShareDialog();
+        dialog.show(getFragmentManager(), "TAG");
     }
 
     private void bindViews() {
@@ -214,7 +213,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         schedule = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
         rootView = findViewById(R.id.animaldetailsactivity_scrollview);
         share = (ImageView) findViewById(R.id.animaldetailsactivity_share);
-        photo = (ImageView) findViewById(R.id.animaldetailsactivity_photo);
+        animalThumb = (ImageView) findViewById(R.id.animaldetailsactivity_photo);
     }
 
     private void initAnimalViews() {
@@ -262,5 +261,22 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
         favoriteView.setBackgroundColor(favoriteViewColor);
     }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, String[] email) {
+        Intent mailIntent = AnimalUtils.getShareMailAnimalIntent(animalPhoto, this, animal);
+        mailIntent.putExtra(Intent.EXTRA_EMAIL, email);
 
+        if (mailIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mailIntent);
+        } else {
+            Toast.makeText(this,
+                    getResources().getString(R.string.animaldetailsactivity_without_mailapp),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        dialog.dismiss();
+    }
 }

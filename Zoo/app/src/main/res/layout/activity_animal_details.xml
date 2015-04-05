@@ -80,7 +80,7 @@
             android:id="@+id/animaldetailsactivity_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/animalsdetailsactivity_more"
+            android:text="@string/animaldetailsactivity_more"
             android:layout_below="@id/animaldetailsactivity_description"
             android:layout_alignParentRight="true"/>
 
