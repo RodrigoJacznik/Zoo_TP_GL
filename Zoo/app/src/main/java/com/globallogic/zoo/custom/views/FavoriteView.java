@@ -17,10 +17,14 @@ import java.util.Random;
 
 public class FavoriteView extends LinearLayout {
 
+    public interface OnFavoriteClickListener {
+        public void onFavoriteClick(boolean favorite, int color);
+    }
+
     private TextView favorite;
     private ImageView star;
 
-    private FavoriteViewCallback callback;
+    private OnFavoriteClickListener onFavoriteClickListener;
 
     private boolean displayText;
     private boolean favoriteState;
@@ -54,7 +58,7 @@ public class FavoriteView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 setFavoriteState(!isFavoriteState());
-                callback.callbackCall(favoriteState, actualBackgroundColor);
+                onFavoriteClickListener.onFavoriteClick(favoriteState, actualBackgroundColor);
             }
         });
 
@@ -111,7 +115,7 @@ public class FavoriteView extends LinearLayout {
         return favoriteState;
     }
 
-    public void setCallback(FavoriteViewCallback callback) {
-        this.callback = callback;
+    public void setOnFavoriteClickListener(OnFavoriteClickListener onFavoriteClickListener) {
+        this.onFavoriteClickListener = onFavoriteClickListener;
     }
 }

@@ -33,7 +33,8 @@ import com.globallogic.zoo.utils.AnimalUtils;
 import java.io.File;
 
 
-public class AnimalDetailsActivity extends ActionBarActivity implements FavoriteViewCallback,
+public class AnimalDetailsActivity extends ActionBarActivity implements
+        FavoriteView.OnFavoriteClickListener,
         ShareDialog.NoticeShareDialogListener {
 
     public final static String ANIMAL = "ANIMAL";
@@ -87,16 +88,17 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
             }
         });
 
-        favoriteView.setCallback(this);
+        favoriteView.setOnFavoriteClickListener(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        animal = (Animal) getIntent().getSerializableExtra(WelcomeActivity.ANIMAL);
-        if (animal == null) {
+        int animalID = getIntent().getIntExtra(AnimalDetailsActivity.ANIMAL, -1);
+        if (animalID == -1) {
             animal = savedAnimal;
+        } else {
+            animal = Animal.getAnimalList().get(animalID);
         }
 
         initAnimalViews();
@@ -254,7 +256,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements Favorite
     }
 
     @Override
-    public void callbackCall(boolean favorite, int color) {
+    public void onFavoriteClick(boolean favorite, int color) {
         animal.setFavorite(favorite);
         favoriteViewColor = color;
         rootView.setBackgroundColor(color);
