@@ -101,9 +101,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     @Override
     public void onClick(Animal animal) {
         Intent intent = new Intent(this, AnimalDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(AnimalDetailsActivity.ANIMAL, animal);
-        intent.putExtras(bundle);
+        intent.putExtra(AnimalDetailsActivity.ANIMAL, animal.getId());
         startActivity(intent);
     }
 

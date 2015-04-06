@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
-import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schudle;
 import com.globallogic.zoo.utils.AnimalUtils;
