@@ -14,12 +14,6 @@ import com.globallogic.zoo.R;
  */
 public class LowBatteryBroadcastReceiver extends BroadcastReceiver {
 
-    private Context context;
-
-    public LowBatteryBroadcastReceiver(Context context) {
-        this.context = context;
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);

@@ -1,6 +1,8 @@
 package com.globallogic.zoo.activities;
 
+import android.app.AlarmManager;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -8,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
@@ -106,7 +110,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
 
         initAnimalViews();
         populateScheduleTable();
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
         registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
     }
 
@@ -268,6 +272,12 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         favoriteViewColor = color;
         rootView.setBackgroundColor(color);
         favoriteView.setBackgroundColor(favoriteViewColor);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + 20 * 1000, alarmIntent);
     }
 
     @Override

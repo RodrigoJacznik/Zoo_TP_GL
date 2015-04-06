@@ -65,7 +65,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
         bindRecyclerView();
         registerForContextMenu(recyclerView);
 
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
     }
 
     @Override

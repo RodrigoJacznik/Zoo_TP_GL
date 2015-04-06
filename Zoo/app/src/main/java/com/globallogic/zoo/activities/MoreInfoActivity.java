@@ -29,7 +29,7 @@ public class MoreInfoActivity extends ActionBarActivity {
         setUpActionBar();
         callBrowser();
 
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
     }
 
     @Override

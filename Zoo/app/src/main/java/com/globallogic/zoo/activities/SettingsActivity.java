@@ -43,7 +43,7 @@ public class SettingsActivity extends ActionBarActivity implements AdapterView.O
             }
         });
 
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
     }
 
 
