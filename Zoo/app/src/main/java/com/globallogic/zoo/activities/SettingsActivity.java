@@ -1,6 +1,7 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.utils.ThemeUtils;
 
 public class SettingsActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
     public final static String THEME = "THEME";
 
     private Spinner spinner;
+    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,21 @@ public class SettingsActivity extends ActionBarActivity implements AdapterView.O
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
     @Override

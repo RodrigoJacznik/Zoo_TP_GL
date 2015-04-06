@@ -1,6 +1,7 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -13,10 +14,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 
 
 public class MoreInfoActivity extends ActionBarActivity {
     public final static String URL = "URL";
+    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,20 @@ public class MoreInfoActivity extends ActionBarActivity {
 
         setUpActionBar();
         callBrowser();
+
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
     @Override

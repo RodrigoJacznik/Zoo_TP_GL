@@ -3,6 +3,7 @@ package com.globallogic.zoo.activities;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.models.Animal;
@@ -53,6 +55,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     private ImageView share;
     private ImageView animalThumb;
     private Button btnMoreInfo;
+    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
     private Animal animal;
     private static Animal savedAnimal;
@@ -103,12 +106,15 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
 
         initAnimalViews();
         populateScheduleTable();
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
+        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         savedAnimal = animal;
+        unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
     @Override

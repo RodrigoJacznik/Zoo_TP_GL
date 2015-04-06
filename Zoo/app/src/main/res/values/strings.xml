@@ -42,4 +42,6 @@
 <string name="sharedialog_title">Ingrese un email</string>
 <string name="sharedialog_ok">Compartir</string>
 <string name="sharedialog_cancel">Cancelar</string>
+<string name="lowbatteryalertdialog_low_battery">Centros de carga</string>
+<string name="lowbatteryalertdialog_ok">Listo</string>
 </resources>

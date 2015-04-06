@@ -1,6 +1,7 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
 import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
+import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.models.Animal;
 
 
@@ -33,6 +35,8 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     private ImageView maps;
     private RecyclerView recyclerView;
     private AnimalAdapter animalAdapter;
+    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
+
     private static String savedUserName;
     private String userName;
 
@@ -60,6 +64,8 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
 
         bindRecyclerView();
         registerForContextMenu(recyclerView);
+
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver(this);
     }
 
     @Override
@@ -71,6 +77,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
             userName = savedUserName;
         }
 
+        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
         welcome.setText(makeWelcomeMessage(userName));
     }
 
@@ -78,6 +85,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     protected void onPause() {
         super.onPause();
         savedUserName = userName;
+        unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
     @Override
