@@ -39,4 +39,7 @@
 
 <string name="menuanimal_share">Compartir</string>
 <string name="menumain_settings">Configuración</string>
+<string name="sharedialog_title">Ingrese un email</string>
+<string name="sharedialog_ok">Compartir</string>
+<string name="sharedialog_cancel">Cancelar</string>
 </resources>

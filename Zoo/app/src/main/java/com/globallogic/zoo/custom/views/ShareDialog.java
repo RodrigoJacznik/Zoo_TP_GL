@@ -46,9 +46,9 @@ public class ShareDialog extends DialogFragment {
         final View rootView = inflater.inflate(R.layout.dialog_mail, null);
 
         builder.setView(rootView)
-                .setTitle("Titulo");
+                .setTitle(getString(R.string.sharedialog_title));
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.sharedialog_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -57,7 +57,8 @@ public class ShareDialog extends DialogFragment {
                 listener.onDialogPositiveClick(ShareDialog.this, emailTo);
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.sharedialog_cancel),
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 listener.onDialogNegativeClick(ShareDialog.this);
