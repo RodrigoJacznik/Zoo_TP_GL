@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
 
-    private List<Animal> animals = Animal.getAnimalList();
+    private List<Animal> animals;
     private Context context;
     private AnimalAdapterCallback callbackObject;
 
@@ -100,12 +100,12 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public AnimalAdapter(Context context) {
         super();
+        this.animals = Animal.getAnimalList();
         this.context = context;
     }
 
     public AnimalAdapter(Context context, AnimalAdapterCallback animalAdapterCallback) {
-        super();
-        this.context = context;
+        this(context);
         this.callbackObject = animalAdapterCallback;
     }
 
