@@ -53,6 +53,7 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
                     intent.putExtra(WelcomeActivity.USERK, userInput);
                     restartDefaultViewState();
                     startActivity(intent);
+                    finish(); // Para que welcome no vuelva a loging
                 } else {
                     error.setVisibility(View.VISIBLE);
                 }

@@ -103,11 +103,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     protected void onStart() {
         super.onStart();
         int animalID = getIntent().getIntExtra(AnimalDetailsActivity.ANIMAL, -1);
-        if (animalID == -1) {
-            animal = savedAnimal;
-        } else {
-            animal = Animal.getAnimalList().get(animalID);
-        }
+        animal = Animal.getAnimalList().get(animalID);
 
         initAnimalViews();
         populateScheduleTable();
@@ -117,7 +113,6 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        savedAnimal = animal;
         unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
@@ -246,6 +241,12 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     private void populateScheduleTable() {
         for (Schudle schudle : animal.getSchudle()) {
             TableRow horarioRow = new TableRow(this);
+            horarioRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
             TextView dia = new TextView(this);
             TextView horaInicio = new TextView(this);
             TextView horaFin = new TextView(this);

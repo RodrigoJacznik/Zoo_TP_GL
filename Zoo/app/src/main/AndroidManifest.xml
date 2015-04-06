@@ -25,7 +25,8 @@
         </activity>
         <activity
             android:name=".activities.WelcomeActivity"
-            android:label="@string/title_activity_welcome">
+            android:label="@string/title_activity_welcome"
+            android:launchMode="singleTop">
         </activity>
         <activity
             android:name=".activities.AnimalDetailsActivity"

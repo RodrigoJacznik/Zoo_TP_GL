@@ -37,7 +37,6 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     private AnimalAdapter animalAdapter;
     private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
-    private static String savedUserName;
     private String userName;
 
     @Override
@@ -73,10 +72,6 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
         super.onStart();
 
         userName = getIntent().getStringExtra(USERK);
-        if (userName == null) {
-            userName = savedUserName;
-        }
-
         registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
         welcome.setText(makeWelcomeMessage(userName));
     }
@@ -84,7 +79,6 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     @Override
     protected void onPause() {
         super.onPause();
-        savedUserName = userName;
         unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
@@ -115,7 +109,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
 
     private void setUpActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
         actionBar.setIcon(R.drawable.ic_action_logo);
     }
 
