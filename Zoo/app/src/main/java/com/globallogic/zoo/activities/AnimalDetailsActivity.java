@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -120,7 +121,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menumain_settings:
+            case R.id.menuanimal_settings:
+                Log.d("SettingsActivityCall", "Llamaaaa");
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.menuanimal_share:

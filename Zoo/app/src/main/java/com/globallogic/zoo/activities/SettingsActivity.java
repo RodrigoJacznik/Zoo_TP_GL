@@ -26,8 +26,6 @@ public class SettingsActivity extends ActionBarActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         spinner = (Spinner) findViewById(R.id.settingsactivity_spinner);
         spinner.setSelection(ThemeUtils.getsTheme(), true);
         spinner.setOnItemSelectedListener(this);
