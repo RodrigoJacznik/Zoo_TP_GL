@@ -35,12 +35,11 @@
         <activity
             android:name=".activities.MoreInfoActivity"
             android:label="@string/title_activity_more_info"
-            android:parentActivityName=".activities.AnimalDetailsActivity">
+            android:parentActivityName=".activities.WelcomeActivity">
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".activities.MoreInfoActivity">
+            android:label="@string/title_activity_settings">
         </activity>
     </application>
 
