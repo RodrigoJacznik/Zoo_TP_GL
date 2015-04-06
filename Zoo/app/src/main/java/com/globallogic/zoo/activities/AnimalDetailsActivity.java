@@ -96,6 +96,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         });
 
         favoriteView.setOnFavoriteClickListener(this);
+        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
     }
 
     @Override
@@ -110,7 +111,6 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
 
         initAnimalViews();
         populateScheduleTable();
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
         registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
     }
 
@@ -273,11 +273,15 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         rootView.setBackgroundColor(color);
         favoriteView.setBackgroundColor(favoriteViewColor);
 
+        sendVibrateBroadcast(20);
+    }
+
+    private void sendVibrateBroadcast(int seconds) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + 20 * 1000, alarmIntent);
+                SystemClock.elapsedRealtime() + seconds * 1000, alarmIntent);
     }
 
     @Override
