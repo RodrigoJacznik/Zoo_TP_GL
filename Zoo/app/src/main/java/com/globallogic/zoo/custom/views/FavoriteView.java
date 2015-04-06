@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.custom.views.callbacks.FavoriteViewCallback;
 
 import java.util.Random;
 
