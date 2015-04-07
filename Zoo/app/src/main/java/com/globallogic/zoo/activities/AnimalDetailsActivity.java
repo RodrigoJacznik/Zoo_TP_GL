@@ -148,10 +148,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         rootView.setBackgroundColor(favoriteViewColor);
     }
 
-    /*
-    * Se llama solo cuando la activity es destruida (se gira la pantalla o el SO reclama memoria).
-    * Si la activity se pone en background, no se asegura que se llame a onSaveInstanceState.
-    * */
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(FAVORITE, animal.isFavorite());
