@@ -2,6 +2,9 @@ package com.globallogic.zoo.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -100,10 +103,17 @@ public class Animal implements Serializable {
 
     static private List<Schudle> generateHorarios() {
         List<Schudle> schudles = new ArrayList<>();
-        schudles.add(new Schudle("Lunes", "10:30", "15:30"));
-        schudles.add(new Schudle("Martes", "11:30", "15:30"));
-        schudles.add(new Schudle("Miercoles", "9:30", "15:30"));
-        schudles.add(new Schudle("Viernes", "10:30", "15:30"));
+
+        Date now = new Date();
+
+        schudles.add(new Schudle(now, Schudle.addOneHoursToDate(now, 2)));
+        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 26),
+                Schudle.addOneHoursToDate(now, 28)));
+        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 50),
+                Schudle.addOneHoursToDate(now, 55)));
+        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 76),
+                Schudle.addOneHoursToDate(now, 80)));
+
 
         return schudles;
     }

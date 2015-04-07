@@ -1,6 +1,12 @@
 package com.globallogic.zoo.models;
 
 import java.io.Serializable;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by GL on 26/03/2015.
@@ -8,37 +14,54 @@ import java.io.Serializable;
 public class Schudle implements Serializable {
 
     private static final long serialVersionUID = 4138897544516350399L;
-    private String day;
-    private String initialHour;
-    private String finalHour;
+    private static GregorianCalendar calendar = new GregorianCalendar();
+    private Date initialHour;
+    private Date finalHour;
 
-    public Schudle(String day, String initialHour, String finalHour) {
-        this.day = day;
+    public Schudle(Date initialHour, Date finalHour) {
         this.initialHour = initialHour;
         this.finalHour = finalHour;
     }
 
-    public String getDay() {
-        return day;
+    public void setInitialHour(Date initialHour) {
+        this.initialHour = initialHour;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setFinalHour(Date finalHour) {
+        this.finalHour = finalHour;
     }
 
-    public String getInitialHour() {
+    public Date getInitialHour() {
         return initialHour;
     }
 
-    public void setInitialHour(String initialHour) {
-        this.initialHour = initialHour;
-    }
-
-    public String getFinalHour() {
+    public Date getFinalHour() {
         return finalHour;
     }
 
-    public void setFinalHour(String finalHour) {
-        this.finalHour = finalHour;
+    public String getDay() {
+        DateFormatSymbols dfs = new DateFormatSymbols(Locale.getDefault());
+        String weekdays[] = dfs.getWeekdays();
+
+        calendar.setTime(initialHour);
+        return weekdays[calendar.get(Calendar.DAY_OF_WEEK)];
+    }
+
+    public String getInitialHourString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        return simpleDateFormat.format(initialHour);
+    }
+
+    public String getFinalHourString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        return simpleDateFormat.format(finalHour);
+    }
+
+    public static Date addOneHoursToDate(Date date, int hours) {
+
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR, hours);
+
+        return calendar.getTime();
     }
 }
