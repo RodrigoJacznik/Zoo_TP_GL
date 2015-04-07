@@ -32,6 +32,7 @@ import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
+import com.globallogic.zoo.listeners.onTableRowClickListener;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schudle;
 import com.globallogic.zoo.utils.AnimalUtils;
@@ -241,19 +242,16 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     private void populateScheduleTable() {
         for (Schudle schudle : animal.getSchudle()) {
             TableRow horarioRow = new TableRow(this);
-            horarioRow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }
-            });
             TextView dia = new TextView(this);
             TextView horaInicio = new TextView(this);
             TextView horaFin = new TextView(this);
 
+            horarioRow.setOnClickListener(new onTableRowClickListener(schudle, this));
+
             dia.setText(schudle.getDay());
-            horaInicio.setText(schudle.getInitialHour());
-            horaFin.setText(schudle.getFinalHour());
+            horaInicio.setText(schudle.getInitialHourString());
+            horaFin.setText(schudle.getFinalHourString());
 
             dia.setGravity(Gravity.CENTER);
             horaInicio.setGravity(Gravity.CENTER);
@@ -303,4 +301,5 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     public void onDialogNegativeClick(DialogFragment dialog) {
         dialog.dismiss();
     }
+
 }
