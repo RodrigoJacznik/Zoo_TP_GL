@@ -119,6 +119,9 @@ public class Animal implements Serializable {
     }
 
     static public List<Animal> getAnimalList() {
+        if (animals == null) {
+            animals = generateAnimals();
+        }
         return animals;
     }
 
@@ -127,7 +130,7 @@ public class Animal implements Serializable {
     }
 
     static private List<Animal> generateAnimals() {
-        animals = new ArrayList<>();
+        List<Animal> animals = new ArrayList<>();
 
         String descripcion = "Lorem Ipsum is simply dummy text of the printing and typesetting " +
                 "industry. Lorem Ipsum has been the industry's standard dummy text ever since the" +
