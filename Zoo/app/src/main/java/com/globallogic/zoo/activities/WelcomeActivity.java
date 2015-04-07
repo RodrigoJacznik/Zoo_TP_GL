@@ -20,12 +20,12 @@ import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
-import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
 import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.models.Animal;
 
 
-public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterCallback {
+public class WelcomeActivity extends ActionBarActivity implements
+        AnimalAdapter.onAnimalClickListener {
 
     final static String USERK = "USER";
     static final String ANIMAL = "ANIMAL";
@@ -101,7 +101,7 @@ public class WelcomeActivity extends ActionBarActivity implements AnimalAdapterC
     }
 
     @Override
-    public void onClick(Animal animal) {
+    public void onAnimalClick(Animal animal) {
         Intent intent = new Intent(this, AnimalDetailsActivity.class);
         intent.putExtra(AnimalDetailsActivity.ANIMAL, animal.getId());
         startActivity(intent);

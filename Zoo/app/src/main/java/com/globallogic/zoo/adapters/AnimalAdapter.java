@@ -1,10 +1,9 @@
 package com.globallogic.zoo.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
-import android.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.globallogic.zoo.adapters.callbacks.AnimalAdapterCallback;
+import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.callbacks.ActionModeCallback;
 import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.R;
 
 import java.util.List;
 
@@ -26,9 +24,13 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     private List<Animal> animals = Animal.getAnimalList();
     private Context context;
-    private AnimalAdapterCallback callbackObject;
+    private onAnimalClickListener callbackObject;
 
     private int position;
+
+    public interface onAnimalClickListener {
+        public void onAnimalClick(Animal animal);
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnCreateContextMenuListener, View.OnLongClickListener {
@@ -42,7 +44,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         public ActionMode.Callback actionModeCallback = (ActionMode.Callback)
                 new ActionModeCallback(AnimalAdapter.this, context);
 
-        public ViewHolder (View v) {
+        public ViewHolder(View v) {
             super(v);
             rootView = v;
             photo = (ImageView) v.findViewById(R.id.animallistactivity_photo);
@@ -72,7 +74,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                 case 3:
                     return resources.getColor(android.R.color.holo_orange_light);
                 case 4:
-                    return  resources.getColor(android.R.color.holo_red_light);
+                    return resources.getColor(android.R.color.holo_red_light);
                 default:
                     return resources.getColor(android.R.color.background_light);
             }
@@ -103,7 +105,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         this.context = context;
     }
 
-    public AnimalAdapter(Context context, AnimalAdapterCallback animalAdapterCallback) {
+    public AnimalAdapter(Context context, onAnimalClickListener animalAdapterCallback) {
         super();
         this.context = context;
         this.callbackObject = animalAdapterCallback;
@@ -124,7 +126,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (callbackObject != null) {
-                    callbackObject.onClick(animalSelected);
+                    callbackObject.onAnimalClick(animalSelected);
                 }
             }
         });
