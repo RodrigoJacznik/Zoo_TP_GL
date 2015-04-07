@@ -275,6 +275,9 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     private void sendVibrateBroadcast(int seconds) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
+
+        intent.putExtra(AlarmBroadcastReceiver.ANIMAL_ID, animal.getId());
+
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME,
                 SystemClock.elapsedRealtime() + seconds * 1000, alarmIntent);
