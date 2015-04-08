@@ -25,14 +25,6 @@ public class Animal implements Serializable {
     private List<Schudle> schudle;
     public static List<Animal> animals;
 
-    public int getSpecieCode() {
-        return specieCode;
-    }
-
-    public void setSpecieCode(int specieCode) {
-        this.specieCode = specieCode;
-    }
-
     public Animal(String name, String specie, String description, int specieCode) {
         this.id = nextId++;
         this.name = name;
@@ -42,6 +34,62 @@ public class Animal implements Serializable {
         this.url = "http://es.wikipedia.org/wiki/" + this.name;
         this.schudle = generateHorarios();
         this.favorite = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "name='" + name + '\'' +
+                ", specie='" + specie + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    static private List<Schudle> generateHorarios() {
+        List<Schudle> schudles = new ArrayList<>();
+
+        Date now = new Date();
+
+        schudles.add(new Schudle(now, Schudle.addOneHoursToDate(now, 2)));
+        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 26),
+                Schudle.addOneHoursToDate(now, 28)));
+        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 50),
+                Schudle.addOneHoursToDate(now, 55)));
+        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 76),
+                Schudle.addOneHoursToDate(now, 80)));
+
+
+        return schudles;
+    }
+
+    static public List<Animal> getAnimalList() {
+        if (animals == null) {
+            animals = generateAnimals();
+        }
+        return animals;
+    }
+
+    static private List<Animal> generateAnimals() {
+        List<Animal> animals = new ArrayList<>();
+
+        String descripcion = "Lorem Ipsum is simply dummy text of the printing and typesetting " +
+                "industry. Lorem Ipsum has been the industry's standard dummy text ever since the" +
+                " 1500s, when an unknown printer took a galley of type and scrambled it to make a" +
+                " type specimen book. It has survived not only five centuries, but also the leap" +
+                " into electronic typesetting, remaining essentially unchanged. It was popularised" +
+                " in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages," +
+                " and more recently with desktop publishing software like Aldus PageMaker including" +
+                " versions of Lorem Ipsum.";
+        animals.add(new Animal("Leon", "Especie del leon", descripcion, 1));
+        animals.add(new Animal("Mono", "Especie del mono", descripcion, 2));
+        animals.add(new Animal("Vaca", "Especie del vaca", descripcion, 3));
+        animals.add(new Animal("Gorila", "Especie del Gorila", descripcion, 4));
+        animals.add(new Animal("Leon", "Especie del leon", descripcion, 1));
+        animals.add(new Animal("Mono", "Especie del mono", descripcion, 2));
+        animals.add(new Animal("Vaca", "Especie del vaca", descripcion, 3));
+        animals.add(new Animal("Gorila", "Especie del Gorila", descripcion, 4));
+
+        return animals;
     }
 
     public String getName() {
@@ -92,64 +140,12 @@ public class Animal implements Serializable {
         this.schudle = schudle;
     }
 
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "name='" + name + '\'' +
-                ", specie='" + specie + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public int getSpecieCode() {
+        return specieCode;
     }
 
-    static private List<Schudle> generateHorarios() {
-        List<Schudle> schudles = new ArrayList<>();
-
-        Date now = new Date();
-
-        schudles.add(new Schudle(now, Schudle.addOneHoursToDate(now, 2)));
-        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 26),
-                Schudle.addOneHoursToDate(now, 28)));
-        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 50),
-                Schudle.addOneHoursToDate(now, 55)));
-        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 76),
-                Schudle.addOneHoursToDate(now, 80)));
-
-
-        return schudles;
-    }
-
-    static public List<Animal> getAnimalList() {
-        if (animals == null) {
-            animals = generateAnimals();
-        }
-        return animals;
-    }
-
-    static public void populateAnimals() {
-        animals = generateAnimals();
-    }
-
-    static private List<Animal> generateAnimals() {
-        List<Animal> animals = new ArrayList<>();
-
-        String descripcion = "Lorem Ipsum is simply dummy text of the printing and typesetting " +
-                "industry. Lorem Ipsum has been the industry's standard dummy text ever since the" +
-                " 1500s, when an unknown printer took a galley of type and scrambled it to make a" +
-                " type specimen book. It has survived not only five centuries, but also the leap" +
-                " into electronic typesetting, remaining essentially unchanged. It was popularised" +
-                " in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages," +
-                " and more recently with desktop publishing software like Aldus PageMaker including" +
-                " versions of Lorem Ipsum.";
-        animals.add(new Animal("Leon", "Especie del leon", descripcion, 1));
-        animals.add(new Animal("Mono", "Especie del mono", descripcion, 2));
-        animals.add(new Animal("Vaca", "Especie del vaca", descripcion, 3));
-        animals.add(new Animal("Gorila", "Especie del Gorila", descripcion, 4));
-        animals.add(new Animal("Leon", "Especie del leon", descripcion, 1));
-        animals.add(new Animal("Mono", "Especie del mono", descripcion, 2));
-        animals.add(new Animal("Vaca", "Especie del vaca", descripcion, 3));
-        animals.add(new Animal("Gorila", "Especie del Gorila", descripcion, 4));
-
-        return animals;
+    public void setSpecieCode(int specieCode) {
+        this.specieCode = specieCode;
     }
 
     static public boolean deleteAnimal(int animalID) {

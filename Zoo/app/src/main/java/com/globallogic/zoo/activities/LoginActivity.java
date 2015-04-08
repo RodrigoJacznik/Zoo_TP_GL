@@ -34,7 +34,6 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Animal.populateAnimals();
         bindViews();
         setUpActionBar();
 
