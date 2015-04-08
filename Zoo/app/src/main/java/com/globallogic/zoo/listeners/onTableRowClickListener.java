@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -66,7 +65,6 @@ public class onTableRowClickListener implements View.OnClickListener {
             cur.moveToNext();
             String event_title = cur.getString(EVENT_TITLE_INDEX);
             String template = context.getString(R.string.animaldetailsactivity_with_event);
-
             Toast.makeText(context, String.format(template, event_title), Toast.LENGTH_LONG).show();
         }
         cur.close();
