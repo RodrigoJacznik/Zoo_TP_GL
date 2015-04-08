@@ -21,7 +21,6 @@ public class ActionModeCallback implements ActionMode.Callback {
     private AnimalAdapter animalAdapter;
     private ActionMode actionMode;
     private Context context;
-    private View currentView;
 
     public ActionModeCallback(AnimalAdapter animalAdapter, Context context) {
         this.animalAdapter = animalAdapter;
@@ -44,28 +43,26 @@ public class ActionModeCallback implements ActionMode.Callback {
     public boolean onActionItemClicked(ActionMode actionMode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cm_welcome_delete:
-                Animal.deleteAnimal(animalAdapter.getItem());
-                animalAdapter.notifyDataSetChanged();
-                finishActionMode();
+                animalAdapter.remove();
+                actionMode.finish();
                 return true;
             case R.id.cm_welcome_share:
                 Intent shareIntent = AnimalUtils.getShareAnimalIntent(animalAdapter.getItem());
                 context.startActivity(shareIntent);
-                finishActionMode();
+                actionMode.finish();
                 return true;
             default:
                 return false;
         }
     }
 
-    private void finishActionMode() {
+    public void finishActionMode() {
         actionMode.finish();
-        currentView.setSelected(false);
     }
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
-        currentView.setSelected(false);
+        animalAdapter.setviewHoldersPressedState(false);
         this.actionMode = null;
     }
 
@@ -77,8 +74,10 @@ public class ActionModeCallback implements ActionMode.Callback {
         return actionMode;
     }
 
-    public void setCurrentView(View view) {
-        currentView = view;
+    public void setShareIconInvisible(Boolean bool) {
+        Menu menu = actionMode.getMenu();
+        MenuItem share = menu.findItem(R.id.cm_welcome_share);
+        share.setVisible(bool);
     }
 }
 

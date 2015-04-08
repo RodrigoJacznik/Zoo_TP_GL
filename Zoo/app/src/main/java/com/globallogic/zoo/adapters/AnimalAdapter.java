@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.ActionMode;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.custom.views.callbacks.ActionModeCallback;
 import com.globallogic.zoo.models.Animal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,25 +26,25 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     private List<Animal> animals;
     private Context context;
-    private onAnimalClickListener callbackObject;
+    private OnAnimalClickListener callbackObject;
+    private List<ViewHolder> viewHoldersPressed = new ArrayList<>();
+    private ActionMode.Callback actionModeCallback = (ActionMode.Callback)
+            new ActionModeCallback(AnimalAdapter.this, context);
 
-    private int position;
-
-    public interface onAnimalClickListener {
+    public interface OnAnimalClickListener {
         public void onAnimalClick(Animal animal);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-            implements View.OnCreateContextMenuListener, View.OnLongClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener,
+            View.OnLongClickListener{
 
         public View rootView;
         public ImageView photo;
         public TextView name;
         public TextView specie;
         public View color;
-
-        public ActionMode.Callback actionModeCallback = (ActionMode.Callback)
-                new ActionModeCallback(AnimalAdapter.this, context);
+        public Animal animal;
 
         public ViewHolder(View v) {
             super(v);
@@ -52,21 +54,21 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
             color = v.findViewById(R.id.animaldetailsactivity_color);
 
-            v.setOnCreateContextMenuListener(this);
+            v.setOnClickListener(this);
             v.setOnLongClickListener(this);
         }
 
-        public void load(Animal anAnimal) {
+        public void load(Animal animal) {
             photo.setImageResource(R.drawable.android);
-            name.setText(anAnimal.getName());
-            specie.setText(anAnimal.getSpecie());
-            color.setBackgroundColor(selectBackgroundColor(anAnimal.getSpecieCode()));
-            getAdapterPosition();
+            name.setText(animal.getName());
+            specie.setText(animal.getSpecie());
+            color.setBackgroundColor(selectBackgroundColor(animal.getSpecieCode()));
+            this.animal = animal;
         }
 
-        public int selectBackgroundColor(int especieCode) {
+        public int selectBackgroundColor(int specieCode) {
             Resources resources = context.getResources();
-            switch (especieCode) {
+            switch (specieCode) {
                 case 1:
                     return resources.getColor(android.R.color.holo_blue_bright);
                 case 2:
@@ -81,32 +83,56 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
 
         @Override
-        public void onCreateContextMenu(ContextMenu menu, View v,
-                                        ContextMenu.ContextMenuInfo menuInfo) {
+        public boolean onLongClick(View v) {
+            ActionModeCallback am = (ActionModeCallback) actionModeCallback;
+            if (am.getActionMode() == null) {
+                am.setActionMode(v.startActionMode(actionModeCallback));
+            }
+
+            if (viewHoldersPressed.contains(this)) {
+                v.setSelected(false);
+                viewHoldersPressed.remove(this);
+                if (viewHoldersPressed.size() == 1) {
+                    am.setShareIconInvisible(true);
+                }
+                if (viewHoldersPressed.isEmpty()) {
+                    am.finishActionMode();
+                }
+            } else {
+                viewHoldersPressed.add(this);
+                v.setSelected(true);
+                if (viewHoldersPressed.size() > 1) {
+                    am.setShareIconInvisible(false);
+                }
+            }
+            return true;
         }
 
         @Override
-        public boolean onLongClick(View v) {
-            ActionModeCallback am = (ActionModeCallback) actionModeCallback;
-            if (am.getActionMode() != null) {
-                return false;
+        public void onClick(View v) {
+            if (callbackObject != null) {
+                callbackObject.onAnimalClick(animal);
             }
+            clearActionMode();
+            setviewHoldersPressedState(false);
+        }
 
-            setPosition(getAdapterPosition());
-            am.setActionMode(v.startActionMode(actionModeCallback));
-            am.setCurrentView(v);
-            v.setSelected(true);
-            return true;
+        public void clearActionMode() {
+            ActionModeCallback am = (ActionModeCallback) actionModeCallback;
+            ActionMode actionMode = am.getActionMode();
+            if (actionMode != null) {
+                am.getActionMode().finish();
+            }
         }
     }
 
     public AnimalAdapter(Context context) {
         super();
-        animals = Animal.getAnimalList();
+        this.animals = Animal.getAnimalList();
         this.context = context;
     }
 
-    public AnimalAdapter(Context context, onAnimalClickListener animalAdapterCallback) {
+    public AnimalAdapter(Context context, OnAnimalClickListener animalAdapterCallback) {
         this(context);
         this.callbackObject = animalAdapterCallback;
     }
@@ -122,14 +148,27 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final Animal animalSelected = animals.get(i);
         viewHolder.load(animalSelected);
-        viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (callbackObject != null) {
-                    callbackObject.onAnimalClick(animalSelected);
-                }
-            }
-        });
+    }
+
+    public void remove(Animal animal) {
+        int pos = animals.indexOf(animal);
+        animals.remove(pos);
+        notifyItemRemoved(pos);
+    }
+
+    public void remove() {
+        for (ViewHolder vh: viewHoldersPressed) {
+            remove(vh.animal);
+        }
+        setviewHoldersPressedState(false);
+        viewHoldersPressed.clear();
+    }
+
+    public void setviewHoldersPressedState(Boolean bool) {
+        for (ViewHolder vh: viewHoldersPressed) {
+            vh.itemView.setSelected(bool);
+        }
+        viewHoldersPressed.clear();
     }
 
     @Override
@@ -138,14 +177,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     }
 
     public Animal getItem() {
-        return animals.get(position);
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
+        return viewHoldersPressed.get(0).animal;
     }
 }
