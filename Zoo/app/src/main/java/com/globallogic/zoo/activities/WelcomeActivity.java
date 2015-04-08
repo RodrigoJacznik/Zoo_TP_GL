@@ -25,7 +25,7 @@ import com.globallogic.zoo.models.Animal;
 
 
 public class WelcomeActivity extends ActionBarActivity implements
-        AnimalAdapter.onAnimalClickListener {
+        AnimalAdapter.OnAnimalClickListener {
 
     final static String USERK = "USER";
     static final String ANIMAL = "ANIMAL";
