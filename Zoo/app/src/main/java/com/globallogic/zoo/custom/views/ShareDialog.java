@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +28,12 @@ import java.util.List;
  * Created by rodrigo on 4/5/15.
  */
 public class ShareDialog extends DialogFragment {
+
+    private static final int PICK_EMAIL_REQUEST = 0;
+    public static final int RESULT_OK = 0;
+    public static final String EMAIL = "EMAIL";
+
+    private EditText email;
 
     private static final String[] CONTACT_PROYECTION = new String[] {
             ContactsContract.RawContacts._ID,
@@ -60,13 +67,14 @@ public class ShareDialog extends DialogFragment {
         final View rootView = inflater.inflate(R.layout.dialog_mail, null);
 
         ImageButton contacts = (ImageButton) rootView.findViewById(R.id.dialog_mail_contacts);
+        email = (EditText) rootView.findViewById(R.id.dialog_mail_email);
         contacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<String> emails = (ArrayList<String>) getContacts(context);
                 Intent intent = new Intent(context, MailSelectorActivity.class);
                 intent.putStringArrayListExtra(MailSelectorActivity.EMAILS, emails);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -84,13 +92,24 @@ public class ShareDialog extends DialogFragment {
         });
         builder.setNegativeButton(getString(R.string.sharedialog_cancel),
                 new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                listener.onDialogNegativeClick(ShareDialog.this);
-            }
-        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.onDialogNegativeClick(ShareDialog.this);
+                    }
+                });
 
         return builder.create();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_EMAIL_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    email.setText(data.getStringExtra(EMAIL));
+                }
+            }
+        }
     }
 
     private List<String> getContacts(Context context) {
@@ -112,9 +131,7 @@ public class ShareDialog extends DialogFragment {
                 while (emailCur.moveToNext()) {
                     emails.add(emailCur.getString(index));
                 }
-
                 emailCur.close();
-
             }
             cur.close();
         }
