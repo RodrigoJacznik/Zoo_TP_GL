@@ -92,6 +92,18 @@ public class Animal implements Serializable {
         return animals;
     }
 
+    static public Animal getById(int id) {
+        if (id == -1) {
+            return null;
+        }
+        for (Animal animal: animals) {
+            if (animal.getId() == id) {
+                return animal;
+            }
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }
