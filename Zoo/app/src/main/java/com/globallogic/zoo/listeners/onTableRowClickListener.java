@@ -47,12 +47,14 @@ public class onTableRowClickListener implements View.OnClickListener {
                 " AND " + CalendarContract.Events.DTEND + ")" +
                     " OR " +
                 "( ? between " + CalendarContract.Events.DTSTART +
-                " AND " + CalendarContract.Events.DTEND + "))";
+                " AND " + CalendarContract.Events.DTEND + ")" +
+                    " OR " +
+                "( " + CalendarContract.Events.DTSTART + " between ? AND ? ))";
 
         String start = String.valueOf(schudle.getInitialHour().getTime());
         String end = String.valueOf(schudle.getFinalHour().getTime());
 
-        String[] selectionargs = new String[] {start, end};
+        String[] selectionargs = new String[] {start, end, start, end};
 
         cur = cr.query(uri, EVENT_PROYECTION, selection, selectionargs, null);
 
