@@ -63,7 +63,6 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
     private Animal animal;
-    private static Animal savedAnimal;
     private int favoriteViewColor;
     private File animalPhoto;
 
@@ -104,7 +103,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     protected void onStart() {
         super.onStart();
         int animalID = getIntent().getIntExtra(AnimalDetailsActivity.ANIMAL, -1);
-        animal = Animal.getAnimalList().get(animalID);
+        animal = Animal.getById(animalID);
 
         initAnimalViews();
         populateScheduleTable();
