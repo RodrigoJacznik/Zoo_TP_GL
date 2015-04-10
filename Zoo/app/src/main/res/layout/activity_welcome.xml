@@ -35,6 +35,5 @@
         android:id="@+id/welcomeactivity_recycleview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/welcomeactivity_signout"
-        android:scrollbars="vertical"/>
+        android:layout_below="@id/welcomeactivity_signout"/>
 </RelativeLayout>
