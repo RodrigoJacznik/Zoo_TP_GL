@@ -76,8 +76,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         stackBuilder.addNextIntent(resultIntent);
         resultIntent.putExtra(AnimalDetailsActivity.ANIMAL, animalId);
 
-        return stackBuilder.getPendingIntent(0,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent getWelcomeActivityPendingIntent(Context context) {

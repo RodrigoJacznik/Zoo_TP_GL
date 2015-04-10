@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -37,6 +36,7 @@ import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schedule;
 import com.globallogic.zoo.models.Show;
 import com.globallogic.zoo.utils.AnimalUtils;
+import com.globallogic.zoo.utils.HttpConnectionManager;
 
 import java.io.File;
 
@@ -182,7 +182,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     }
 
     private void moreInfo() {
-        if (checkConnection()) {
+        if (HttpConnectionManager.checkConnection(this)) {
             Intent intent = new Intent(this, MoreInfoActivity.class);
             intent.putExtra(MoreInfoActivity.URL, animal.getMoreInfo());
             startActivity(intent);
@@ -231,11 +231,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         favoriteView.setFavoriteState(animal.isFavorite());
     }
 
-    private boolean checkConnection() {
-        ConnectivityManager cm = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        return (cm.getActiveNetworkInfo() != null);
-    }
+
 
     private void populateScheduleTable() {
         for (Show show : animal.getShow()) {

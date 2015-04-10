@@ -2,6 +2,7 @@ package com.globallogic.zoo.activities;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,16 +25,25 @@ import com.globallogic.zoo.adapters.AnimalAdapter;
 import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.models.Animal;
+import com.globallogic.zoo.utils.HttpConnectionManager;
 import com.globallogic.zoo.utils.JsonParser;
 
 import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class WelcomeActivity extends ActionBarActivity implements
         AnimalAdapter.OnAnimalClickListener {
 
-    final static String USERK = "USER";
-    static final String ANIMAL = "ANIMAL";
+    private static final String URL_GET = "http://rodjacznik.pythonanywhere.com/api/v1.0/animals";
+    public static final String USERK = "USER";
+    private static final String ANIMAL = "ANIMAL";
 
     private Button signout;
     private TextView welcome;
@@ -48,7 +59,8 @@ public class WelcomeActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        new ParseAnimalJson().execute();
+        ParseAnimalJson parseAnimalJson = new ParseAnimalJson();
+        parseAnimalJson.execute();
 
         bindViews();
         setUpActionBar();
@@ -66,9 +78,6 @@ public class WelcomeActivity extends ActionBarActivity implements
                 viewPositionInMaps();
             }
         });
-
-        bindRecyclerView();
-        registerForContextMenu(recyclerView);
 
         lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
     }
@@ -156,17 +165,30 @@ public class WelcomeActivity extends ActionBarActivity implements
         maps = (ImageView) findViewById(R.id.welcomeactivity_maps);
     }
 
-    private class ParseAnimalJson extends AsyncTask<Void, Void, Void> {
+    private class ParseAnimalJson extends AsyncTask<Void, Void, List<Animal>> {
 
         @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                JsonParser.parseJson(getResources().openRawResource(R.raw.animals));
-            } catch (JSONException e) {
-                e.printStackTrace();
+        protected List<Animal> doInBackground(Void... params) {
+            HttpConnectionManager conn =
+                    new HttpConnectionManager(URL_GET, HttpConnectionManager.GET);
+            List<Animal> animals = new ArrayList<>();
+            conn.connect();
+            int response = conn.getResponseCode();
+            if (response == 200) {
+                String data = conn.getData();
+                if (data != null) {
+                    animals = JsonParser.parseJson(data);
+                }
             }
-            return null;
+
+            return animals;
+        }
+
+        @Override
+        protected void onPostExecute(List<Animal> animals) {
+            Animal.setAnimals(animals);
+            bindRecyclerView();
+            registerForContextMenu(recyclerView);
         }
     }
-
 }

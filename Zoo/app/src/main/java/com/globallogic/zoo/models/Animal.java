@@ -160,10 +160,6 @@ public class Animal implements Serializable {
         JSONObject jAnimal = new JSONObject(str);
         long id = jAnimal.getLong("id");
 
-        if (getById(id) != null) {
-            return getById(id);
-        }
-
         String name = jAnimal.getString("name");
         String specie = jAnimal.getString("specie");
         String description = jAnimal.getString("description");
@@ -176,9 +172,7 @@ public class Animal implements Serializable {
         }
         String moreInfo = jAnimal.getString("moreInfo");
 
-        Animal animal = new Animal(id, name, specie, description, image, moreInfo, shows);
-        animals.add(animal);
-        return animal;
+        return new Animal(id, name, specie, description, image, moreInfo, shows);
     }
 
 }

@@ -20,8 +20,6 @@ public class ThemeUtils {
     public static void changeToTheme(Activity activity, int theme) {
         if (sTheme != theme) {
             sTheme = theme;
-            // Las siguientes 2 lineas NO deberían estar, sino que debería informarse al usuario que
-            // debe reiniciar la aplicación para ver los cambios
             activity.finish();
             activity.startActivity(new Intent(activity, activity.getClass()));
         }

@@ -51,12 +51,4 @@ public class Schedule {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         return simpleDateFormat.format(finalHour);
     }
-
-    public static Date addOneHoursToDate(Date date, int hours) {
-
-        calendar.setTime(date);
-        calendar.add(Calendar.HOUR, hours);
-
-        return calendar.getTime();
-    }
 }

@@ -4,44 +4,73 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-
-import com.globallogic.zoo.activities.AnimalDetailsActivity;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.security.Permission;
 
 /**
  * Created by GL on 10/04/2015.
  */
-public class HttpConnectionManager extends HttpURLConnection {
+public class HttpConnectionManager {
+
+    private HttpURLConnection connection;
 
     public static final String GET = "GET";
 
-    protected HttpConnectionManager(URL url, String method) throws ProtocolException {
-        super(url);
-        this.setConnectTimeout(10000);
-        this.setReadTimeout(10000);
-        this.setRequestMethod(method);
+    public HttpConnectionManager(String anUrl, String method) {
+        try {
+            URL url = new URL(anUrl);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
+            connection.setRequestMethod(method);
+        } catch (MalformedURLException e) {
+            Log.e("HttpConnectionManager", e.getMessage(), e);
+        } catch (IOException e) {
+            Log.e("HttpConnectionManager", e.getMessage(), e);
+        }
     }
 
-    @Override
-    public boolean usingProxy() {
-        return false;
+    public void connect() {
+        try {
+            connection.connect();
+        } catch (SocketException e){
+
+        }catch (SocketTimeoutException e){
+
+        }
+        catch (IOException e) {
+            Log.e("HttpConnectionManager", e.getMessage(), e);
+        }
     }
 
-    @Override
-    public void disconnect() {
+    public int getResponseCode() {
+        int code = -1;
+        try {
+            code = connection.getResponseCode();
+        } catch (IOException e) {
+            Log.e("HttpConnectionManager", e.getMessage(), e);
+        }
 
+        return code;
     }
 
-    @Override
-    public void connect() throws IOException {
+    public String getData() {
+        InputStream is;
+        String json = null;
+        try {
+            is = connection.getInputStream();
+            json = JsonParser.convertStreamToString(is);
+            is.close();
+        } catch (IOException e) {
+            Log.e("HttpConnectionManager", e.getMessage(), e);
+        }
 
+        return json;
     }
 
     public static boolean checkConnection(Context context) {
