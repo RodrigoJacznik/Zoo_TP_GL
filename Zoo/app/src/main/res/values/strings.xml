@@ -1,52 +1,53 @@
 <resources>
-<string name="app_name">Zoo</string>
-<string name="title_activity_welcome">Welcome</string>
-<string name="title_activity_animal_list">Lista de Animales</string>
-<string name="title_activity_animal_detail">Detalle</string>
-<string name="title_activity_more_info">Más Info</string>
-<string name="title_activity_settings">Settings</string>
+    <string name="app_name">Zoo</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="title_activity_animal_list">Lista de Animales</string>
+    <string name="title_activity_animal_detail">Detalle</string>
+    <string name="title_activity_more_info">Más Info</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_mail_selector">Mails disponibles</string>
 
-<string name="mainactivity_name">User</string>
-<string name="mainactivity_pass">Password</string>
-<string name="mainactivity_femm">Femenino</string>
-<string name="mainactivity_man">Masculino</string>
-<string name="mainactivity_signin">Sign In</string>
-<string name="mainactivity_error">User or Password incorrect</string>
+    <string name="mainactivity_name">User</string>
+    <string name="mainactivity_pass">Password</string>
+    <string name="mainactivity_femm">Femenino</string>
+    <string name="mainactivity_man">Masculino</string>
+    <string name="mainactivity_signin">Sign In</string>
+    <string name="mainactivity_error">User or Password incorrect</string>
 
-<string name="welcomeactivity_signout">LogOut</string>
-<string name="welcomeactivity_welcome">Bienvenido %1$s</string>
-<string name="welcomeactivity_sra">Sra.</string>
-<string name="welcomeactivity_sr">Sr.</string>
-<string name="welcomeactivity_without_maps">No tenes una app de mapas instalado. Instale una e intente más tarde</string>
+    <string name="welcomeactivity_signout">LogOut</string>
+    <string name="welcomeactivity_welcome">Bienvenido %1$s</string>
+    <string name="welcomeactivity_sra">Sra.</string>
+    <string name="welcomeactivity_sr">Sr.</string>
+    <string name="welcomeactivity_without_maps">No tenes una app de mapas instalado. Instale una e intente más tarde</string>
 
-<string name="animaldetailsactivity_more">Más Info</string>
-<string name="animaldetailsactivity_day">Dia</string>
-<string name="animaldetailsactivity_initialhour">Hora Inicio</string>
-<string name="animaldetailsactivity_endhour">Hora fin</string>
-<string name="animaldetailsactivity_email_subject">Mira el %1$s estoy viendo en el zoo</string>
-<string name="animaldetailsactivity_without_connection">Problemas en su conexion</string>
-<string name="animaldetailsactivity_without_mailapp">No tenes el mail configurado. Configurelo e intente más tarde</string>
-<string name="animaldetailsactivity_without_event">No tenes eventos. Veni al ZOO</string>
-<string name="animaldetailsactivity_with_event">Estas ocupado con el evento %1$s. Cancelalo y veni al ZOO</string>
+    <string name="animaldetailsactivity_more">Más Info</string>
+    <string name="animaldetailsactivity_name">Nombre</string>
+    <string name="animaldetailsactivity_attractions">Proximas atracciones</string>
+    <string name="animaldetailsactivity_initialhour">Hora Inicio</string>
+    <string name="animaldetailsactivity_endhour">Hora fin</string>
+    <string name="animaldetailsactivity_email_subject">Mira el %1$s estoy viendo en el zoo</string>
+    <string name="animaldetailsactivity_without_connection">Problemas en su conexion</string>
+    <string name="animaldetailsactivity_without_mailapp">No tenes el mail configurado. Configurelo e intente más tarde</string>
+    <string name="animaldetailsactivity_without_event">No tenes eventos. Veni al ZOO</string>
+    <string name="animaldetailsactivity_with_event">Estas ocupado con el evento %1$s. Cancelalo y veni al ZOO</string>
 
-<string name="settingsactivity_theme">Tema</string>
-<string name="settingsactivity_button">Boton que no hace nada</string>
-<string name="settingsactivity_toast_msg">Posta, no hace nada</string>
+    <string name="settingsactivity_theme">Tema</string>
+    <string name="settingsactivity_button">Boton que no hace nada</string>
+    <string name="settingsactivity_toast_msg">Posta, no hace nada</string>
 
-<string name="favactivity_like">Me gusta</string>
-<string name="favactivity_dontlike">No me gusta</string>
+    <string name="favactivity_like">Me gusta</string>
+    <string name="favactivity_dontlike">No me gusta</string>
 
-<string name="context_menu_welcome_share">Compartir</string>
-<string name="context_menu_welcome_delete">Eliminar</string>
+    <string name="context_menu_welcome_share">Compartir</string>
+    <string name="context_menu_welcome_delete">Eliminar</string>
 
-<string name="menuanimal_share">Compartir</string>
-<string name="menumain_settings">Configuración</string>
-<string name="sharedialog_title">Ingrese un email</string>
-<string name="sharedialog_ok">Compartir</string>
-<string name="sharedialog_cancel">Cancelar</string>
-<string name="lowbatteryalertdialog_low_battery">Centros de carga</string>
-<string name="lowbatteryalertdialog_ok">Listo</string><string name="sharedialog_emailhint">Email</string>
-    <string name="title_activity_mail_selector">MailSelectorActivity</string>
+    <string name="menuanimal_share">Compartir</string>
+    <string name="menumain_settings">Configuración</string>
+    <string name="sharedialog_title">Ingrese un email</string>
+    <string name="sharedialog_ok">Compartir</string>
+    <string name="sharedialog_cancel">Cancelar</string>
+    <string name="lowbatteryalertdialog_low_battery">Centros de carga</string>
+    <string name="lowbatteryalertdialog_ok">Listo</string><string name="sharedialog_emailhint">Email</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

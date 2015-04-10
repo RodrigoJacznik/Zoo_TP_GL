@@ -24,7 +24,7 @@ public class AnimalUtils {
 
     static public Intent getShareAnimalIntent(Animal animal) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, animal.getName() + ": " + animal.getDescripcion());
+        intent.putExtra(Intent.EXTRA_TEXT, animal.getName() + ": " + animal.getSpecie());
         intent.setType(HTTP.PLAIN_TEXT_TYPE);
 
         return intent;

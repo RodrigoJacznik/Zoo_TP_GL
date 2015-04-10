@@ -1,0 +1,397 @@
+[
+    {
+        "id":1,
+        "name": "Delfín",
+        "specie": "Cetáceo",
+        "description": "Los delfínidos (Delphinidae), llamados comúnmente delfines oceánicos (para distinguirlos de los platanistoideos o delfines de río), son una familia de cetáceos odontocetos bastante heterogénea, que comprende unas 34 especies. Miden entre 2 y 9 metros de largo, con el cuerpo fusiforme y la cabeza grande, el hocico alargado y un solo espiráculo en la parte superior de la cabeza (orificio respiratorio que muchos animales marinos tienen como contacto del aire o agua con su sistema respiratorio interno). Son carnívoros estrictos.",
+        "image": "http://photos.cuervo.net/d/8590-2/640x480xOcean_Park_071.jpg.pagespeed.ic.yOw6tKDmvA.jpg",
+        "shows": [
+             {
+                "id": 1,
+                "name": "Capitan America",
+                "schedules": [
+                    "10:30",
+                    "12:30",
+                    "14:30"
+                ],
+                "duration": "90"
+
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Delphinidae"
+    },
+    {
+        "id":2,
+        "name": "Elefante",
+        "specie": "Mamífero",
+        "description": "Los elefantes o elefántidos (Elephantidae) son una familia de mamíferos placentarios del orden Proboscidea. Antiguamente se clasificaban, junto con otros animales de piel gruesa, en el orden, ahora inválido, de los paquidermos (Pachydermata). Existen hoy en día tres especies y diversas subespecies. Entre los géneros extintos de esta familia destacan los mamuts. Los elefantes son los animales terrestres más grandes que existen actualmente. El periodo de gestación es de 22 meses, el más largo en cualquier animal terrestre. El peso al nacer usualmente es 120 kg. Normalmente viven de 50 a 70 años, pero registros antiguos documentan edades máximas de 82 años. El elefante más grande que se ha cazado, de los que se tiene registro, pesó alrededor de 11 000 kg (Angola, 1956), alcanzando una altura en la cruz de 3,96 m, un metro más alto que el elefante africano promedio. El elefante más pequeño, de alrededor del tamaño de una cría o un cerdo grande, es una especie prehistórica que existió en la isla de Creta, Elephas creticus, durante el Pleistoceno.",
+        "image": "http://squit.ch/Elefanti/elefante4.jpg",
+         "shows": [
+             {
+                "id": 1,
+                "name": "Capitan America",
+                "schedules": [
+                    "10:30",
+                    "12:30",
+                    "14:30"
+                ],
+                "duration": "90"
+
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Elephantidae"
+    },
+ {
+        "id":3,
+        "name": "Tigre",
+        "specie": "Mamífero",
+        "description": "El tigre es el félido más grande del mundo, comparable en tamaño con los grandes félidos fósiles. El tamaño de los tigres y demás características varían de una subespecie a otra. En estado salvaje, los tigres machos tienen un peso que oscila entre los 100 y los 360 kg y una longitud de 220-380 cm incluyendo la cola, que mide entre 60 y 110 cm y de 70 hasta 122 cm de altura a la cruz. Mientras tanto, las hembras, mucho más pequeñas, tienen un peso de 85-167 kg. y una longitud total de 210-275 cm.7 Actualmente, la subespecie más pequeña es la del tigre de Sumatra, mientras que las de mayor tamaño son la del tigre de Amur y el tigre de Bengala.La mayoría de los tigres tienen un pelaje naranja o leonado, un área intermedia y ventral blanquecina y las rayas varían en tono desde marrón oscuro hasta el negro. La forma y cantidad de las rayas varían según su sexo (si es hembra la cantidad de rayas es menor), aunque la mayoría de los tigres suelen tener menos de 100 rayas. El patrón de rayas es único en cada ejemplar y es posible utilizar esto para identificar a un individuo, de la misma forma que las huellas dactilares se utilizan para identificar a una persona. Sin embargo, debido a lo difícil que es registrar el patrón de rayas en un tigre salvaje, este no es el método más usado para la identificación de un tigre. Probablemente, la función de las rayas es el camuflaje, siendo útil para ocultarse de sus posibles presas. El patrón de rayas también se encuentra en la piel del tigre, por lo que, si es afeitado, sus rayas distintivas pueden ser observadas.Como la mayoría de los felinos, se cree que los tigres tienen cierta visión del color. Por otra parte, su visión nocturna es muy aguda merced a la membrana especular ubicada en la retina, la cual focaliza la poca luz de la noche. Al igual que los otros miembros de su género, el tigre tiene la capacidad de rugir. A diferencia de otros felinos, aunque a semejanza del jaguar, el tigre es un excelente nadador; puede sorprender y cazar presas en el agua.",
+        "image": "http://www.anawalls.com/repic/image.php?src=http://www.anawalls.com/images/animals/tiger-water-spray-big-cat-predator.jpg&h=480&w=640",
+        "shows": [
+             {
+                "id": 1,
+                "name": "Capitan America",
+                "schedules": [
+                    "10:30",
+                    "12:30",
+                    "14:30"
+                ],
+                "duration": "90"
+
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Panthera_tigris"
+    },
+     {
+        "id":4,
+        "name": "Chimpancé",
+        "specie": "Mamífero",
+        "description": "Pan es un género de primates homínidos que comprende las especies Pan troglodytes (chimpancé común) y Pan paniscus (bonobo o chimpancé pigmeo). Por estudios de genética e inmunología se ha podido datar la divergencia entre su línea evolutiva y la de Gorilla hace 7-8 millones de años y de la de Homo hace unos 6 millones de años. Las dos especies actuales se separaron de un último ancestro común hace unos 2 millones de años, tras quedar aisladas una de la otra por el río Congo. Los seres humanos comparten el 96% del genoma con el chimpancé. Al contrario que su historia genética, la historia fósil de los chimpancés es por ahora un misterio. Sólo se conocen algunos dientes hallados recientemente en la zona este del Gran Valle del Rift, pertenecientes a Pan troglodytes u otra especie de Pan aún innominada, que tienen una antigüedad de 500.000 años. En aquella época esa zona de África oriental ya era una sabana, mientras que estos animales sólo se encuentran actualmente en las selvas de África occidental.",
+        "image": "http://www.cadizturismo.com/media/fotos/image_67300_jpeg_640x480_q85.jpg",
+        "shows": [
+             {
+                "id": 1,
+                "name": "Capitan America",
+                "schedules": [
+                    "10:30",
+                    "12:30",
+                    "14:30"
+                ],
+                "duration": "90"
+
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Pan_(animal)"
+    },
+     {
+        "id":5,
+        "name": "Gorila",
+        "specie": "Mamífero",
+        "description": "Los gorilas (género Gorilla) son primates herbívoros que habitan los bosques de África central. Es el más grande de los primates vivos. Su ADN está compuesto de 3.041.976.159 pares de bases que codifican 20.962 genes proteicos compuestos de 237.216 exones.1 Su ADN es un 97%–98% igual al humano, siendo el más cercano a éste después de las dos especies de chimpancé. El físico y misionero estadounidense Thomas Staughton Savage fue el primero en describir el gorila occidental, al que llamó Troglodytes gorilla, en 1847 a partir de especímenes obtenidos en Liberia. El nombre es derivado de la palabra griega γόριλλαι (gorillai), que designaba a una «tribu de mujeres peludas», pero también de hombres con cola de caballo que, portando antorchas, asaltaban los barcos y torturaban y violaban a las mujeres que los marineros les ofrecían, descrita por Hannón el Navegante. ",
+        "image": "http://fondoz.com/wp-content/uploads/et_temp/Un-gorila-enfadado-1482463_640x480.jpg",
+        "shows": [
+             {
+                "id": 2,
+                "name": "Iron Man",
+                "schedules": [
+                    "11:30",
+                    "13:30",
+                    "15:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Gorilla"
+    },
+     {
+        "id":6,
+        "name": "Condor Andino",
+        "specie": "Ave",
+        "description": "El cóndor andino, cóndor de los Andes o simplemente cóndor (Vultur gryphus)2 es una especie de ave de la familia Cathartidae que habita en Sudamérica. El orden al que pertenece su familia se encuentra en disputa. Se extiende por la cordillera de los Andes, cordilleras próximas a ella y las costas adyacentes de los océanos Pacífico y Atlántico. Es el ave no marina de mayor envergadura del Planeta.3 No posee subespecies.4 Su nombre procede del quechua cùntur. Es un ave grande y negra, con plumas blancas alrededor del cuello y en partes de las alas. La cabeza carece de plumas y es de color rojo, pudiendo cambiar de tonalidad de acuerdo al estado emocional del ave. A diferencia de la mayor parte de las aves de presa, el macho es mayor que la hembra. Es un ave carroñera. Alcanza la madurez sexual a los 5 o 6 años y anida entre los 1000 y 5000 msnm, generalmente en formaciones rocosas inaccesibles. Posee una tasa de reproducción muy baja y se espera que al menos ponga un huevo cada dos años. Es una de las aves más longevas, pudiendo alcanzar la edad de 50 años. Es un símbolo nacional de Bolivia, Chile, Colombia, Ecuador, Perú y tiene un importante rol en el folclore y la mitología de las regiones andinas de Sudamérica. El cóndor andino fue declarado monumento natural de Chile mediante decreto el 30 de junio de 2006. La Unión Internacional para la Conservación de la Naturaleza la cataloga como una especie casi amenazada, ya que sufre la pérdida de su hábitat y el envenenamiento por la ingesta de animales intoxicados o de los propios cebos envenenados colocados ilegalmente por cazadores y ganaderos. Varios países iniciaron programas de reproducción en cautividad. Es considerada como Patrimonio Cultural y natural de Sudamérica. ",
+        "image": "http://st-listas.20minutos.es/images/2012-04/325735/3463956_640px.jpg?1334094002",
+        "shows": [
+             {
+                "id": 2,
+                "name": "Iron Man",
+                "schedules": [
+                    "11:30",
+                    "13:30",
+                    "15:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Vultur_gryphus"
+    },
+     {  "id":7,
+        "name": "Tucan",
+        "specie": "Ave",
+        "description": "Los ranfástidos (Ramphastidae), conocidos comúnmente como tucanes, diotedé, o diostedé, son una familia de aves piciformes que se caracterizan por poseer un pico muy desarrollado y de vivos colores. Miden entre 18 y 63 cm, siendo el tucán toco (Ramphastos toco) el de mayor tamaño. Habitan en selvas desde México hasta el norte de la Argentina. Algunas especies prefieren selvas húmedas tropicales de baja altitud, mientras que otras habitan en forestas más templadas en cordilleras, a altitudes hasta los 3000 msnm. El nombre de este grupo de aves procede del tupi tucana, a través del francés. Los tucanes son aves de plumas y pico de colores muy llamativos . Llegan a medir hasta 60 cm. Su pico es largo, con dientecillos como sierras, llega a medir la tercera parte de su tamaño y es muy ligero por las numerosas cámaras que tiene por lo que no le dificulta el vuelo. Su lengua es muy larga (llega a medir hasta 14 cm), angosta, aplanada y termina en punta. Tiene alas pequeñas, cortas y redondeadas. La cola es cuadrada en unas especies y llama la atención la facilidad con que la mueve hacia arriba y abajo. Los ojos están rodeados por una piel que a veces es de colores vivos. Utiliza el pico como arma y para tomar los frutos que se encuentran en las puntas de las ramas muy delgadas. Se ha descubierto recientemente que su pico es utilizado para regular la temperatura corporal, regulando el flujo sanguíneo de los numerosos vasos del pico.1 Además, está formado por una sustancia llamada queratina, que forma una estructura parecida a la de una esponja. Estas características lo hacen asombrosamente resistente a los golpes, pero a la vez muy liviano.",
+        "image": "http://www.imagenesparafotos.com/d/1251-2/3d-animales-tucan.jpg",
+         "shows": [
+             {
+                "id": 2,
+                "name": "Iron Man",
+                "schedules": [
+                    "11:30",
+                    "13:30",
+                    "15:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Ramphastidae"
+    },
+     {  "id":8,
+        "name": "Cocodrilo",
+        "specie": "Sauropsida",
+        "description": "Los crocodílidos (Crocodylidae) son una familia de saurópsidos (reptiles) arcosaurios comúnmente conocidos como cocodrilos. Incluye a 14 especies actuales.1 Se trata de grandes reptiles semiacuáticos que viven en las regiones tropicales de África, Asia, América y Australia. Aparecieron por primera vez durante el Eoceno, unos 55 millones de años. En sentido estricto, un cocodrilo es cualquier especie que pertenece a la familia Crocodylidae (a veces clasificada como la subfamilia Crocodylinae). No obstante, el término también se puede usar de manera más flexible para incluir todos los miembros existentes de la orden Crocodilia, es decir, los verdaderos cocodrilos, los aligatores y caimanes (familia Alligatoridae) y los gaviales (familia Gavialidae), así como los Crocodylomorpha, que incluye parientes y antepasados extintos de los cocodrilo actuales. Los cocodrilos tienden a congregarse en hábitats de agua dulce como ríos, lagos, humedales y algunas veces en agua salobre. Se alimentan principalmente de vertebrados (peces, reptiles y mamíferos), y algunas veces de invertebrados (moluscos y crustáceos), según la especie. Puede saltar hasta 8 metros.",
+        "image": "http://angelguardian.mx/beta/wp-content/uploads/2015/02/coco2_110215-640x480.jpg",
+         "shows": [
+             {
+                "id": 2,
+                "name": "Iron Man",
+                "schedules": [
+                    "11:30",
+                    "13:30",
+                    "15:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Crocodylidae"
+    },
+     {  "id":9,
+        "name": "Boa",
+        "specie": "Sauropsida",
+        "description": "La boa constrictora (Boa constrictor) es una especie de reptil escamoso de la familia Boidae. Es una boa nativa de América, desde Argentina hasta el norte de México. Solo la subespecie Boa constrictor constrictor posee el final de su cola de un color rojizo (boa cola roja). Vive en hábitats con poca cantidad de agua, como desiertos y sabana, a la vez que se la puede encontrar en bosques húmedos y terrenos de cultivo. Es un reptil tanto terrestre como arbóreo. Miden entre 0,5 y 4 m, dependiendo de la subespecie y el sexo del animal, siendo las hembras normalmente mayores que los machos. El mayor ejemplar en cautividad es una hembra de 5,5 m de Surinam que se encuentra en el Zoo de San Diego. Presenta una atractiva coloración que consiste en superficies dorsales de tonos rojizos que quedan dentro de un fondo que puede ser blanco, rosado, marrón o dorado, dependiendo de la subespecie o los cruzamientos llevados a cabo en cautividad. Durante los días próximos a la muda, las serpientes adquieren una piel de color grisáceo poco vistosa y sus ojos se vuelven de color blanco cremoso. En la naturaleza es raro que vivan más de 20 años, aunque en cautividad pueden alcanzar los 30 con relativa facilidad. En el Jardín Zoológico de Filadelfia se registró el caso de una Boa constrictor que llegó a vivir 40 años 3 meses y 14 días.",
+        "image": "http://www.aqua.org/learn/just-for-fun/~/media/Images/downloads%20and%20ecards/EmeraldTreeBoa/EmeraldTreeBoa_m-android_640x480.jpg",
+        "shows": [
+             {
+                "id": 3,
+                "name": "Hulk",
+                "schedules": [
+                    "12:30",
+                    "14:30",
+                    "16:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Boa_constrictor"
+    },
+       {  "id":10,
+        "name": "Cangrejo",
+        "specie": "Crustaceo",
+        "description": "La jaiba o cangrejo azul (Callinectes sapidus ) es un crustáceo decápodo que presenta cinco pares de patas; su cuerpo está cubierto de un exoesqueleto de color verde oscuro. En los machos, las patas (pleópodos) tienen un color gris-azulado, y es esta característica la que les ha dado el nombre común de jaiba azul. Sin embargo, en las hembras las puntas de las patas son de tonalidad rojizo-anaranjada. Son especímenes activos y voraces; su dieta alimenticia está basada en crustáceos, peces, gran variedad de moluscos y algas. Como el resto de los crustáceos son ovíparos. Se reproducen en aguas próximas a las costas en primavera y verano. Se calcula que la fecundidad de una hembra de tamaño promedio, es de 700.000 a 2 millones de huevos. El Callinectes sapidus es nativo de la orilla occidental del Océano Atlántico desde Nueva Escocia hasta Argentina y alrededor de toda la costa del Golfo de México.1 2 También se ha introducido en aguas japonesas y europeas, y se ha observado en los mares Báltico, del Norte, del Mediterráneo y Negro.3 El primer registro de las aguas europeas se hizo en 1901 en Rochefort, Francia.4 En algunas partes de su área de distribución introducido, C. sapidus se ha convertido en el objetivo de pesca de cangrejos, incluso en Grecia, donde la población local puede estar disminuyendo como consecuencia de la sobrepesca.",
+        "image": "http://www.anawalls.com/repic/image.php?src=http://www.anawalls.com/images/animals/crab-sea-sand-beach.jpg&h=480&w=640",
+        "shows": [
+             {
+                "id": 3,
+                "name": "Hulk",
+                "schedules": [
+                    "12:30",
+                    "14:30",
+                    "16:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Cangrejo"
+    },
+         {  "id":11,
+        "name": "Tarantula",
+        "specie": "Arácnido",
+        "description": "La tarántula (Lycosa tarantula) es una araña araneomorfa de la familia Lycosidae, originaria del área alrededor de la ciudad italiana de Tarento, Tarentum en la época romana. Esta araña tiene mala reputación debido a razones históricas y culturales, como la creencia de que una infinitésima parte de su veneno produce severos síntomas llamados tarantismo. De acuerdo a dicha creencia, una persona envenenada por una de estas tarántulas debe ser tratada con una clase especial de baile. Esa danza, o alguna versión de ella, es hoy conocida como la tarantella. En realidad, el veneno de la tarántula no causa síntomas severos en humanos y mucho menos pone en riesgo la vida. Las tarántulas son grandes, las hembras miden 27 mm de largo del cuerpo y los machos 19 mm. Como en otros licósidos, tras nacer, las arañuelas trepan al abdomen de la madre, donde permanecen hasta ser suficientemente maduras para sobrevivir por si mismas. Las hembras viven en sus cuevas toda su vida, los machos maduros encuentran protección en cuevas pero pasean fuera con compañeros. Los machos viven hasta dos años, y mueren poco tiempo después de su madurez sexual. Las hembras viven cuatro años o más. En el invierno estas arañas hibernan en sus cuevas. Son una especie nocturna, y generalmente montan guardia en la boca de la cueva esperando una presa, por lo que es extraño que una persona pueda encontrarse con ellas. Al contrario de las Salticidae (arañas saltonas) muy curiosas acerca de los humanos, las Lycosidae tiene una tendencia fuerte a huir ante la proximidad de un animal grande; tiene muy buena vista, siendo difícil que un humano las vea, y son relativamente difíciles de capturar por su gran velocidad. En general, lo menos que desean es morder a un animal grande. Esta araña posee veneno. El veneno es importante para la araña como medio para matar a la presa, y, secundariamente, autoprotegerse. El veneno está diseñado para reducir a la presas de tipo insecto, las distintas especies de mamíferos tienen reacciones muy diferentes al mismo tóxico. El de las Lycosidae no es particularmente tóxico a humanos, y no es más doloroso que el de la abeja. Debido a su baja toxicidad de su veneno, no existen investigaciones médicas sobre el veneno de la Lycosa tarantula.",
+        "image": "http://www.wallpapergeeks.com/wp-content/uploads/2013/12/Creepy-Tarantula-Wallpaper-640x480.jpg",
+        "shows": [
+             {
+                "id": 3,
+                "name": "Hulk",
+                "schedules": [
+                    "12:30",
+                    "14:30",
+                    "16:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Lycosa_tarantula"
+    },
+      {  "id":12,
+        "name": "Jirafa",
+        "specie": "Mamífero",
+        "description": "La jirafa (Giraffa camelopardalis) es una especie de mamífero artiodáctilo de la familia Giraffidae propio de África. Es la más alta de todas las especies de animales terrestres existentes. Puede alcanzar una altura de 5,8 metros y un peso que varía entre 750 y 1600 kg. Su área de distribución es disperso y se extiende de Chad en el norte hasta Sudáfrica en el sur, y de Niger en el oeste hasta Somalia en el este. Por lo general habita en sabanas, pastizales, y bosques abiertos. Se alimenta principalmente de las hojas del acacia, que ramonea en alturas inaccesibles para la mayoría de los demás herbívoros. Las jirafas adultas son depredadas por leones, y los terneros también por leopardos, hienas manchadas y perros salvajes. Las jirafas adultas no tienen fuertes vínculos sociales, aunque se agrupan en manadas abiertas y sueltas si llegan a estar moviéndose en la misma dirección general. Los machos establecen una jerarquía social mediante duelos conocidos como necking, un combate en el cual utilizan el cuello como arma. Solo los machos dominantes pueden acoplarse con las hembras; solo las hembras se dedican a la cría de los terneros. El nombre común «jirafa» y primer término del nombre binomial Giraffa proviene del árabe الزرافة (ziraafa o zurapha), que significa «alta». El segundo término que da nombre a la especie camelopardalis proviene del griego καμηλοπάρδαλη camelopardale y del latín camelopardalis, que significa «camello leopardo». Julio César introdujo la primera jirafa en Europa traída de su campañas en Asia menor y Egipto donde conoció a Cleopatra. Sin tener claro qué animal era, los romanos la bautizaron cameleopardo, un cruce entre camello y leopardo, convirtiéndose en el nombre científico que se utiliza hasta hoy. Por su apariencia peculiar, la jirafa fue una fuente de fascinación en diversas culturas, tanto antiguas como modernas, y apareció con frecuencia en pinturas, libros y dibujos animados. Fue clasificada como una especie bajo preocupación menor por la UICN, a pesar de que desapareció de muchas partes de su área de distribución original, y algunas subespecies fueron clasificadas como en peligro de extinción. Sin embargo, todavía existe un gran número de jirafas en los parques nacionales y reservas de caza",
+        "image": "http://es.yoyowall.com/wallpapers/2013/03/Jirafa-%C3%A1rbol-480x640.jpg",
+         "shows": [
+             {
+                "id": 3,
+                "name": "Hulk",
+                "schedules": [
+                    "12:30",
+                    "14:30",
+                    "16:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Giraffa_camelopardalis"
+    },
+      {  "id":13,
+        "name": "Orca",
+        "specie": "Cetáceo",
+        "description": "La orca (Orcinus orca) es una especie de cetáceo odontoceto perteneciente a la familia Delphinidae (delfines oceánicos), que habita en todos los océanos del planeta. Es la especie más grande de delfínido y la única existente reconocida dentro del género Orcinus. Este cetáceo posee una complexión robusta e hidrodinámica. La especie, como característica distintiva, posee una aleta dorsal muy larga que llega a medir hasta 1,8 m en los machos y presenta una coloración blanca y negra que se distribuye de manera particular, la cual es propia de cada individuo y permite distinguirlo de los demás. La orca tiene un dimorfismo sexual marcado; las hembras son más pequeñas que los machos y tienen la aleta dorsal más corta. Un macho adulto puede alcanzar 5,5 t de peso y hasta 9 m de longitud, mientras que una hembra suele rondar los 7,7 m de largo y pesa menos de 4 t. Los individuos de la especie forman estructuras sociales complejas y se organizan en grupos matrilineales (descendencia definida por la línea materna); para facilitar la socialización utilizan un método de comunicación sofisticado. Se han identificado varios tipos de orca en los hemisferios norte y sur, los cuales tienen diferencias genéticas, morfológicas, comportamentales y alimentarias tan notables, que incluso se han propuesto como especies diferentes. La orca posee una combinación de fuerza, velocidad e inteligencia que la convierte en un depredador muy versátil; de hecho, por encontrarse en la cima de la cadena alimenticia y no poseer enemigos naturales se convierte en un superdepredador de los océanos. Su dieta es muy variada y, dependiendo del tipo de orca, se alimenta de peces, calamares y mamíferos marinos. Se distribuye por todos los océanos del mundo, desde las aguas del Ártico y Antártico hasta los mares tropicales; sin embargo, prefiere las aguas templadas y frías, y las zonas cercanas a las costas. Es una especie migratoria, llegando algunos grupos a desplazarse miles de kilómetros, incluso entre ambos hemisferios. Para 2008, según lo publicado en la Lista Roja de la UICN, la población mundial superaba los 50 000 individuos. En el mismo año, se catalogó como especie con datos insuficientes (del inglés Data Deficient, DD); decisión justificada ante la posibilidad de que existan dos o más especies, lo cual obligaría a establecer el riesgo específico para cada una de ellas. Al carecer de depredadores naturales todas las amenazas son dependientes de la acción del hombre. Entre estas cabe mencionar la contaminación secundaria a plaguicidas, el ruido producido por elementos y dispositivos acústicos, el deterioro de su hábitat, las capturas accidentales durante operaciones de pesca y la caza. Desde la antigüedad, en la cultura occidental se lo consideró un animal feroz y peligroso. Esa imagen empezó a cambiar desde la década de 1960, al observarse que los primeros animales en cautiverio se comportaban dócilmente y no intentaban agredir a los humanos. Se han registrado muy pocos ataques a humanos por parte de individuos en libertad, sin ninguna muerte; sin embargo, los ejemplares en cautiverio, probablemente debido al estrés que les causa la situación, se han cobrado algunas víctimas.",
+        "image": "http://thescuttlefish.com/wp-content/uploads/2011/06/orca-640x480.jpg",
+        "shows": [
+            {
+                "id": 4,
+                "name": "Thor",
+                "schedules": [
+                    "13:30",
+                    "15:30",
+                    "17:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Orcinus_orca"
+    },
+    {  "id":14,
+        "name": "Lobo Marino",
+        "specie": "Mamífero",
+        "description": "El lobo marino sudamericano (Otaria flavescens, anteriormente clasificado como O. byronia), también llamado otario de la Patagonia, lobo marino chusco, lobo marino de un pelo, león marino del sur, león marino sudamericano o simplemente lobo marino, es una especie de mamífero pinnípedo de la familia de los otáridos. Son de color pardo oscuro cuando son adultos y negro cuando son jóvenes. Los machos adultos habitualmente pesan unos 300 kg, el doble que las hembras, y poseen una capa de pelo castaño rojizo sobre el cuello. Esta «melena» es la causa de que sean llamados «leones marinos». Viven en colonias de unos 15 individuos, formadas por el macho, su harén, y unos pocos jóvenes. Durante el verano, en diciembre y enero, se trasladan a parir a sitios protegidos donde se congregan miles de ejemplares. La gestación dura casi un año, pariendo una sola cría. Durante la época de reproducción, los machos entran en combate por el control de su territorio y por las hembras, y es usual que no se alimenten en ese periodo. Viven entre 25 y 50 años. Habita las costas de la mitad austral de América del Sur. En el Pacífico se halla en las costas de Perú y Chile; ocasionalmente se han observado ejemplares divagantes en las islas Galápagos (Ecuador), Colombia, y Panamá. En el Atlántico habita desde Recife dos Tôrres en Brasil hacia el sur, en el litoral del Uruguay, y las costas del mar Argentino, tanto en la Patagonia argentina como en las islas Malvinas. Su comida son peces, pulpos, calamares, pingüinos y otras aves marinas, comen entre 15 y 25 kg de alimento por día y, a su vez, son presa de las orcas. El lobo marino común es una especie clave del ecosistema costero desplazándose ampliamente en la plataforma continental. Sin embargo las hembras suelen ser más costeras que los machos en sus desplazamientos. La dieta se estudió en el norte y centro de Patagonia sobre la base del reconocimientos de otolitos de peces y picos de cefalópodos en contenidos estomacales. Las presas más importantes fueron la merluza (Merluccius hubbsi), la raneya (Raneya fluminensis), los calamares (Illex argentinus y Loligo gahi), y los pulpos (Octopus tehuelchus y Enteroctopus megalocyathus). También se incluye a la anchoíta (Engraulis anchoita), las nototenias (Patagonotothen cornucola y P. ramsayi), el salmón de mar (Pseudopercis semifasciata), el abadejo (Genypterus blacodes), y varios elasmobranquios. De crustáceos incluye varias especies, pero no son de importancia, salvo en años de abundancia del langostino (Pleoticus muelleri). Estos resultados indican que el lobo común es una especie oportunista que preda sobre una amplia gama de recursos con una tendencia a predar sobre especies demersales y bentónicas, algunas de ellas de importancia comercial. Entre los parásitos del lobo común se han encontrado nematodes (Anisakis simplex, Contracaecum ogmorhini, Pseudoterranova decipiens, y Uncinaria sp.); también se hallaron el acantocéfalo (Corynosoma australe), y el cestode (Diphyllobothrium pacificum).",
+        "image": "http://patagoniabuceo.com/images/Excursiones%20de%20buceo/Buceo%20con%20lobos%20marinos/Buceo%20con%20Lobos%20Marinos%20Puerto%20Madryn_07.jpg",
+        "shows": [
+            {
+                "id": 4,
+                "name": "Thor",
+                "schedules": [
+                    "13:30",
+                    "15:30",
+                    "17:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Otaria_flavescens"
+    },
+     {  "id":15,
+        "name": "Pingüino",
+        "specie": "Ave",
+        "description": "Los pingüinos (familia Spheniscidae, orden Sphenisciformes) son un grupo de aves marinas, no voladoras, que se distribuyen únicamente en el Hemisferio Sur, sobre todo en sus altas latitudes. Los primeros europeos en observar a estas aves fueron miembros de la primera expedición de Vasco da Gama,1 que les llamaron pájaros niño o pájaros bobos por su andar torpe y erguido y al ser un ave incapaz de volar.[cita requerida] Años más tarde, cuando los primeros británicos vieron a estos animales, les llamaron penguins (del galés penwyn, pen = 'cabeza' y gwyn = 'blanca'), que era el nombre que daban a algunas especies de la familia Acidae, como al alca gigante del Atlántico norte (Pinguinus impennis),1 y al alca común (Alca torda).2 Sin embargo y pese a las aparentes similitudes resultado de la convergencia evolutiva, las alcas del Hemisferio Norte no están relacionadas con los Spheniscidae. Con el paso del tiempo, ha ido imponiéndose aplicar el apelativo «pingüino» solo a los miembros de la familia Spheniscidae. Existe controversia respecto a la cantidad de especies que existen actualmente, variando entre 16 y 19 según el criterio utilizado, aunque el número que cuenta con mayor consenso es el de 17 especies. Estas especies se dividen en 6 géneros bien definidos, algunos de los cuales también incluyen especies extintas.",
+        "image": "http://cdn5.xombit.com/wp-content/blogs.dir/19/files/2012/05/Madagascar-640x480.jpg",
+        "shows": [
+            {
+                "id": 4,
+                "name": "Thor",
+                "schedules": [
+                    "13:30",
+                    "15:30",
+                    "17:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Spheniscidae"
+    },
+      {  "id":16,
+        "name": "Flamenco",
+        "specie": "Ave",
+        "description": "Los flamencos mayores (Phoenicopterus) son un género de aves neognatas de la familia Phoenicopteridae. Son aves que se distribuyen tanto por el hemisferio occidental como por el hemisferio oriental: existen 2 especies en América y una en el Viejo Mundo. Tienen cráneo desmognato holorrino, con 16 a 20 vértebras cervicales y pies anisodáctilos. Se trata de aves muy esbeltas, de entre 80 cm y 1,40 m de largo, con patas larguísimas y cuello largo. El pico es muy característico, y perfectamente adaptado para hurgar en el barro. La mandíbula superior, de menor tamaño que la inferior, es la única móvil. El pico tiene una pronunciada curvatura hacia abajo y está dotado de unas laminillas internas para retener las sustancias alimenticias al filtrar el limo. Los pies tienen cuatro dedos, los tres delanteros unidos por una membrana y el posterior muy pequeño. Todas las especies son de color rosa más o menos fuerte, desde el rosa claro casi blanco del flamenco europeo (Phoenicopterus roseus), hasta el color salmón del flamenco del Caribe (Phoenicopterus ruber). Mientras vuelan mantienen el cuello y las patas completamente estirados. Necesitan grandes extensiones de agua poco profunda, normalmente salina, salobre o alcalina, desde el nivel del rio hasta los 5.000 msnm. Se encuentran en todos los continentes, a excepción de Australia. Hacen los nidos de barro, con forma de tronco de cono, con la cima cóncava, donde ponen un único huevo blanco (a veces dos) que incuban durante unos 30 días. Los flamencos alimentan a sus crías con una “leche” similar a la de las palomas, pero con más grasa y menos proteínas, que es producida por glándulas ubicadas en la zona superior del tracto digestivo. Las crías son alimentadas con este producto durante unos dos meses, hasta que su pico está suficientemente desarrollado para filtrar el alimento.",
+        "image": "http://www.anawalls.com/repic/image.php?src=http://www.anawalls.com/images/animals/flamingo-flying-birds-sky-clouds.jpg&h=480&w=640",
+        "shows": [
+            {
+                "id": 4,
+                "name": "Thor",
+                "schedules": [
+                    "13:30",
+                    "15:30",
+                    "17:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Phoenicopterus"
+    },
+      {  "id":17,
+        "name": "León",
+        "specie": "Mamifero",
+        "description": "El león (Panthera leo) es un mamífero carnívoro de la familia de los félidos y una de las 5 especies del género Panthera. Algunos machos, excepcionalmente grandes, llegan a pesar hasta 250 kg,3 lo que los convierte en el segundo félido viviente más grande después del tigre. Los leones salvajes viven en África subsahariana y Asia, con una población en peligro crítico al noroeste de la India, habiendo desaparecido del norte de África, de Oriente Próximo y del oeste de Asia en tiempos históricos. Hasta finales del Pleistoceno, hace aproximadamente 10 000 años, de los grandes mamíferos terrestres, el león era el más extendido tras los humanos. Su distribución cubría la mayor parte de África, gran parte de Eurasia, desde el oeste de Europa hasta la India, y en América, desde el río Yukón hasta el sur de México. Si sobreviven a las dificultades de la infancia, las leonas que viven en un hábitat seguro, como por ejemplo el Parque Nacional Kruger, a menudo pueden llegar a la edad de 12-14 años, mientras que los leones raramente viven más de ocho años.7 Sin embargo, se conocen casos de leonas que han vivido hasta veinte años en estado salvaje. En cautiverio, tanto los machos como las hembras pueden vivir más de veinte años. Suelen vivir en sabanas y herbazales, aun cuando pueden entrar en zonas arbustivas y boscosas. Los leones son animales especialmente sociales en comparación con otros félidos. Una manada de leones se compone de hembras que tienen una relación familiar, sus crías y un número reducido de machos adultos. Los grupos de leonas suelen cazar juntos, atacando principalmente a grandes ungulados. El león es un superpredador y clave, pese a que puede tener un comportamiento carroñero si tiene la oportunidad. Aun cuando los leones, normalmente, no cazan humanos de manera selectiva, algunos de ellos pueden convertirse en antropófagos y buscar presas humanas. El león es una especie vulnerable y, en su ámbito de distribución africano, a lo largo de las dos últimas décadas ha sufrido un declive de las poblaciones, posiblemente irreversible, de entre un 30 % y un 50 %;1 las poblaciones no son viables fuera de las reservas delimitadas y los parques nacionales. Aunque la causa de este declive no es del todo comprendida, la pérdida del hábitat y los conflictos con humanos son actualmente los motivos de preocupación más importantes. Se han tenido leones en cautividad desde los tiempos de la Antigua Roma y desde finales del siglo XVIII han sido una especie muy buscada y exhibida en zoológicos por todo el mundo. Los propios zoológicos están colaborando en programas de reproducción para proteger la amenazada subespecie asiática. Los machos son muy fáciles de distinguir gracias a su melena, que hace de su cabeza uno de los símbolos animales más ampliamente conocidos de la cultura humana. Aparece muy a menudo en la literatura, la escultura, la pintura, en banderas nacionales y en películas y literatura contemporáneas.",
+        "image": "http://www.anawalls.com/repic/image.php?src=http://www.anawalls.com/images/animals/lion-grass-teeth-face-wind.jpg&h=480&w=640",
+        "shows": [
+            {
+                "id": 5,
+                "name": "Darth Vader",
+
+                "schedules": [
+                    "14:30",
+                    "16:30",
+                    "18:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Panthera_leo"
+    },
+     {  "id":18,
+        "name": "Oso",
+        "specie": "Mamifero",
+        "description": "Los úrsidos (Ursidae) son una familia de mamíferos carnívoros conocidos comúnmente como osos.1 Son animales de gran tamaño, generalmente omnívoros ya que, a pesar de su temible dentadura, comen frutos, raíces e insectos, además de carne. Sin embargo, el oso polar, debido a la escasez de otras fuentes de alimento, se alimenta casi únicamente de carne.2 Con sus pesados cuerpos y sus poderosas mandíbulas, los osos se cuentan entre los mayores carnívoros que viven en la Tierra. Un macho de oso polar pesa en promedio 500 kg y alcanza una talla de hasta 130 cm a la altura de la cruz.3 Se mueven con un caminar pesado, apoyando toda la planta de los pies (son, por lo tanto, animales plantígrados). Tienen orejas cortas y cola rudimentaria. Los osos se caracterizan por su gran cabeza, orejas pequeñas, redondeadas y erectas, ojos pequeños, un cuerpo pesado y robusto y cola corta. Las patas son cortas y poderosas, con cinco dedos provistos de uñas fuertes y recurvadas. Son plantígrados (como los humanos, apoyan toda la planta del pie al caminar) y pueden desplazarse cortas distancias erguidos sobre las patas traseras. Cuando lo necesitan, pueden ser sorprendentemente ágiles y cuidadosos en sus movimientos. El sentido del oído y la vista no son buenos, pero poseen un olfato excelente. La hibernación, esto es la capacidad de permanecer semidormidos durante la época del año donde el clima es desfavorable, es un fenómeno común, al menos entre las especies de Ursus. Los osos actuales miden entre 1 y 2,8 m de longitud total y tienen una masa de entre 27 y 780 kg (existen registros de machos de oso polar de alrededor de una tonelada). El macho suele ser un 20 % más grande que la hembra. El pelaje es largo y espeso, y generalmente de un solo color, a menudo marrón, negro o blanco. Como excepciones, el oso de anteojos tiene un par de círculos de pelo blanco rodeando los ojos y el oso panda, tiene un patrón de coloración blanco y negro bien definido. En cuanto a la dentición, los incisivos no se encuentran especializados, los caninos son elongados, los primeros tres premolares se encuentran reducidos o ausentes y los molares poseen una corona ancha y baja especialmente apta para una alimentación omnívora. Justamente, los úrsidos actuales son omnívoros: se alimentan de pequeños vertebrados, invertebrados, huevos, frutos y otros vegetales. Sin embargo, hay dos especies de alimentación muy especializada: Melursus ursinus (oso perezoso de la India) que consume casi exclusivamente hormigas y termitas y Ursus maritimus (oso polar), la única especie estrictamente carnívora, que se alimenta básicamente de focas y morsas. Los úrsidos se distribuyen en Eurasia y América del Norte, en las montañas Atlas del norte de África y en los Andes de América del Sur (oso de anteojos solamente), ocupando un rango de hábitats que abarca desde los hielos árticos hasta las selvas tropicales. Incluyen tres géneros actuales y ocho especies que según Hall (1981), pueden ubicarse en tres subfamilias actuales: la de los Tremarctinae, con el género Tremarctos (oso de anteojos); la de los Ursinae, con Ursus (oso negro, grizzly, polar, malayo, perezoso, marrón, etc.) y la de los Ailuropodinae con Ailuropoda (oso panda). La familia Ursidae (con excepción de los extintos Agriotheriinae, cuyo registro es muy fragmentario y más antiguo que el de las otras subfamilias), se registra desde el Mioceno medio hasta la actualidad en Europa; desde el Mioceno tardío hasta la actualidad en América del Norte; desde el Plioceno medio hasta la actualidad en Asia; desde el Pleistoceno temprano hasta la actualidad en América del Sur; sólo en el Plioceno en el sur de África y en la actualidad en el norte de África. Los Ursidae son menos diversos (en cuanto a número de especies) en el presente que en el pasado. Esto es especialmente cierto para los tremarctinos, ya que diez especies vivieron entre el Mioceno tardío y el Pleistoceno tardío en América y en la actualidad solo una, el oso de anteojos. Actualmente más de 250 investigadores de todo el mundo llevan a cabo
+estudios sobre la dieta, uso del hábitat, distribución geográfica, genética, interacción con el hombre, etc. de los osos. El objetivo final de la mayoría de los estudios es la conservación y el manejo de las poblaciones.",
+        "image": "http://es.naturewallpaperfree.com/animales-osos/wallpaper-naturaleza-640x480-1859-3b772e91.jpg",
+         "shows": [
+            {
+                "id": 5,
+                "name": "Darth Vader",
+
+                "schedules": [
+                    "14:30",
+                    "16:30",
+                    "18:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Ursidae"
+    },
+    {  "id":19,
+        "name": "Águila",
+        "specie": "Ave",
+        "description": "Águila es el nombre dado a las mayores aves depredadoras. Las diversas especies y subespecies de águilas pueden encontrarse en casi cualquier parte del mundo excepto en la Antártida. Son miembros de las aves de presa, del orden de Accipitriformes,1 (o Falconiformes acorde a una clasificación anterior),2 familia Accipitridae, subfamilia Buteoninae. Pertenecen a varios géneros, los cuales están sujetos a una reclasificación más adecuada puesto que los expertos no llegan a una opinión consensuada. Las águilas se caracterizan principalmente por su gran tamaño, constitución robusta, cabeza y pico pesados. Como todas las aves de presa, las águilas poseen un pico grande, poderoso y puntiagudo para desprender la carne de su presa. Cuentan también con tarsos y garras poderosas. Llama también la atención la fuerza de las águilas, que les posibilita alzar en vuelo a presas mucho más pesadas que ellas. Además poseen una vista extremadamente aguda que les permite visualizar potenciales presas a distancia, por ejemplo el águila real posee dos puntos focales en sus ojos, uno para mirar de frente y otro para localizar la mirada hacia los costados escudriñando a la distancia. Las águilas han sido utilizadas por muchos pueblos como símbolo nacional y especialmente símbolo imperial, mostrando tanto poderío como belleza. Del Imperio romano es que, en general, otros estados han tomado la forma más usual del emblema con un águila; el Imperio bizantino aportó el símbolo del águila bicéfala. El águila era sinónimo de poder para muchos pueblos antiguos como los Mochica del antiguo Perú, mayas y aztecas. También es emblema de ciertos esquipos deportivos, principalmente en béisbol; caso de los equipos Águilas de Mexicali (México), Águilas del Zulia (Venezuela) y Águilas Cibaeñas (Repúbica Dominicana).",
+        "image": "http://www.luissanmiguel.com/wp-content/uploads/2014/03/MG_8106-640x480.jpg",
+        "shows": [
+            {
+                "id": 5,
+                "name": "Darth Vader",
+
+                "schedules": [
+                    "14:30",
+                    "16:30",
+                    "18:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/%C3%81guila"
+    },
+     {  "id":20,
+        "name": "Ñandú",
+        "specie": "Ave",
+        "description": "Los ñandúes (Rhea) son aves paleognatas endémicas de Sudamérica, existiendo dos especies. No obstante, algunos autores clasifican al ñandú de Darwin (Rhea pennata) como Pterocnemia pennata. Son similares al avestruz, sin embargo poseen marcadas diferencias como un menor tamaño, entre 1,50 y 1,80 metros de altura (la hembra es un poco más pequeña), la presencia de tres dedos en cada pie, mientras que el avestruz sólo posee dos. Hay dimorfismo sexual entre machos y hembras, pero no es muy acentuado. El ñandú es incapaz de volar, sin embargo todo su cuerpo está adaptado para correr a gran velocidad si se ve en peligro, es torpe para saltar pero es un buen nadador si necesita cruzar algún curso de agua. Son animales gregarios, durante el otoño y el invierno conforman grandes grupos desde 20 a 30 individuos, aunque se han visualizado hasta 50 individuos juntos, estos grupos se van disgregando, en grupos menos numerosos a la entrada de la época reproductiva, debido a que los machos empiezan a disputarse entre si, por el derecho del apareamiento, estos animales son netamente polígamos, practicando la poliginia y la poliandria. Entonces en épocas reproductivas encontramos grupos de un macho con varias hembras y grupos no reproductivos formados por juveniles y machos que no pudieron obtener hembras para aparearse. Son grandes corredoras y uno de los animales más veloces del mundo, pudiendo llegar en rectas a superar los 80 kilómetros por hora. Su dieta consiste en hierba, semillas, frutos, insectos, reptiles y hasta pequeños mamíferos. Su afición por las serpientes lo hace especialmente útil. Tiene un estómago con enzimas muy poderosas, por lo cual su voracidad es muy conocida. Entran en celo entre julio y agosto. Para la nidificación escogen terrenos abiertos con poca vegetación; la hembra pone más de 40 huevos en un intervalo de 6 días, en pequeñas depresiones del terreno. Los huevos son grandes (9 x 13 cm) de color amarillento, aunque con el tiempo se vuelven blanquecinos. El macho es el único encargado de la incubación, que dura alrededor de 37 a 38 días, pero con picos mínimos de 30 a 45 días.",
+        "image": "http://sitios.cl/fotos/i/torres-del-paine/640x480/sitios-cl-torresdelpaine-nandu-1.jpg",
+        "shows": [
+            {
+                "id": 5,
+                "name": "Darth Vader",
+
+                "schedules": [
+                    "14:30",
+                    "16:30",
+                    "18:30"
+                ],
+                "duration": "90"
+            }
+        ],
+        "moreInfo": "http://es.wikipedia.org/wiki/Rhea"
+    }
+]
