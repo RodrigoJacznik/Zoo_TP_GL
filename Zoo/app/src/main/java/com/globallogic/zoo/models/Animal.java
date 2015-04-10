@@ -1,38 +1,39 @@
 package com.globallogic.zoo.models;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
  * Created by GL on 19/03/2015.
  */
 public class Animal implements Serializable {
-    private static final long serialVersionUID = 4851874892403066514L;
-    private static int nextId = 0;
+    public static List<Animal> animals = new ArrayList<>();
 
-    private int id;
+    private long id;
     private String name;
     private String specie;
     private String description;
-    private String url;
+    private String image;
+    private String moreInfo;
+    private List<Show> shows;
+
     private boolean favorite;
-    private int specieCode;
 
-    private List<Schudle> schudle;
-    public static List<Animal> animals;
+    public Animal(long id, String name, String specie, String description, String image,
+                  String moreInfo, List<Show> shows) {
 
-    public Animal(String name, String specie, String description, int specieCode) {
-        this.id = nextId++;
+        this.id = id;
         this.name = name;
         this.specie = specie;
         this.description = description;
-        this.specieCode = specieCode;
-        this.url = "http://es.wikipedia.org/wiki/" + this.name;
-        this.schudle = generateHorarios();
+        this.image = image;
+        this.moreInfo = moreInfo;
+        this.shows = shows;
         this.favorite = false;
     }
 
@@ -45,55 +46,9 @@ public class Animal implements Serializable {
                 '}';
     }
 
-    static private List<Schudle> generateHorarios() {
-        List<Schudle> schudles = new ArrayList<>();
 
-        Date now = new Date();
-
-        schudles.add(new Schudle(now, Schudle.addOneHoursToDate(now, 2)));
-        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 26),
-                Schudle.addOneHoursToDate(now, 28)));
-        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 50),
-                Schudle.addOneHoursToDate(now, 55)));
-        schudles.add(new Schudle(Schudle.addOneHoursToDate(now, 76),
-                Schudle.addOneHoursToDate(now, 80)));
-
-
-        return schudles;
-    }
-
-    static public List<Animal> getAnimalList() {
-        if (animals == null) {
-            animals = generateAnimals();
-        }
-        return animals;
-    }
-
-    static private List<Animal> generateAnimals() {
-        List<Animal> animals = new ArrayList<>();
-
-        String descripcion = "Lorem Ipsum is simply dummy text of the printing and typesetting " +
-                "industry. Lorem Ipsum has been the industry's standard dummy text ever since the" +
-                " 1500s, when an unknown printer took a galley of type and scrambled it to make a" +
-                " type specimen book. It has survived not only five centuries, but also the leap" +
-                " into electronic typesetting, remaining essentially unchanged. It was popularised" +
-                " in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages," +
-                " and more recently with desktop publishing software like Aldus PageMaker including" +
-                " versions of Lorem Ipsum.";
-        animals.add(new Animal("Leon", "Especie del leon", descripcion, 1));
-        animals.add(new Animal("Mono", "Especie del mono", descripcion, 2));
-        animals.add(new Animal("Vaca", "Especie del vaca", descripcion, 3));
-        animals.add(new Animal("Gorila", "Especie del Gorila", descripcion, 4));
-        animals.add(new Animal("Leon", "Especie del leon", descripcion, 1));
-        animals.add(new Animal("Mono", "Especie del mono", descripcion, 2));
-        animals.add(new Animal("Vaca", "Especie del vaca", descripcion, 3));
-        animals.add(new Animal("Gorila", "Especie del Gorila", descripcion, 4));
-
-        return animals;
-    }
-
-    static public Animal getById(int id) {
-        if (id == -1) {
+    static public Animal getById(long id) {
+        if (id == -1 || animals.isEmpty()) {
             return null;
         }
         for (Animal animal: animals) {
@@ -128,12 +83,12 @@ public class Animal implements Serializable {
         this.description = description;
     }
 
-    public String getUrl() {
-        return url;
+    public String getMoreInfo() {
+        return moreInfo;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setMoreInfo(String moreInfo) {
+        this.moreInfo = moreInfo;
     }
 
     public boolean isFavorite() {
@@ -144,20 +99,48 @@ public class Animal implements Serializable {
         this.favorite = favorite;
     }
 
-    public List<Schudle> getSchudle() {
-        return schudle;
+    public List<Show> getShow() {
+        return shows;
     }
 
-    public void setSchudle(List<Schudle> schudle) {
-        this.schudle = schudle;
+    public void setShow(List<Show> shows) {
+        this.shows = shows;
     }
 
-    public int getSpecieCode() {
-        return specieCode;
+    public static List<Animal> getAnimals() {
+        return animals;
     }
 
-    public void setSpecieCode(int specieCode) {
-        this.specieCode = specieCode;
+    public static void setAnimals(List<Animal> animals) {
+        Animal.animals = animals;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public List<Show> getShows() {
+        return shows;
+    }
+
+    public void setShows(List<Show> shows) {
+        this.shows = shows;
     }
 
     static public boolean deleteAnimal(int animalID) {
@@ -169,7 +152,33 @@ public class Animal implements Serializable {
         return animals.remove(animal);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
+
+    public static Animal fromJson(String str) throws JSONException {
+        JSONObject jAnimal = new JSONObject(str);
+        long id = jAnimal.getLong("id");
+
+        if (getById(id) != null) {
+            return getById(id);
+        }
+
+        String name = jAnimal.getString("name");
+        String specie = jAnimal.getString("specie");
+        String description = jAnimal.getString("description");
+        String image = jAnimal.getString("image");
+
+        List<Show> shows = new ArrayList<>();
+        JSONArray jShows = jAnimal.getJSONArray("shows");
+        for (int i = 0; i < jShows.length(); i++) {
+            shows.add(Show.fromJson(jShows.get(i).toString()));
+        }
+        String moreInfo = jAnimal.getString("moreInfo");
+
+        Animal animal = new Animal(id, name, specie, description, image, moreInfo, shows);
+        animals.add(animal);
+        return animal;
+    }
+
 }

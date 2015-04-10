@@ -1,6 +1,5 @@
 package com.globallogic.zoo.models;
 
-import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,26 +8,22 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
- * Created by GL on 26/03/2015.
+ * Created by GL on 09/04/2015.
  */
-public class Schudle implements Serializable {
-
-    private static final long serialVersionUID = 4138897544516350399L;
+public class Schedule {
     private static GregorianCalendar calendar = new GregorianCalendar();
+
     private Date initialHour;
     private Date finalHour;
 
-    public Schudle(Date initialHour, Date finalHour) {
-        this.initialHour = initialHour;
-        this.finalHour = finalHour;
-    }
+    public Schedule(String initialHour, int duration) {
+        String[] schedule = initialHour.split(":");
 
-    public void setInitialHour(Date initialHour) {
-        this.initialHour = initialHour;
-    }
-
-    public void setFinalHour(Date finalHour) {
-        this.finalHour = finalHour;
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(schedule[0]));
+        calendar.set(Calendar.MINUTE, Integer.valueOf(schedule[1]));
+        this.initialHour = calendar.getTime();
+        calendar.add(Calendar.MINUTE, duration);
+        this.finalHour = calendar.getTime();
     }
 
     public Date getInitialHour() {
@@ -39,7 +34,7 @@ public class Schudle implements Serializable {
         return finalHour;
     }
 
-    public String getDay() {
+    public String getDayOfTheWeek() {
         DateFormatSymbols dfs = new DateFormatSymbols(Locale.getDefault());
         String weekdays[] = dfs.getWeekdays();
 
