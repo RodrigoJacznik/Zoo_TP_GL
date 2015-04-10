@@ -9,13 +9,16 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.models.Schudle;
+import com.globallogic.zoo.models.Schedule;
+import com.globallogic.zoo.models.Show;
+
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by GL on 07/04/2015.
  */
 public class onTableRowClickListener implements View.OnClickListener {
-    private Schudle schudle;
+    private Schedule schedule;
     private Context context;
 
     public static final String[] EVENT_PROYECTION = new String[] {
@@ -30,8 +33,8 @@ public class onTableRowClickListener implements View.OnClickListener {
     private static final int EVENT_DTSTART_INDEX = 2;
     private static final int EVENT_DTEND_INDEX = 3;
 
-    public onTableRowClickListener(Schudle schudle, Context context) {
-        this.schudle = schudle;
+    public onTableRowClickListener(Schedule schedule, Context context) {
+        this.schedule = schedule;
         this.context = context;
     }
 
@@ -50,8 +53,8 @@ public class onTableRowClickListener implements View.OnClickListener {
                     " OR " +
                 "( " + CalendarContract.Events.DTSTART + " between ? AND ? ))";
 
-        String start = String.valueOf(schudle.getInitialHour().getTime());
-        String end = String.valueOf(schudle.getFinalHour().getTime());
+        String start = String.valueOf(schedule.getInitialHour().getTime());
+        String end = String.valueOf(schedule.getFinalHour().getTime());
 
         String[] selectionargs = new String[] {start, end, start, end};
 

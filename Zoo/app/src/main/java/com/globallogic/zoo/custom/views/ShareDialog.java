@@ -35,11 +35,6 @@ public class ShareDialog extends DialogFragment {
 
     private EditText email;
 
-    private static final String[] CONTACT_PROYECTION = new String[] {
-            ContactsContract.RawContacts._ID,
-            ContactsContract.Contacts.DISPLAY_NAME,
-    };
-
     public interface NoticeShareDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog, String[] email);
         public void onDialogNegativeClick(DialogFragment dialog);
@@ -71,9 +66,7 @@ public class ShareDialog extends DialogFragment {
         contacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> emails = (ArrayList<String>) getContacts(context);
                 Intent intent = new Intent(context, MailSelectorActivity.class);
-                intent.putStringArrayListExtra(MailSelectorActivity.EMAILS, emails);
                 startActivityForResult(intent, 0);
             }
         });
@@ -110,31 +103,5 @@ public class ShareDialog extends DialogFragment {
                 }
             }
         }
-    }
-
-    private List<String> getContacts(Context context) {
-        List<String> emails = new ArrayList<>();
-
-        Cursor cur;
-        ContentResolver cr = context.getContentResolver();
-        Uri uri = ContactsContract.Contacts.CONTENT_URI;
-
-        cur = cr.query(uri, CONTACT_PROYECTION, null, null, null);
-        if (cur != null && cur.getCount() > 1) {
-            while (cur.moveToNext()) {
-                Cursor emailCur = cr.query(
-                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                        null,
-                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + cur.getString(0),
-                        null, null);
-                int index = emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA);
-                while (emailCur.moveToNext()) {
-                    emails.add(emailCur.getString(index));
-                }
-                emailCur.close();
-            }
-            cur.close();
-        }
-        return emails;
     }
 }
