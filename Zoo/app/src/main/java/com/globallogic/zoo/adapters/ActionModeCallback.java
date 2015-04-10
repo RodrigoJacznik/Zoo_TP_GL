@@ -1,4 +1,4 @@
-package com.globallogic.zoo.custom.views.callbacks;
+package com.globallogic.zoo.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,11 +6,9 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
-import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.utils.AnimalUtils;
 
 /**
@@ -62,7 +60,7 @@ public class ActionModeCallback implements ActionMode.Callback {
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
-        animalAdapter.setviewHoldersPressedState(false);
+        animalAdapter.setViewHoldersPressedState(false);
         this.actionMode = null;
     }
 
