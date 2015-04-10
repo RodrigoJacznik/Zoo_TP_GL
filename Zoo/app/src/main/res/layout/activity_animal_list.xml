@@ -38,11 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextSecundary"/>
-
-            <View
-                android:id="@+id/animaldetailsactivity_color"
-                android:layout_width="10dp"
-                android:layout_height="10dp"/>
         </LinearLayout>
 
         <ImageView
