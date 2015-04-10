@@ -3,12 +3,12 @@ package com.globallogic.zoo.activities;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,8 +20,12 @@ import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
+import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.models.Animal;
+import com.globallogic.zoo.utils.JsonParser;
+
+import org.json.JSONException;
 
 
 public class WelcomeActivity extends ActionBarActivity implements
@@ -43,7 +47,9 @@ public class WelcomeActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        Log.d("Life cycle", "WelcomeActivity onCreate");
+
+        new ParseAnimalJson().execute();
+
         bindViews();
         setUpActionBar();
 
@@ -71,7 +77,12 @@ public class WelcomeActivity extends ActionBarActivity implements
     protected void onStart() {
         super.onStart();
 
-        userName = getIntent().getStringExtra(USERK);
+        Intent intent = getIntent();
+
+        userName = intent.getStringExtra(USERK);
+        Boolean bool = intent.getBooleanExtra(AlarmBroadcastReceiver.MULTI_NOTIFICATION, false);
+        AlarmBroadcastReceiver.resetNotificationCount(bool);
+
         registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
         welcome.setText(makeWelcomeMessage(userName));
     }
@@ -79,7 +90,9 @@ public class WelcomeActivity extends ActionBarActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(lowBatteryBroadcastReceiver);
+        if (lowBatteryBroadcastReceiver != null) {
+            unregisterReceiver(lowBatteryBroadcastReceiver);
+        }
     }
 
     @Override
@@ -142,4 +155,18 @@ public class WelcomeActivity extends ActionBarActivity implements
         welcome = (TextView) findViewById(R.id.welcomeactivity_welcome);
         maps = (ImageView) findViewById(R.id.welcomeactivity_maps);
     }
+
+    private class ParseAnimalJson extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                JsonParser.parseJson(getResources().openRawResource(R.raw.animals));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
 }
