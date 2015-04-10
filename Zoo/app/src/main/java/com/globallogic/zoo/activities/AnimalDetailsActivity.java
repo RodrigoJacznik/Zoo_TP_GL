@@ -34,7 +34,8 @@ import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.listeners.onTableRowClickListener;
 import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.models.Schudle;
+import com.globallogic.zoo.models.Schedule;
+import com.globallogic.zoo.models.Show;
 import com.globallogic.zoo.utils.AnimalUtils;
 
 import java.io.File;
@@ -96,13 +97,14 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         });
 
         favoriteView.setOnFavoriteClickListener(this);
+
         lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        int animalID = getIntent().getIntExtra(AnimalDetailsActivity.ANIMAL, -1);
+        long animalID = getIntent().getLongExtra(ANIMAL, -1);
         animal = Animal.getById(animalID);
 
         initAnimalViews();
@@ -182,7 +184,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     private void moreInfo() {
         if (checkConnection()) {
             Intent intent = new Intent(this, MoreInfoActivity.class);
-            intent.putExtra(MoreInfoActivity.URL, animal.getUrl());
+            intent.putExtra(MoreInfoActivity.URL, animal.getMoreInfo());
             startActivity(intent);
         } else {
             Toast.makeText(
@@ -236,28 +238,30 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     }
 
     private void populateScheduleTable() {
-        for (Schudle schudle : animal.getSchudle()) {
-            TableRow horarioRow = new TableRow(this);
+        for (Show show : animal.getShow()) {
+            for (Schedule schedule : show.getSchedules()) {
+                TableRow horarioRow = new TableRow(this);
 
-            TextView dia = new TextView(this);
-            TextView horaInicio = new TextView(this);
-            TextView horaFin = new TextView(this);
+                TextView name = new TextView(this);
+                TextView horaInicio = new TextView(this);
+                TextView horaFin = new TextView(this);
 
-            horarioRow.setOnClickListener(new onTableRowClickListener(schudle, this));
+                horarioRow.setOnClickListener(new onTableRowClickListener(schedule, this));
 
-            dia.setText(schudle.getDay());
-            horaInicio.setText(schudle.getInitialHourString());
-            horaFin.setText(schudle.getFinalHourString());
+                name.setText(show.getName());
+                horaInicio.setText(schedule.getInitialHourString());
+                horaFin.setText(schedule.getFinalHourString());
 
-            dia.setGravity(Gravity.CENTER);
-            horaInicio.setGravity(Gravity.CENTER);
-            horaFin.setGravity(Gravity.CENTER);
+                name.setGravity(Gravity.CENTER);
+                horaInicio.setGravity(Gravity.CENTER);
+                horaFin.setGravity(Gravity.CENTER);
 
-            horarioRow.addView(dia);
-            horarioRow.addView(horaInicio);
-            horarioRow.addView(horaFin);
+                horarioRow.addView(name);
+                horarioRow.addView(horaInicio);
+                horarioRow.addView(horaFin);
 
-            schedule.addView(horarioRow);
+                this.schedule.addView(horarioRow);
+            }
         }
     }
 

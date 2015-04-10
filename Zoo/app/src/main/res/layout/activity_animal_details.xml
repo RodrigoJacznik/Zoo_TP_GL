@@ -84,11 +84,19 @@
             android:layout_below="@id/animaldetailsactivity_description"
             android:layout_alignParentRight="true"/>
 
+        <TextView
+            android:id="@+id/animaldetailsactivity_attractions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/animaldetailsactivity_more"
+            android:text="@string/animaldetailsactivity_attractions"/>
+
         <TableLayout
             android:id="@+id/animaldetailsactivity_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/animaldetailsactivity_more"
+            android:layout_below="@id/animaldetailsactivity_attractions"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:shrinkColumns="*"
@@ -96,7 +104,7 @@
 
             <TableRow>
                 <TextView
-                    android:text="@string/animaldetailsactivity_day"
+                    android:text="@string/animaldetailsactivity_name"
                     android:gravity="center"
                     android:textStyle="bold"/>
                 <TextView
