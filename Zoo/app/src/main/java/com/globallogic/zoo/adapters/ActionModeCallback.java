@@ -8,8 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.adapters.AnimalAdapter;
-import com.globallogic.zoo.utils.AnimalUtils;
+import com.globallogic.zoo.helpers.AnimalHelper;
 
 /**
  * Created by GL on 01/04/2015.
@@ -45,7 +44,7 @@ public class ActionModeCallback implements ActionMode.Callback {
                 actionMode.finish();
                 return true;
             case R.id.cm_welcome_share:
-                Intent shareIntent = AnimalUtils.getShareAnimalIntent(animalAdapter.getItem());
+                Intent shareIntent = AnimalHelper.getShareAnimalIntent(animalAdapter.getItem());
                 context.startActivity(shareIntent);
                 actionMode.finish();
                 return true;

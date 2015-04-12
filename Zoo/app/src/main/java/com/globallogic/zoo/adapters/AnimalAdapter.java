@@ -1,7 +1,6 @@
 package com.globallogic.zoo.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.models.Animal;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
