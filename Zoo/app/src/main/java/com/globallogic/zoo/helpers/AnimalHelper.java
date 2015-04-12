@@ -1,14 +1,8 @@
-package com.globallogic.zoo.utils;
+package com.globallogic.zoo.helpers;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.models.Animal;
@@ -20,7 +14,7 @@ import java.io.File;
 /**
  * Created by GL on 01/04/2015.
  */
-public class AnimalUtils {
+abstract public class AnimalHelper {
 
     static public Intent getShareAnimalIntent(Animal animal) {
         Intent intent = new Intent(Intent.ACTION_SEND);

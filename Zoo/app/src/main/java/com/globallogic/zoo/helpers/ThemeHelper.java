@@ -1,4 +1,4 @@
-package com.globallogic.zoo.utils;
+package com.globallogic.zoo.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import com.globallogic.zoo.R;
 /**
  * Created by GL on 31/03/2015.
  */
-public class ThemeUtils {
+public class ThemeHelper {
     private static int sTheme;
     public final static int THEME_DEFAULT = 0;
     public final static int THEME_EXTRA = 1;
