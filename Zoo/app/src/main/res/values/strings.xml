@@ -51,6 +51,11 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="notification_content">Apurate, la atraccion de %1$s esta por comenzar</string>
-    <string name="notification_title">Una atraccion esta por comenzar</string>
+    <string name="notification_single_content">Apurate, la atraccion de %1$s esta por comenzar</string>
+    <string name="notification_single_title">Una atraccion esta por comenzar</string>
+    <string name="mailselectoractivity_error">No tenes emails disponibles, presione back para continuar</string>
+    <string name="notification_multi_title">%1$s atracciones estan por comenzar</string>
+    <string name="notification_multi_content">Apurate %1$s atracciones estan por comenzar</string>
+    <string name="animaldetailsactivity_attractions_start">Una atraccion del %1$s esta por comenzar</string>
+
 </resources>
