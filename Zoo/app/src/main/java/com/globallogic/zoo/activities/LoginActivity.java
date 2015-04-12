@@ -1,13 +1,10 @@
 package com.globallogic.zoo.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,10 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.models.Animal;
 
 
-public class LoginActivity extends ActionBarActivity implements TextWatcher {
+public class LoginActivity extends BaseActivity implements TextWatcher {
     private final static String PASS = "Android";
     private final static String USER = "GL";
 
@@ -48,11 +44,9 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
                 String userInput = user.getText().toString();
 
                 if (passInput.equals(PASS) && userInput.equals(USER)) {
-                    Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                    intent.putExtra(WelcomeActivity.USERK, userInput);
-                    restartDefaultViewState();
+                    Intent intent = WelcomeActivity.getIntent(LoginActivity.this, userInput);
                     startActivity(intent);
-                    finish(); // Para que welcome no vuelva a loging
+                    finish();
                 } else {
                     error.setVisibility(View.VISIBLE);
                 }
@@ -93,17 +87,12 @@ public class LoginActivity extends ActionBarActivity implements TextWatcher {
         signin.setEnabled(! user.getText().toString().isEmpty() && ! pass.getText().toString().isEmpty());
     }
 
-    private void setUpActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+    @Override
+    protected void setUpActionBar() {
+        super.setUpActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
-        actionBar.setIcon(R.drawable.ic_action_logo);
     }
 
-    private void restartDefaultViewState() {
-        pass.setText("");
-        user.setText("");
-        error.setVisibility(View.INVISIBLE);
-    }
     private void bindViews() {
         signin = (Button) findViewById(R.id.mainactivity_siging);
         pass = (EditText) findViewById(R.id.mainactivity_pass);

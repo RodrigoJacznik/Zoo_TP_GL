@@ -17,9 +17,8 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 
 
-public class MoreInfoActivity extends ActionBarActivity {
+public class MoreInfoActivity extends BaseActivity {
     public final static String URL = "URL";
-    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +27,6 @@ public class MoreInfoActivity extends ActionBarActivity {
 
         setUpActionBar();
         callBrowser();
-
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
     @Override
@@ -60,12 +45,6 @@ public class MoreInfoActivity extends ActionBarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void setUpActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
-        actionBar.setIcon(R.drawable.ic_action_logo);
     }
 
     private class MyBrowser extends WebViewClient {

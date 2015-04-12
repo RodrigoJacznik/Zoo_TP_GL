@@ -1,56 +1,45 @@
 package com.globallogic.zoo.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
-import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
-import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
+import com.globallogic.zoo.asynctask.OnAsyncTaskListener;
+import com.globallogic.zoo.asynctask.ParseAnimalJsonTask;
 import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.utils.HttpConnectionManager;
-import com.globallogic.zoo.utils.JsonParser;
+import com.globallogic.zoo.helpers.HttpConnectionHelper;
+import com.globallogic.zoo.helpers.NotificationHelper;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class WelcomeActivity extends ActionBarActivity implements
-        AnimalAdapter.OnAnimalClickListener {
+public class WelcomeActivity extends BaseActivity implements
+        AnimalAdapter.OnAnimalClickListener,
+        OnAsyncTaskListener<List<Animal>> {
 
-    private static final String URL_GET = "http://rodjacznik.pythonanywhere.com/api/v1.0/animals";
-    public static final String USERK = "USER";
-    private static final String ANIMAL = "ANIMAL";
+    public static final String USER = "USER";
 
     private Button signout;
     private TextView welcome;
     private ImageView maps;
     private RecyclerView recyclerView;
     private AnimalAdapter animalAdapter;
-    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
+    private ProgressBar load;
 
     private String userName;
 
@@ -59,10 +48,9 @@ public class WelcomeActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        ParseAnimalJson parseAnimalJson = new ParseAnimalJson();
-        parseAnimalJson.execute();
-
         bindViews();
+        new ParseAnimalJsonTask(this, HttpConnectionHelper.ALL_ANIMALS).execute();
+
         setUpActionBar();
 
         signout.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +66,6 @@ public class WelcomeActivity extends ActionBarActivity implements
                 viewPositionInMaps();
             }
         });
-
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
     }
 
     @Override
@@ -88,20 +74,10 @@ public class WelcomeActivity extends ActionBarActivity implements
 
         Intent intent = getIntent();
 
-        userName = intent.getStringExtra(USERK);
-        Boolean bool = intent.getBooleanExtra(AlarmBroadcastReceiver.MULTI_NOTIFICATION, false);
-        AlarmBroadcastReceiver.resetNotificationCount(bool);
+        userName = intent.getStringExtra(USER);
+        NotificationHelper.cancelNotification(this);
 
-        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
         welcome.setText(makeWelcomeMessage(userName));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (lowBatteryBroadcastReceiver != null) {
-            unregisterReceiver(lowBatteryBroadcastReceiver);
-        }
     }
 
     @Override
@@ -129,10 +105,10 @@ public class WelcomeActivity extends ActionBarActivity implements
         startActivity(intent);
     }
 
-    private void setUpActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+    @Override
+    protected void setUpActionBar() {
+        super.setUpActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
-        actionBar.setIcon(R.drawable.ic_action_logo);
     }
 
     private void viewPositionInMaps() {
@@ -163,32 +139,27 @@ public class WelcomeActivity extends ActionBarActivity implements
         signout = (Button) findViewById(R.id.welcomeactivity_signout);
         welcome = (TextView) findViewById(R.id.welcomeactivity_welcome);
         maps = (ImageView) findViewById(R.id.welcomeactivity_maps);
+        load = (ProgressBar) findViewById(R.id.welcomeactivity_load);
     }
 
-    private class ParseAnimalJson extends AsyncTask<Void, Void, List<Animal>> {
+    public static Intent getIntent(Context context, String userName) {
+        Intent intent = new Intent(context, WelcomeActivity.class);
+        intent.putExtra(USER, userName);
+        return intent;
+    }
 
-        @Override
-        protected List<Animal> doInBackground(Void... params) {
-            HttpConnectionManager conn =
-                    new HttpConnectionManager(URL_GET, HttpConnectionManager.GET);
-            List<Animal> animals = new ArrayList<>();
-            conn.connect();
-            int response = conn.getResponseCode();
-            if (response == 200) {
-                String data = conn.getData();
-                if (data != null) {
-                    animals = JsonParser.parseJson(data);
-                }
-            }
-
-            return animals;
-        }
-
-        @Override
-        protected void onPostExecute(List<Animal> animals) {
+    @Override
+    public void onPostExecute(List<Animal> animals) {
+        if (! animals.isEmpty()) {
             Animal.setAnimals(animals);
-            bindRecyclerView();
-            registerForContextMenu(recyclerView);
         }
+        bindRecyclerView();
+        registerForContextMenu(recyclerView);
+        load.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onPreExecute() {
+        load.setVisibility(View.VISIBLE);
     }
 }

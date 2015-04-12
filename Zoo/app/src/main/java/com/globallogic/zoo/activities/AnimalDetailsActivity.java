@@ -1,18 +1,11 @@
 package com.globallogic.zoo.activities;
 
-import android.app.AlarmManager;
 import android.app.DialogFragment;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -28,22 +21,23 @@ import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
-import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.listeners.onTableRowClickListener;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schedule;
 import com.globallogic.zoo.models.Show;
-import com.globallogic.zoo.utils.AnimalUtils;
-import com.globallogic.zoo.utils.HttpConnectionManager;
+import com.globallogic.zoo.helpers.AnimalHelper;
+import com.globallogic.zoo.helpers.HttpConnectionHelper;
+import com.globallogic.zoo.helpers.NotificationHelper;
 
 import java.io.File;
 
 
-public class AnimalDetailsActivity extends ActionBarActivity implements
+public class AnimalDetailsActivity extends BaseActivity implements
         FavoriteView.OnFavoriteClickListener,
-        ShareDialog.NoticeShareDialogListener {
+        ShareDialog.NoticeShareDialogListener,
+        NotificationHelper.OnNotificationListener {
 
     public final static String ANIMAL = "ANIMAL";
 
@@ -61,7 +55,6 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     private ImageView share;
     private ImageView animalThumb;
     private Button btnMoreInfo;
-    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
     private Animal animal;
     private int favoriteViewColor;
@@ -98,7 +91,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
 
         favoriteView.setOnFavoriteClickListener(this);
 
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
+
     }
 
     @Override
@@ -106,16 +99,15 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         super.onStart();
         long animalID = getIntent().getLongExtra(ANIMAL, -1);
         animal = Animal.getById(animalID);
-
+        NotificationHelper.regiterListener(this);
         initAnimalViews();
         populateScheduleTable();
-        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(lowBatteryBroadcastReceiver);
+        NotificationHelper.unregisterListener();
     }
 
     @Override
@@ -175,14 +167,8 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         }
     }
 
-    private void setUpActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
-        actionBar.setIcon(R.drawable.ic_action_logo);
-    }
-
     private void moreInfo() {
-        if (HttpConnectionManager.checkConnection(this)) {
+        if (HttpConnectionHelper.checkConnection(this)) {
             Intent intent = new Intent(this, MoreInfoActivity.class);
             intent.putExtra(MoreInfoActivity.URL, animal.getMoreInfo());
             startActivity(intent);
@@ -195,7 +181,7 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
     }
 
     private void shareAnimal() {
-        Intent shareIntent = AnimalUtils.getShareAnimalIntent(animal);
+        Intent shareIntent = AnimalHelper.getShareAnimalIntent(animal);
         startActivity(shareIntent);
     }
 
@@ -268,23 +254,12 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         rootView.setBackgroundColor(color);
         favoriteView.setBackgroundColor(favoriteViewColor);
 
-        sendVibrateBroadcast(20);
-    }
-
-    private void sendVibrateBroadcast(int seconds) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
-
-        intent.putExtra(AlarmBroadcastReceiver.ANIMAL_ID, animal.getId());
-
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + seconds * 1000, alarmIntent);
+        AlarmBroadcastReceiver.sendVibrateBroadcast(this, 20, animal.getId());
     }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String[] email) {
-        Intent mailIntent = AnimalUtils.getShareMailAnimalIntent(animalPhoto, this, animal);
+        Intent mailIntent = AnimalHelper.getShareMailAnimalIntent(animalPhoto, this, animal);
         mailIntent.putExtra(Intent.EXTRA_EMAIL, email);
 
         if (mailIntent.resolveActivity(getPackageManager()) != null) {
@@ -301,4 +276,14 @@ public class AnimalDetailsActivity extends ActionBarActivity implements
         dialog.dismiss();
     }
 
+    @Override
+    public long getId() {
+        return animal.getId();
+    }
+
+    @Override
+    public void onNotification() {
+        Toast.makeText(this, getString(R.string.animaldetailsactivity_attractions_start),
+                Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,36 +1,28 @@
 package com.globallogic.zoo.activities;
 
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
-import com.globallogic.zoo.utils.ThemeUtils;
+import com.globallogic.zoo.helpers.ThemeHelper;
 
-public class SettingsActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
+public class SettingsActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public final static String THEME = "THEME";
 
     private Spinner spinner;
-    private LowBatteryBroadcastReceiver lowBatteryBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeUtils.onActivityCreateSetTheme(this);
+        ThemeHelper.onActivityCreateSetTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         spinner = (Spinner) findViewById(R.id.settingsactivity_spinner);
-        spinner.setSelection(ThemeUtils.getsTheme(), true);
+        spinner.setSelection(ThemeHelper.getsTheme(), true);
         spinner.setOnItemSelectedListener(this);
 
         Button dummy = (Button) findViewById(R.id.settingsactivity_dummybutton);
@@ -42,30 +34,15 @@ public class SettingsActivity extends ActionBarActivity implements AdapterView.O
                         Toast.LENGTH_SHORT).show();
             }
         });
-
-        lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        registerReceiver(lowBatteryBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unregisterReceiver(lowBatteryBroadcastReceiver);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String option = (String) parent.getItemAtPosition(position);
         if (option.equals("Extra")) {
-            ThemeUtils.changeToTheme(this, ThemeUtils.THEME_EXTRA);
+            ThemeHelper.changeToTheme(this, ThemeHelper.THEME_EXTRA);
         } else {
-            ThemeUtils.changeToTheme(this, ThemeUtils.THEME_DEFAULT);
+            ThemeHelper.changeToTheme(this, ThemeHelper.THEME_DEFAULT);
         }
     }
 
