@@ -16,8 +16,14 @@
 
         <ImageView
             android:id="@+id/animallistactivity_photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+        <ProgressBar
+            android:id="@+id/animallistactivity_load"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
 
         <LinearLayout
             android:id="@+id/animallistactivity_detail"

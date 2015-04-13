@@ -79,6 +79,16 @@
             android:text="@string/mainactivity_error"
             android:visibility="invisible"/>
 
+        <ProgressBar
+            android:id="@+id/mainactivity_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mainactivity_linearlayout_pass"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="invisible"/>
+
         <Button
             android:id="@+id/mainactivity_siging"
             android:layout_width="wrap_content"

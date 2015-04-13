@@ -6,32 +6,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.globallogic.zoo.activities.AnimalDetailsActivity">
+    tools:context="com.globallogic.zoo.activities.AnimalDetailsActivity"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/animaldetailsactivity_load"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="15dp"
+            android:visibility="visible"/>
 
         <ImageView
             android:id="@+id/animaldetailsactivity_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <ImageView
+            android:id="@+id/animaldetailsactivity_photo"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:src="@drawable/sheep"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_height="wrap_content"
+            android:src="@drawable/state_list_photo"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/animaldetailsactivity_load"/>
+
+        <com.globallogic.zoo.custom.views.FavoriteView
+            android:id="@+id/animaldetailsactivity_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:displayText="false"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/animaldetailsactivity_load"
+            android:layout_below="@+id/animaldetailsactivity_photo"></com.globallogic.zoo.custom.views.FavoriteView>
 
         <TextView
             android:id="@+id/animaldetailsactivity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextMain"
-            android:layout_toRightOf="@+id/animaldetailsactivity_fav"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"/>
 
         <TextView
             android:id="@+id/animaldetailsactivity_specie"
@@ -39,42 +59,18 @@
             android:layout_height="wrap_content"
             style="@style/TextSecundary"
             android:layout_below="@+id/animaldetailsactivity_name"
-            android:layout_toRightOf="@+id/animaldetailsactivity_fav"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="28dp"
             android:layout_marginBottom="15dp"/>
-        
-        <ImageView
-            android:id="@+id/animaldetailsactivity_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/state_list_photo"
-            android:layout_toRightOf="@id/animaldetailsactivity_img"/>
-
-        <ImageView
-            android:id="@+id/animaldetailsactivity_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/state_list_share"
-            android:layout_toRightOf="@id/animaldetailsactivity_img"
-            android:layout_below="@id/animaldetailsactivity_photo"/>
-
-        <com.globallogic.zoo.custom.views.FavoriteView
-            android:id="@+id/animaldetailsactivity_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:displayText="false"
-            android:layout_toRightOf="@id/animaldetailsactivity_img"
-            android:layout_below="@+id/animaldetailsactivity_share"/>
 
         <TextView
             android:id="@+id/animaldetailsactivity_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             style="@style/TextSecundary"
-            android:layout_below="@id/animaldetailsactivity_specie"
+            android:layout_below="@+id/animaldetailsactivity_load"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="25dp"/>
 
         <Button
             android:id="@+id/animaldetailsactivity_more"
