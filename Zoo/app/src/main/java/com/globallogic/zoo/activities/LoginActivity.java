@@ -1,6 +1,8 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -16,12 +18,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.helpers.HttpConnectionHelper;
+import com.globallogic.zoo.helpers.SharedPreferencesHelper;
+import com.globallogic.zoo.helpers.ThemeHelper;
 
 
 public class LoginActivity extends BaseActivity implements TextWatcher {
-    private final static String PASS = "Android";
-    private final static String USER = "GL";
 
     private EditText pass;
     private EditText user;
@@ -32,8 +35,14 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+        if (SharedPreferencesHelper.isUserLogin(this)) {
+            Intent intent = WelcomeActivity.getIntent(LoginActivity.this);
+            startActivity(intent);
+            finish();
+        }
+
+        setContentView(R.layout.activity_login);
         bindViews();
         setUpActionBar();
 
@@ -96,6 +105,13 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         load = (ProgressBar) findViewById(R.id.mainactivity_load);
     }
 
+    private void login(String userInput, String passInput) {
+        Intent intent = WelcomeActivity.getIntent(LoginActivity.this);
+        SharedPreferencesHelper.setUserNameAndPass(this, userInput, passInput);
+        startActivity(intent);
+        finish();
+    }
+
     private class LoginTask extends AsyncTask<Void, Void, Boolean> {
 
         String passInput;
@@ -120,11 +136,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         protected void onPostExecute(Boolean aBoolean) {
             load.setVisibility(View.INVISIBLE);
             if (aBoolean) {
-                Intent intent = WelcomeActivity.getIntent(LoginActivity.this, userInput);
-                HttpConnectionHelper.setUser(userInput);
-                HttpConnectionHelper.setPass(passInput);
-                startActivity(intent);
-                finish();
+                login(userInput, passInput);
             } else {
                 error.setVisibility(View.VISIBLE);
                 signin.setEnabled(true);
