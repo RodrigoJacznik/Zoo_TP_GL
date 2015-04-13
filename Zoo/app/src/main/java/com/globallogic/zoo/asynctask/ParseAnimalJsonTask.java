@@ -1,5 +1,6 @@
 package com.globallogic.zoo.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.globallogic.zoo.models.Animal;
@@ -11,33 +12,24 @@ import java.util.List;
 
 public class ParseAnimalJsonTask extends AsyncTask<Void, Void, List<Animal>> {
 
-    OnAsyncTaskListener<List<Animal>> onAsyncTaskListener;
-    int action;
+    private OnAsyncTaskListener<List<Animal>> onAsyncTaskListener;
+    private Context context;
 
-    public ParseAnimalJsonTask(OnAsyncTaskListener onAsyncTaskListener, int action) {
+    public ParseAnimalJsonTask(Context context, OnAsyncTaskListener onAsyncTaskListener) {
+        this.context = context;
         this.onAsyncTaskListener = onAsyncTaskListener;
-        this.action = action;
     }
 
     @Override
     protected List<Animal> doInBackground(Void... params) {
 
         List<Animal> animals = new ArrayList<>();
-        String data = excecuteAction();
+        String data = HttpConnectionHelper.getAllAnimals(context);
         if (data != null) {
             animals = JsonParserHelper.parseJson(data);
         }
 
         return animals;
-    }
-
-    private String excecuteAction() {
-        switch (action) {
-            case HttpConnectionHelper.ALL_ANIMALS:
-                return HttpConnectionHelper.getAllAnimals();
-            default:
-                return null;
-        }
     }
 
     @Override

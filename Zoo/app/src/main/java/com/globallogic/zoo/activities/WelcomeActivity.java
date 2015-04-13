@@ -49,7 +49,7 @@ public class WelcomeActivity extends BaseActivity implements
         setContentView(R.layout.activity_welcome);
 
         bindViews();
-        new ParseAnimalJsonTask(this, HttpConnectionHelper.ALL_ANIMALS).execute();
+        new ParseAnimalJsonTask(this, this).execute();
 
         setUpActionBar();
 
