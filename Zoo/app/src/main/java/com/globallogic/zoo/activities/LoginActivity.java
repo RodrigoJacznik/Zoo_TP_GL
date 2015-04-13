@@ -1,6 +1,7 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -11,9 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.helpers.HttpConnectionHelper;
 
 
 public class LoginActivity extends BaseActivity implements TextWatcher {
@@ -24,6 +27,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     private EditText user;
     private Button signin;
     private TextView error;
+    private ProgressBar load;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +44,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String passInput = pass.getText().toString();
-                String userInput = user.getText().toString();
-
-                if (passInput.equals(PASS) && userInput.equals(USER)) {
-                    Intent intent = WelcomeActivity.getIntent(LoginActivity.this, userInput);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    error.setVisibility(View.VISIBLE);
-                }
+                new LoginTask().execute();
             }
         });
     }
@@ -98,5 +93,42 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         pass = (EditText) findViewById(R.id.mainactivity_pass);
         user = (EditText) findViewById(R.id.mainactivity_user);
         error = (TextView) findViewById(R.id.mainactivity_error);
+        load = (ProgressBar) findViewById(R.id.mainactivity_load);
+    }
+
+    private class LoginTask extends AsyncTask<Void, Void, Boolean> {
+
+        String passInput;
+        String userInput;
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return HttpConnectionHelper.login(LoginActivity.this, userInput, passInput);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            passInput = pass.getText().toString();
+            userInput = user.getText().toString();
+            load.setVisibility(View.VISIBLE);
+            signin.setEnabled(false);
+            error.setVisibility(View.INVISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            load.setVisibility(View.INVISIBLE);
+            if (aBoolean) {
+                Intent intent = WelcomeActivity.getIntent(LoginActivity.this, userInput);
+                HttpConnectionHelper.setUser(userInput);
+                HttpConnectionHelper.setPass(passInput);
+                startActivity(intent);
+                finish();
+            } else {
+                error.setVisibility(View.VISIBLE);
+                signin.setEnabled(true);
+            }
+        }
     }
 }
