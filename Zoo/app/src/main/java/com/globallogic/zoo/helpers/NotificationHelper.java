@@ -35,6 +35,8 @@ abstract public class NotificationHelper {
     private static OnNotificationListener onNotificationListener;
 
     public static void makeNotification(Context context, long animalId) {
+        Animal animal = Animal.getById(animalId);
+
         if (checkAnimalActivityOnScreen(animalId)) {
             if (notificationCount > 1) {
                 pendingIntent = getWelcomeActivityPendingIntent(context);
@@ -45,11 +47,12 @@ abstract public class NotificationHelper {
             } else {
                 pendingIntent = getAnimalDetailPendingIntent(context, animalId);
                 content = String.format(context.getString(R.string.notification_single_content),
-                        Animal.getById(animalId).getName());
+                        animal.getName());
                 title = context.getString(R.string.notification_single_title);
             }
 
-            Log.d("NotificationHelper", Animal.getById(animalId).getName());
+            SharedPreferencesHelper.incrementAnimalNotificationCount(context, animalId);
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.zooimg)
                     .setContentTitle(title)
@@ -88,7 +91,13 @@ abstract public class NotificationHelper {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        if (onNotificationListener != null) {
+            SharedPreferencesHelper.resetAnimalNotificationCount(context,
+                    onNotificationListener.getId());
+        }
+
         notificationManager.cancel(NOTIFICATION_ID);
+
         if (notificationCount > 1) {
             notificationCount = 1;
         }
@@ -99,7 +108,7 @@ abstract public class NotificationHelper {
                 onNotificationListener.getId() != animalId;
     }
 
-    public static void regiterListener(OnNotificationListener onNotificationListener) {
+    public static void registerListener(OnNotificationListener onNotificationListener) {
         NotificationHelper.onNotificationListener = onNotificationListener;
     }
 
