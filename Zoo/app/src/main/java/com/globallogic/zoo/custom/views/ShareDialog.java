@@ -4,15 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -21,13 +16,12 @@ import android.widget.ImageButton;
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.activities.MailSelectorActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by rodrigo on 4/5/15.
  */
 public class ShareDialog extends DialogFragment {
+
+    public static final String TAG = "SHARE_DIALOG";
 
     private static final int PICK_EMAIL_REQUEST = 0;
     public static final int RESULT_OK = 0;
@@ -37,6 +31,7 @@ public class ShareDialog extends DialogFragment {
 
     public interface NoticeShareDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog, String[] email);
+
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
