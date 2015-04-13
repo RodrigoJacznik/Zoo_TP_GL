@@ -1,6 +1,7 @@
 package com.globallogic.zoo.helpers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -34,20 +35,16 @@ public class HttpConnectionHelper {
 
     public static final String GET = "GET";
 
-    private static String user = "";
-    private static String pass = "";
     private static final int CONNECT_TIMEOUT = 10000;
     private static final int READ_TIMEOUT = 10000;
     private HttpURLConnection connection;
 
-
-
-    public HttpConnectionHelper(String anUrl, String method) {
+    public HttpConnectionHelper(Context context, String anUrl, String method) {
         try {
             URL url = new URL(anUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Authorization", getEncodeUserAndPass());
+            connection.setRequestProperty("Authorization", getEncodeUserAndPass(context));
             connection.setConnectTimeout(CONNECT_TIMEOUT);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setRequestMethod(method);
@@ -58,7 +55,13 @@ public class HttpConnectionHelper {
         }
     }
 
-    private String getEncodeUserAndPass() {
+    private static String getEncodeUserAndPass(Context context) {
+        String user = SharedPreferencesHelper.getUserName(context);
+        String pass = SharedPreferencesHelper.getPass(context);
+        return "Basic " + Base64.encodeToString((user + ":" + pass).getBytes(), Base64.DEFAULT);
+    }
+
+    private static String getEncodeUserAndPass(String user, String pass) {
         return "Basic " + Base64.encodeToString((user + ":" + pass).getBytes(), Base64.DEFAULT);
     }
 
@@ -112,7 +115,7 @@ public class HttpConnectionHelper {
     }
 
     public static String getAllAnimals(Context context) {
-        HttpConnectionHelper conn = new HttpConnectionHelper(ALL_ANIMALS_URL, GET);
+        HttpConnectionHelper conn = new HttpConnectionHelper(context, ALL_ANIMALS_URL, GET);
         if (checkConnection(context)) {
             conn.connect();
             int response = conn.getResponseCode();
@@ -148,10 +151,8 @@ public class HttpConnectionHelper {
     }
 
     public static boolean login(Context context, String user, String pass) {
-        HttpConnectionHelper conn = new HttpConnectionHelper(LOGIN_URL, GET);
-        conn.setUser(user);
-        conn.setPass(pass);
-        conn.connection.setRequestProperty("Authorization", conn.getEncodeUserAndPass());
+        HttpConnectionHelper conn = new HttpConnectionHelper(context, LOGIN_URL, GET);
+        conn.connection.setRequestProperty("Authorization", getEncodeUserAndPass(user, pass));
 
         if (checkConnection(context)) {
             conn.connect();
@@ -163,7 +164,7 @@ public class HttpConnectionHelper {
     }
 
     public static Bitmap fetchImg(Context context, String url) {
-        HttpConnectionHelper conn = new HttpConnectionHelper(url, GET);
+        HttpConnectionHelper conn = new HttpConnectionHelper(context, url, GET);
         Bitmap img = null;
         if (checkConnection(context)) {
             conn.connect();
@@ -175,14 +176,4 @@ public class HttpConnectionHelper {
 
         return img;
     }
-
-    public static void setPass(String pass) {
-        HttpConnectionHelper.pass = pass;
-    }
-
-    public static void setUser(String user) {
-        HttpConnectionHelper.user = user;
-    }
-
-
 }
