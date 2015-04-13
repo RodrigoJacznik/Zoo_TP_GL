@@ -24,12 +24,12 @@ abstract public class AnimalHelper {
         return intent;
     }
 
-    static public Intent getShareMailAnimalIntent(File file, Context context, Animal animal) {
+    static public Intent getShareMailAnimalIntent(Context context, File file, String name) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("application/image");
+        emailIntent.setType(Intent.normalizeMimeType("image/*"));
 
         String subject = String.format(context.getResources().
-                getString(R.string.animaldetailsactivity_email_subject), animal.getName());
+                getString(R.string.animaldetailsactivity_email_subject), name);
 
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));

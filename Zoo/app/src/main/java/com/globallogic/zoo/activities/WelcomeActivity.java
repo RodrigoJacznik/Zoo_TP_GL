@@ -21,6 +21,7 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
 import com.globallogic.zoo.asynctask.OnAsyncTaskListener;
 import com.globallogic.zoo.asynctask.ParseAnimalJsonTask;
+import com.globallogic.zoo.helpers.SharedPreferencesHelper;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.helpers.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.NotificationHelper;
@@ -56,7 +57,7 @@ public class WelcomeActivity extends BaseActivity implements
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                logout();
             }
         });
 
@@ -72,10 +73,7 @@ public class WelcomeActivity extends BaseActivity implements
     protected void onStart() {
         super.onStart();
 
-        Intent intent = getIntent();
-
-        userName = intent.getStringExtra(USER);
-        NotificationHelper.cancelNotification(this);
+        userName = SharedPreferencesHelper.getUserName(this);
 
         welcome.setText(makeWelcomeMessage(userName));
     }
@@ -142,10 +140,8 @@ public class WelcomeActivity extends BaseActivity implements
         load = (ProgressBar) findViewById(R.id.welcomeactivity_load);
     }
 
-    public static Intent getIntent(Context context, String userName) {
-        Intent intent = new Intent(context, WelcomeActivity.class);
-        intent.putExtra(USER, userName);
-        return intent;
+    public static Intent getIntent(Context context) {
+        return new Intent(context, WelcomeActivity.class);
     }
 
     @Override
@@ -161,5 +157,10 @@ public class WelcomeActivity extends BaseActivity implements
     @Override
     public void onPreExecute() {
         load.setVisibility(View.VISIBLE);
+    }
+
+    private void logout() {
+        SharedPreferencesHelper.clearUserName(this);
+        finish();
     }
 }
