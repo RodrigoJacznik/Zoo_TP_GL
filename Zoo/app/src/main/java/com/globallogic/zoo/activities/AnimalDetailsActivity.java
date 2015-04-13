@@ -14,12 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.adapters.AnimalAdapter;
+import com.globallogic.zoo.asynctask.FetchImgTask;
 import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
@@ -52,9 +55,9 @@ public class AnimalDetailsActivity extends BaseActivity implements
     private FavoriteView favoriteView;
     private TableLayout schedule;
     private View rootView;
-    private ImageView share;
     private ImageView animalThumb;
     private Button btnMoreInfo;
+    private ProgressBar load;
 
     private Animal animal;
     private int favoriteViewColor;
@@ -82,16 +85,7 @@ public class AnimalDetailsActivity extends BaseActivity implements
             }
         });
 
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareAnimal();
-            }
-        });
-
         favoriteView.setOnFavoriteClickListener(this);
-
-
     }
 
     @Override
@@ -205,19 +199,18 @@ public class AnimalDetailsActivity extends BaseActivity implements
         description = (TextView) findViewById(R.id.animaldetailsactivity_description);
         schedule = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
         rootView = findViewById(R.id.animaldetailsactivity_scrollview);
-        share = (ImageView) findViewById(R.id.animaldetailsactivity_share);
-        animalThumb = (ImageView) findViewById(R.id.animaldetailsactivity_photo);
+        animalThumb = (ImageView) findViewById(R.id.animaldetailsactivity_img);
+        load = (ProgressBar) findViewById(R.id.animaldetailsactivity_load);
     }
 
     private void initAnimalViews() {
         name.setText(animal.getName());
         specie.setText(animal.getSpecie());
         description.setText(animal.getDescripcion());
-
         favoriteView.setFavoriteState(animal.isFavorite());
+
+        new FetchImgTask(animalThumb, animal.getId(), load, this).execute(animal.getImage());
     }
-
-
 
     private void populateScheduleTable() {
         for (Show show : animal.getShow()) {
