@@ -27,7 +27,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void setUpActionBar() {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
         actionBar.setIcon(R.drawable.ic_action_logo);
-    };
+    }
 
     @Override
     protected void onStart() {
