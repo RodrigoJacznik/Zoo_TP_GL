@@ -1,15 +1,24 @@
 package com.globallogic.zoo.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.LongSparseArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.asynctask.FetchImgTask;
+import com.globallogic.zoo.asynctask.FetchMailTask;
+import com.globallogic.zoo.helpers.HttpConnectionHelper;
 import com.globallogic.zoo.models.Animal;
 
 import java.util.ArrayList;
@@ -39,6 +48,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         public ImageView photo;
         public TextView name;
         public TextView specie;
+        public ProgressBar load;
         public Animal animal;
 
         public ViewHolder(View v) {
@@ -47,13 +57,18 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             photo = (ImageView) v.findViewById(R.id.animallistactivity_photo);
             name = (TextView) v.findViewById(R.id.animallistactivity_name);
             specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
+            load = (ProgressBar) v.findViewById(R.id.animallistactivity_load);
 
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
         }
 
         public void load(Animal animal) {
-            photo.setImageResource(R.drawable.android);
+            new FetchImgTask(photo, animal.getId(), load, itemView.getContext()).
+                    execute(animal.getImage());
+
+            photo.getDrawingCache();
+            photo.setImageDrawable(null);
             name.setText(animal.getName());
             specie.setText(animal.getSpecie());
             this.animal = animal;
