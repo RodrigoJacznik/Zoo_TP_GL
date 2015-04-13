@@ -1,12 +1,11 @@
 package com.globallogic.zoo.activities;
 
 import android.app.DialogFragment;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.adapters.AnimalAdapter;
-import com.globallogic.zoo.asynctask.FetchImgTask;
 import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
+import com.globallogic.zoo.helpers.FileHelper;
 import com.globallogic.zoo.listeners.onTableRowClickListener;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schedule;
@@ -33,6 +31,8 @@ import com.globallogic.zoo.models.Show;
 import com.globallogic.zoo.helpers.AnimalHelper;
 import com.globallogic.zoo.helpers.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.NotificationHelper;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.io.File;
 
@@ -56,16 +56,18 @@ public class AnimalDetailsActivity extends BaseActivity implements
     private TableLayout schedule;
     private View rootView;
     private ImageView animalThumb;
+    private ImageView takePhoto;
     private Button btnMoreInfo;
     private ProgressBar load;
 
     private Animal animal;
     private int favoriteViewColor;
-    private File animalPhoto;
+    private File animalPhotoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_animal_details);
 
         bindViews();
@@ -78,7 +80,7 @@ public class AnimalDetailsActivity extends BaseActivity implements
             }
         });
 
-        animalThumb.setOnClickListener(new View.OnClickListener() {
+        takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePhoto();
@@ -93,7 +95,9 @@ public class AnimalDetailsActivity extends BaseActivity implements
         super.onStart();
         long animalID = getIntent().getLongExtra(ANIMAL, -1);
         animal = Animal.getById(animalID);
-        NotificationHelper.regiterListener(this);
+
+        NotificationHelper.registerListener(this);
+        NotificationHelper.cancelNotification(this);
         initAnimalViews();
         populateScheduleTable();
     }
@@ -115,7 +119,6 @@ public class AnimalDetailsActivity extends BaseActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuanimal_settings:
-                Log.d("SettingsActivityCall", "Llamaaaa");
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.menuanimal_share:
@@ -149,9 +152,8 @@ public class AnimalDetailsActivity extends BaseActivity implements
         switch (requestCode) {
             case REQUEST_CAMERA:
                 if (resultCode == RESULT_OK) {
-                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                    if (f.exists()) {
-                        animalPhoto = f;
+                    animalPhotoFile = FileHelper.getFileByName(animal.getName(), animal.getId());
+                    if (animalPhotoFile != null) {
                         createShareDialog();
                     }
                 }
@@ -181,14 +183,14 @@ public class AnimalDetailsActivity extends BaseActivity implements
 
     private void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+        File photo = FileHelper.createFile(animal.getName(), animal.getId());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
     private void createShareDialog() {
         ShareDialog dialog = new ShareDialog();
-        dialog.show(getFragmentManager(), "TAG");
+        dialog.show(getFragmentManager(), ShareDialog.TAG);
     }
 
     private void bindViews() {
@@ -200,6 +202,7 @@ public class AnimalDetailsActivity extends BaseActivity implements
         schedule = (TableLayout) findViewById(R.id.animaldetailsactivity_table);
         rootView = findViewById(R.id.animaldetailsactivity_scrollview);
         animalThumb = (ImageView) findViewById(R.id.animaldetailsactivity_img);
+        takePhoto = (ImageView) findViewById(R.id.animaldetailsactivity_photo);
         load = (ProgressBar) findViewById(R.id.animaldetailsactivity_load);
     }
 
@@ -208,34 +211,42 @@ public class AnimalDetailsActivity extends BaseActivity implements
         specie.setText(animal.getSpecie());
         description.setText(animal.getDescripcion());
         favoriteView.setFavoriteState(animal.isFavorite());
-
-        new FetchImgTask(animalThumb, animal.getId(), load, this).execute(animal.getImage());
+        Ion.with(this)
+                .load(animal.getImage())
+                .progressBar(load)
+                .intoImageView(animalThumb)
+                .setCallback(new FutureCallback<ImageView>() {
+                    @Override
+                    public void onCompleted(Exception e, ImageView result) {
+                        load.setVisibility(View.INVISIBLE);
+                    }
+                });
     }
 
     private void populateScheduleTable() {
         for (Show show : animal.getShow()) {
             for (Schedule schedule : show.getSchedules()) {
-                TableRow horarioRow = new TableRow(this);
+                TableRow hourRow = new TableRow(this);
 
                 TextView name = new TextView(this);
-                TextView horaInicio = new TextView(this);
-                TextView horaFin = new TextView(this);
+                TextView initialHour = new TextView(this);
+                TextView endHour = new TextView(this);
 
-                horarioRow.setOnClickListener(new onTableRowClickListener(schedule, this));
+                hourRow.setOnClickListener(new onTableRowClickListener(schedule, this));
 
                 name.setText(show.getName());
-                horaInicio.setText(schedule.getInitialHourString());
-                horaFin.setText(schedule.getFinalHourString());
+                initialHour.setText(schedule.getInitialHourString());
+                endHour.setText(schedule.getFinalHourString());
 
                 name.setGravity(Gravity.CENTER);
-                horaInicio.setGravity(Gravity.CENTER);
-                horaFin.setGravity(Gravity.CENTER);
+                initialHour.setGravity(Gravity.CENTER);
+                endHour.setGravity(Gravity.CENTER);
 
-                horarioRow.addView(name);
-                horarioRow.addView(horaInicio);
-                horarioRow.addView(horaFin);
+                hourRow.addView(name);
+                hourRow.addView(initialHour);
+                hourRow.addView(endHour);
 
-                this.schedule.addView(horarioRow);
+                this.schedule.addView(hourRow);
             }
         }
     }
@@ -252,7 +263,8 @@ public class AnimalDetailsActivity extends BaseActivity implements
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String[] email) {
-        Intent mailIntent = AnimalHelper.getShareMailAnimalIntent(animalPhoto, this, animal);
+        Intent mailIntent = AnimalHelper.getShareMailAnimalIntent(this, animalPhotoFile,
+                animal.getName());
         mailIntent.putExtra(Intent.EXTRA_EMAIL, email);
 
         if (mailIntent.resolveActivity(getPackageManager()) != null) {
@@ -276,7 +288,8 @@ public class AnimalDetailsActivity extends BaseActivity implements
 
     @Override
     public void onNotification() {
-        Toast.makeText(this, getString(R.string.animaldetailsactivity_attractions_start),
-                Toast.LENGTH_SHORT).show();
+        String msg = String.format(getString(R.string.animaldetailsactivity_attractions_start),
+                animal.getName());
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

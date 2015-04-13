@@ -1,25 +1,20 @@
 package com.globallogic.zoo.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.LongSparseArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.asynctask.FetchImgTask;
-import com.globallogic.zoo.asynctask.FetchMailTask;
-import com.globallogic.zoo.helpers.HttpConnectionHelper;
+import com.globallogic.zoo.helpers.SharedPreferencesHelper;
 import com.globallogic.zoo.models.Animal;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +37,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener,
-            View.OnLongClickListener{
+            View.OnLongClickListener {
 
         public View rootView;
         public ImageView photo;
@@ -50,6 +45,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         public TextView specie;
         public ProgressBar load;
         public Animal animal;
+        public TextView notificationCounter;
 
         public ViewHolder(View v) {
             super(v);
@@ -58,19 +54,33 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             name = (TextView) v.findViewById(R.id.animallistactivity_name);
             specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
             load = (ProgressBar) v.findViewById(R.id.animallistactivity_load);
-
+            notificationCounter = (TextView) v.findViewById(R.id.animaldetailsactivity_noti_count);
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
         }
 
         public void load(Animal animal) {
-            new FetchImgTask(photo, animal.getId(), load, itemView.getContext()).
-                    execute(animal.getImage());
+            Ion.with(context)
+                    .load(animal.getImage())
+                    .progressBar(load)
+                    .intoImageView(photo)
+                    .setCallback(new FutureCallback<ImageView>() {
+                        @Override
+                        public void onCompleted(Exception e, ImageView result) {
+                            load.setVisibility(View.INVISIBLE);
+                        }
+                    });
 
-            photo.getDrawingCache();
-            photo.setImageDrawable(null);
             name.setText(animal.getName());
             specie.setText(animal.getSpecie());
+
+            int count = SharedPreferencesHelper.getAnimalNotificationCount(context, animal.getId());
+            if (count > 0) {
+                notificationCounter.setText(String.valueOf(count));
+            } else {
+                notificationCounter.setText("");
+            }
+
             this.animal = animal;
         }
 
@@ -104,6 +114,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
+            notificationCounter.setText("");
             if (callbackObject != null && ! isActionModeActivate) {
                 callbackObject.onAnimalClick(animal);
             }
