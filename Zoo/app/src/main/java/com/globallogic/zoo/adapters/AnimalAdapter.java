@@ -25,7 +25,7 @@ import java.util.List;
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
 
     private List<Animal> animals;
-    private Context context;
+
     private OnAnimalClickListener callbackObject;
     private List<ViewHolder> viewHoldersPressed = new ArrayList<>();
     private ActionMode.Callback actionModeCallback;
@@ -60,6 +60,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
 
         public void load(Animal animal) {
+            Context context = itemView.getContext();
             Ion.with(context)
                     .load(animal.getImage())
                     .progressBar(load)
@@ -125,7 +126,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         super();
         this.animals = Animal.getAnimals();
         actionModeCallback = new ActionModeCallback(AnimalAdapter.this, context);
-        this.context = context;
+
     }
 
     public AnimalAdapter(Context context, OnAnimalClickListener animalAdapterCallback) {
@@ -177,4 +178,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         return viewHoldersPressed.get(0).animal;
     }
 
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
+    }
 }
