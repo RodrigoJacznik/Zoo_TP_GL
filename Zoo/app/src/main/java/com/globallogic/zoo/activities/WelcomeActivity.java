@@ -23,6 +23,7 @@ import com.globallogic.zoo.adapters.AnimalAdapter;
 import com.globallogic.zoo.asynctask.OnAsyncTaskListener;
 import com.globallogic.zoo.asynctask.ParseAnimalJsonTask;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
+import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.helpers.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.NotificationHelper;
@@ -151,7 +152,9 @@ public class WelcomeActivity extends BaseActivity implements
     @Override
     public void onPostExecute(List<Animal> animals) {
         if (! animals.isEmpty()) {
-            Animal.setAnimals(animals);
+            ZooDatabaseHelper db = new ZooDatabaseHelper(this);
+            db.insertAnimals(animals);
+
             animalAdapter.setAnimals(animals);
             animalAdapter.notifyDataSetChanged();
         }

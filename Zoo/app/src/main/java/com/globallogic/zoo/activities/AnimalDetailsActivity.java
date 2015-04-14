@@ -24,6 +24,7 @@ import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.helpers.FileHelper;
+import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.listeners.onTableRowClickListener;
 import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.Schedule;
@@ -94,7 +95,8 @@ public class AnimalDetailsActivity extends BaseActivity implements
     protected void onStart() {
         super.onStart();
         long animalID = getIntent().getLongExtra(ANIMAL, -1);
-        animal = Animal.getById(animalID);
+        ZooDatabaseHelper db = new ZooDatabaseHelper(this);
+        animal = db.getAnimalById(animalID);
 
         NotificationHelper.registerListener(this);
         NotificationHelper.cancelNotification(this);
