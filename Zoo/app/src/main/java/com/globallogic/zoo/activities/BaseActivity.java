@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
+import com.globallogic.zoo.helpers.SharedPreferencesHelper;
 
 /**
  * Created by rodrigo on 4/11/15.
@@ -19,6 +20,9 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int theme = SharedPreferencesHelper.getTheme(this);
+        setTheme(theme);
+
         super.onCreate(savedInstanceState);
         lowBatteryBroadcastReceiver = new LowBatteryBroadcastReceiver();
         actionBar = getSupportActionBar();
