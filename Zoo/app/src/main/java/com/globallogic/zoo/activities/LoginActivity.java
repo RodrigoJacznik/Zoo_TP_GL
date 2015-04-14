@@ -1,8 +1,6 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -18,10 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.helpers.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
-import com.globallogic.zoo.helpers.ThemeHelper;
 
 
 public class LoginActivity extends BaseActivity implements TextWatcher {

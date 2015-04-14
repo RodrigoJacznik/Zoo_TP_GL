@@ -135,7 +135,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     @Override
     public AnimalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_animal_list,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row,
                 parent, false);
         return new ViewHolder(v);
     }
