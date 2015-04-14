@@ -34,7 +34,7 @@
     <string name="settingsactivity_theme">Tema Extra activado</string>
     <string name="settingsactivity_button">Boton que no hace nada</string>
     <string name="settingsactivity_toast_msg">Posta, no hace nada</string>
-    <string name="settingsactivity_alert_msg">\"Para que el cambio sea efectivo debe reiniciar la aplicación\"</string>
+    <string name="settingsactivity_alert_msg">Para que el cambio sea efectivo debe reiniciar la aplicación</string>
     <string name="settingsactivity_negative">No Reiniciar</string>
     <string name="settingsactivity_positive">Reiniciar</string>
 
