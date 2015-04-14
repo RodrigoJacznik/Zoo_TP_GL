@@ -28,6 +28,21 @@ public class Show implements Serializable {
         this.duration = duration;
     }
 
+    public Show(long id, String name, String initialHours, String duration) {
+        this.id = id;
+        this.name = name;
+        this.schedules = new ArrayList<>();
+        this.duration = Integer.valueOf(duration);
+
+        String[] schedules = initialHours.split(",");
+
+        for (int i = 0; i < schedules.length; i++) {
+            String initialHour = schedules[i];
+            this.schedules.add(new Schedule(initialHour, this.duration));
+        }
+
+    }
+
     public static Show fromJson(String str) throws JSONException {
         JSONObject jShow = new JSONObject(str);
         long id = jShow.getLong("id");
@@ -97,6 +112,18 @@ public class Show implements Serializable {
 
     public List<Schedule> getSchedules() {
         return schedules;
+    }
+
+    public String getSchedulesString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < schedules.size(); i++) {
+            sb.append(schedules.get(i).getFinalHourString());
+            if (i != schedules.size() - 1) {
+                sb.append(',');
+            }
+        }
+
+        return sb.toString();
     }
 
     public void setSchedules(List<Schedule> schedules) {

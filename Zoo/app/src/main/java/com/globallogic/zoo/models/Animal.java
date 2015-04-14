@@ -1,17 +1,18 @@
 package com.globallogic.zoo.models;
 
+import com.globallogic.zoo.helpers.ZooDatabaseHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by GL on 19/03/2015.
  */
-public class Animal implements Serializable {
+public class Animal {
     public static List<Animal> animals = new ArrayList<>();
 
     private long id;
@@ -27,15 +28,22 @@ public class Animal implements Serializable {
     public Animal(long id, String name, String specie, String description, String image,
                   String moreInfo, List<Show> shows) {
 
+        this(id, name, specie, description, image, moreInfo);
+        this.shows = shows;
+    }
+
+    public Animal(long id, String name, String specie, String description, String image,
+                  String moreInfo) {
         this.id = id;
         this.name = name;
         this.specie = specie;
         this.description = description;
         this.image = image;
         this.moreInfo = moreInfo;
-        this.shows = shows;
         this.favorite = false;
     }
+
+
 
     @Override
     public String toString() {
@@ -46,12 +54,11 @@ public class Animal implements Serializable {
                 '}';
     }
 
-
     static public Animal getById(long id) {
         if (id == -1 || animals.isEmpty()) {
             return null;
         }
-        for (Animal animal: animals) {
+        for (Animal animal : animals) {
             if (animal.getId() == id) {
                 return animal;
             }
@@ -143,13 +150,13 @@ public class Animal implements Serializable {
         this.shows = shows;
     }
 
+    static public boolean deleteAnimal(Animal animal) {
+        return animals.remove(animal);
+    }
+
     static public boolean deleteAnimal(int animalID) {
         Animal animal = animals.remove(animalID);
         return animal != null;
-    }
-
-    static public boolean deleteAnimal(Animal animal) {
-        return animals.remove(animal);
     }
 
     public long getId() {
