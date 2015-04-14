@@ -5,4 +5,6 @@
         <attr name="is_favorite_text" format="string"></attr>
         <attr name="is_not_favorite_text" format="string"></attr>
     </declare-styleable>
+
+    <attr name="RecyclerViewRow" format="reference"></attr>
 </resources>

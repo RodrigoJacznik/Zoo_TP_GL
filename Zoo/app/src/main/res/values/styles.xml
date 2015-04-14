@@ -4,11 +4,13 @@
         <item name="android:windowBackground">@color/gray</item>
         <item name="android:colorBackground">@color/gray</item>
         <item name="android:buttonStyle">@style/Button</item>
+        <item name="RecyclerViewRow">@style/RowList</item>
     </style>
 
     <style name="ExtraTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:colorBackground">@color/material_deep_teal_200</item>
         <item name="android:buttonStyle">@style/ExtraButton</item>
+        <item name="RecyclerViewRow">@style/RowListExtra</item>
     </style>
 
     <style name="Button">
@@ -39,6 +41,10 @@
 
     <style name="RowList">
         <item name="android:background">@drawable/state_list_row</item>
+    </style>
+
+    <style name="RowListExtra">
+        <item name="android:background">@drawable/state_list_row_extra</item>
     </style>
 
 </resources>
