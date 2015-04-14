@@ -7,6 +7,7 @@ import android.util.Log;
 import android.util.LongSparseArray;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -47,28 +48,37 @@ public class FileHelper {
             photo_count.put(animalId, 1);
             return "";
         }
-        String postfix = "_" + count++;
+        String postfix = "_" + ++count;
         photo_count.put(animalId, count);
         return postfix;
     }
 
-    private static String getPostfix(long animalId) {
+    private static String getPostfix(long animalId) throws FileNotFoundException {
         int count = photo_count.get(animalId, -1);
-        return count == -1 ? "" : "_" + count;
+        if (count == -1) {
+            throw new FileNotFoundException();
+        }
+        return count == 1 ? "" : "_" + count;
     }
 
     private static File getAlbumStorageDir() {
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), ALBUM_NAME);
-        if (!file.mkdirs()) {
-            Log.e(LOG_TAG, "Directory not created");
+
+        if (! file.exists()) {
+            file.mkdirs();
         }
         return file;
     }
 
     public static File getFileByName(String name, Long animalId) {
         File dir = getAlbumStorageDir();
-        return new File(dir, name + getPostfix(animalId) + EXTENSION);
+        try {
+            return new File(dir, name + getPostfix(animalId) + EXTENSION);
+        } catch (FileNotFoundException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+        }
+        return null;
     }
 
 }
