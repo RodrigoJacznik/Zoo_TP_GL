@@ -3,6 +3,10 @@ package com.globallogic.zoo.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.globallogic.zoo.R;
+import com.globallogic.zoo.activities.BaseActivity;
+import com.globallogic.zoo.activities.SettingsActivity;
+
 /**
  * Created by GL on 13/04/2015.
  */
@@ -10,6 +14,7 @@ public class SharedPreferencesHelper {
     private static final String SETTINGS = "SETTINGS";
     private static final String USER_NAME = "USER_NAME";
     private static final String PASS_NAME = "PASS_NAME";
+    private static final String THEME = "THEME";
 
     public static boolean isUserLogin(Context context) {
         return getUserName(context) != null;
@@ -59,5 +64,22 @@ public class SharedPreferencesHelper {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(String.valueOf(animalId), 0);
         editor.apply();
+    }
+
+    public static int getTheme(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        return settings.getInt(THEME, R.style.AppTheme);
+    }
+
+    public static void setTheme(Context context, int theme) {
+        SharedPreferences settings = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(THEME, theme);
+        editor.apply();
+    }
+
+    public static boolean isExtraActivate(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        return settings.getInt(THEME, R.style.AppTheme) == R.style.ExtraTheme;
     }
 }
