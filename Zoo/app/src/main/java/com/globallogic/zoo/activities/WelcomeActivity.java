@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -67,6 +68,8 @@ public class WelcomeActivity extends BaseActivity implements
                 viewPositionInMaps();
             }
         });
+
+        bindRecyclerView();
     }
 
     @Override
@@ -127,6 +130,7 @@ public class WelcomeActivity extends BaseActivity implements
         animalAdapter = new AnimalAdapter(this, this);
 
         recyclerView.setAdapter(animalAdapter);
+        registerForContextMenu(recyclerView);
     }
 
     private String makeWelcomeMessage(String name) {
@@ -148,9 +152,9 @@ public class WelcomeActivity extends BaseActivity implements
     public void onPostExecute(List<Animal> animals) {
         if (! animals.isEmpty()) {
             Animal.setAnimals(animals);
+            animalAdapter.setAnimals(animals);
+            animalAdapter.notifyDataSetChanged();
         }
-        bindRecyclerView();
-        registerForContextMenu(recyclerView);
         load.setVisibility(View.INVISIBLE);
     }
 
