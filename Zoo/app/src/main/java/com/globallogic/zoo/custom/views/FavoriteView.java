@@ -57,7 +57,9 @@ public class FavoriteView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 setFavoriteState(!isFavoriteState());
-                onFavoriteClickListener.onFavoriteClick(favoriteState, actualBackgroundColor);
+                if (onFavoriteClickListener != null) {
+                    onFavoriteClickListener.onFavoriteClick(favoriteState, actualBackgroundColor);
+                }
             }
         });
 
