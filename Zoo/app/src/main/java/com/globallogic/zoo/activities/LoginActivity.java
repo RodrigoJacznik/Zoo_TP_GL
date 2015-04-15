@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.helpers.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
+import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 
 
 public class LoginActivity extends BaseActivity implements TextWatcher {
@@ -129,9 +130,11 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        protected void onPostExecute(Boolean userConnect) {
             load.setVisibility(View.INVISIBLE);
-            if (aBoolean) {
+            if (userConnect) {
+                ZooDatabaseHelper db = new ZooDatabaseHelper(LoginActivity.this);
+                db.insertOrUpdateUser(userInput);
                 login(userInput, passInput);
             } else {
                 error.setVisibility(View.VISIBLE);

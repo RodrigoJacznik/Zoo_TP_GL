@@ -8,6 +8,7 @@ import com.globallogic.zoo.models.Animal;
 import com.globallogic.zoo.models.dao.AnimalDAO;
 import com.globallogic.zoo.models.dao.AnimalShowDAO;
 import com.globallogic.zoo.models.dao.ShowDAO;
+import com.globallogic.zoo.models.dao.UserDAO;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ZooDatabaseHelper extends SQLiteOpenHelper {
 
 
     private static final String DB_NAME = "ZooDatabase";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     public ZooDatabaseHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -30,6 +31,7 @@ public class ZooDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(AnimalDAO.CREATE_TABLE);
         db.execSQL(ShowDAO.CREATE_TABLE);
         db.execSQL(AnimalShowDAO.CREATE_TABLE);
+        db.execSQL(UserDAO.CREATE_TABLE);
     }
 
     @Override
@@ -37,10 +39,12 @@ public class ZooDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(AnimalDAO.DROP_TABLE);
         db.execSQL(ShowDAO.DROP_TABLE);
         db.execSQL(AnimalShowDAO.DROP_TABLE);
+        db.execSQL(UserDAO.DROP_TABLE);
 
         db.execSQL(AnimalDAO.CREATE_TABLE);
         db.execSQL(ShowDAO.CREATE_TABLE);
         db.execSQL(AnimalShowDAO.CREATE_TABLE);
+        db.execSQL(UserDAO.CREATE_TABLE);
     }
 
     public void insertAnimal(Animal animal) {
@@ -69,5 +73,9 @@ public class ZooDatabaseHelper extends SQLiteOpenHelper {
 
     public List<Animal> getAnimals() {
         return AnimalDAO.getAll(this);
+    }
+
+    public void insertOrUpdateUser(String name) {
+        UserDAO.insertOrUpdate(this, name);
     }
 }
