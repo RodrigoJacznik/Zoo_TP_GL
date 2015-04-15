@@ -95,6 +95,7 @@ public class ShareDialog extends DialogFragment {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
                     email.setText(data.getStringExtra(EMAIL));
+                    email.setTextColor(getResources().getColor(R.color.gray_dark));
                 }
             }
         }
