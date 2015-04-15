@@ -8,18 +8,18 @@ import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 /**
  * Created by GL on 14/04/2015.
  */
-public class AnimalShowDB {
+public class AnimalShowDAO {
 
-    public static final String TABLE_NAME = AnimalDB.TABLE_NAME + "_" + ShowDB.TABLE_NAME;
+    public static final String TABLE_NAME = AnimalDAO.TABLE_NAME + "_" + ShowDAO.TABLE_NAME;
 
-    public static final String KEY_ANIMAL = AnimalDB.TABLE_NAME + "_" + AnimalDB.KEY_ID;
-    public static final String KEY_SHOW = ShowDB.TABLE_NAME + "_" + ShowDB.KEY_ID;
+    public static final String KEY_ANIMAL = AnimalDAO.TABLE_NAME + "_" + AnimalDAO.KEY_ID;
+    public static final String KEY_SHOW = ShowDAO.TABLE_NAME + "_" + ShowDAO.KEY_ID;
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
             KEY_ANIMAL + " INTEGER NOT NULL, " + KEY_SHOW + " INTEGER NOT NULL, " +
             "PRIMARY KEY (" + KEY_ANIMAL + ", " + KEY_SHOW + " ) " +
-            "FOREIGN KEY (" + KEY_ANIMAL + ") REFERENCES " + AnimalDB.TABLE_NAME + "(" + AnimalDB.KEY_ID + ")" +
-            "FOREIGN KEY (" + KEY_SHOW + ") REFERENCES " + ShowDB.TABLE_NAME + "(" + ShowDB.KEY_ID + "))";
+            "FOREIGN KEY (" + KEY_ANIMAL + ") REFERENCES " + AnimalDAO.TABLE_NAME + "(" + AnimalDAO.KEY_ID + ")" +
+            "FOREIGN KEY (" + KEY_SHOW + ") REFERENCES " + ShowDAO.TABLE_NAME + "(" + ShowDAO.KEY_ID + "))";
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 

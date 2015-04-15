@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by GL on 14/04/2015.
  */
-public class ShowDB {
+public class ShowDAO {
 
     public static final String TABLE_NAME = "Show";
 
@@ -22,6 +22,11 @@ public class ShowDB {
     public static final String KEY_NAME = "name";
     public static final String KEY_SCHEDULES = "schedules";
     public static final String KEY_DURATION = "duration";
+
+    public static final int KEY_ID_INDEX = 0;
+    public static final int KEY_NAME_INDEX = 1;
+    public static final int KEY_SCHEDULES_INDEX = 2;
+    public static final int KEY_DURATION_INDEX = 3;
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "" +
             " (" + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_SCHEDULES + " TEXT, " +
@@ -73,8 +78,8 @@ public class ShowDB {
 
     private static Show createShowFromCursor(Cursor cursor) {
         Show show;
-        show = new Show(cursor.getLong(0), cursor.getString(1), cursor.getString(2),
-                cursor.getString(3));
+        show = new Show(cursor.getLong(KEY_ID_INDEX), cursor.getString(KEY_NAME_INDEX),
+                cursor.getString(KEY_SCHEDULES_INDEX), cursor.getString(KEY_DURATION_INDEX));
         cursor.close();
         return show;
     }
@@ -83,20 +88,20 @@ public class ShowDB {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(ShowDB.TABLE_NAME + "." + ShowDB.KEY_ID + ", ");
-        queryBuilder.append(ShowDB.TABLE_NAME + "." + ShowDB.KEY_NAME + ", ");
-        queryBuilder.append(ShowDB.TABLE_NAME + "." + ShowDB.KEY_SCHEDULES + ", ");
-        queryBuilder.append(ShowDB.TABLE_NAME + "." + ShowDB.KEY_DURATION);
+        queryBuilder.append(ShowDAO.TABLE_NAME + "." + ShowDAO.KEY_ID + ", ");
+        queryBuilder.append(ShowDAO.TABLE_NAME + "." + ShowDAO.KEY_NAME + ", ");
+        queryBuilder.append(ShowDAO.TABLE_NAME + "." + ShowDAO.KEY_SCHEDULES + ", ");
+        queryBuilder.append(ShowDAO.TABLE_NAME + "." + ShowDAO.KEY_DURATION);
 
         String args = queryBuilder.toString();
-        String tables = ShowDB.TABLE_NAME + ", " + AnimalDB.TABLE_NAME + ", " + AnimalShowDB.TABLE_NAME;
+        String tables = ShowDAO.TABLE_NAME + ", " + AnimalDAO.TABLE_NAME + ", " + AnimalShowDAO.TABLE_NAME;
 
         queryBuilder.setLength(0);
-        queryBuilder.append(AnimalDB.TABLE_NAME + "." + AnimalDB.KEY_ID + " = " + String.valueOf(animalId) + " AND ");
-        queryBuilder.append(AnimalDB.TABLE_NAME + "." + AnimalDB.KEY_ID + " = ");
-        queryBuilder.append(AnimalShowDB.TABLE_NAME + "." + AnimalShowDB.KEY_ANIMAL + " AND ");
-        queryBuilder.append(ShowDB.TABLE_NAME + "." + ShowDB.KEY_ID + " = ");
-        queryBuilder.append(AnimalShowDB.TABLE_NAME + "." + AnimalShowDB.KEY_SHOW);
+        queryBuilder.append(AnimalDAO.TABLE_NAME + "." + AnimalDAO.KEY_ID + " = " + String.valueOf(animalId) + " AND ");
+        queryBuilder.append(AnimalDAO.TABLE_NAME + "." + AnimalDAO.KEY_ID + " = ");
+        queryBuilder.append(AnimalShowDAO.TABLE_NAME + "." + AnimalShowDAO.KEY_ANIMAL + " AND ");
+        queryBuilder.append(ShowDAO.TABLE_NAME + "." + ShowDAO.KEY_ID + " = ");
+        queryBuilder.append(AnimalShowDAO.TABLE_NAME + "." + AnimalShowDAO.KEY_SHOW);
 
         String cond = queryBuilder.toString();
         String rawQuery = "SELECT " + args + " FROM " + tables + " WHERE " + cond;
