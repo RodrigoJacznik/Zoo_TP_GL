@@ -39,7 +39,7 @@ public class AnimalDAO {
             "" + KEY_DESCRIPTION + " TEXT, " + KEY_IMAGE + " TEXT, " + KEY_MORE_INFO + " TEXT, " +
             "" + KEY_IS_FAVORITE + " INTEGER)";
 
-    public static final String DROP_TABLE = "DROP TABLE IF EXISTS" + TABLE_NAME;
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     public static void insert(ZooDatabaseHelper dbHelper, Animal animal) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
