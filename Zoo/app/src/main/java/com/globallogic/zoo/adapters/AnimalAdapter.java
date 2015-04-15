@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
+import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.models.Animal;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -124,9 +125,9 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public AnimalAdapter(Context context) {
         super();
-        this.animals = Animal.getAnimals();
+        ZooDatabaseHelper db = new ZooDatabaseHelper(context);
+        this.animals = db.getAnimals();
         actionModeCallback = new ActionModeCallback(AnimalAdapter.this, context);
-
     }
 
     public AnimalAdapter(Context context, OnAnimalClickListener animalAdapterCallback) {

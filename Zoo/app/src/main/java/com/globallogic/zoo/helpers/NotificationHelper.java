@@ -6,7 +6,6 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.activities.AnimalDetailsActivity;
@@ -19,7 +18,7 @@ import com.globallogic.zoo.models.Animal;
 abstract public class NotificationHelper {
 
     public interface OnNotificationListener {
-        public long getId();
+        public long getAnimalId();
 
         public void onNotification();
     }
@@ -35,20 +34,14 @@ abstract public class NotificationHelper {
     private static OnNotificationListener onNotificationListener;
 
     public static void makeNotification(Context context, long animalId) {
-        Animal animal = Animal.getById(animalId);
+        ZooDatabaseHelper db = new ZooDatabaseHelper(context);
+        Animal animal = db.getAnimalById(animalId);
 
         if (checkAnimalActivityOnScreen(animalId)) {
             if (notificationCount > 1) {
-                pendingIntent = getWelcomeActivityPendingIntent(context);
-                content = String.format(context.getString(R.string.notification_multi_content),
-                        notificationCount);
-                title = String.format(context.getString(R.string.notification_multi_title),
-                        notificationCount);
+                perpareMultipleNotification(context);
             } else {
-                pendingIntent = getAnimalDetailPendingIntent(context, animalId);
-                content = String.format(context.getString(R.string.notification_single_content),
-                        animal.getName());
-                title = context.getString(R.string.notification_single_title);
+                prepareSimpleNotification(context, animal);
             }
 
             SharedPreferencesHelper.incrementAnimalNotificationCount(context, animalId);
@@ -67,6 +60,21 @@ abstract public class NotificationHelper {
         } else {
             onNotificationListener.onNotification();
         }
+    }
+
+    private static void prepareSimpleNotification(Context context, Animal animal) {
+        pendingIntent = getAnimalDetailPendingIntent(context, animal.getId());
+        content = String.format(context.getString(R.string.notification_single_content),
+                animal.getName());
+        title = context.getString(R.string.notification_single_title);
+    }
+
+    private static void perpareMultipleNotification(Context context) {
+        pendingIntent = getWelcomeActivityPendingIntent(context);
+        content = String.format(context.getString(R.string.notification_multi_content),
+                notificationCount);
+        title = String.format(context.getString(R.string.notification_multi_title),
+                notificationCount);
     }
 
 
@@ -93,7 +101,7 @@ abstract public class NotificationHelper {
 
         if (onNotificationListener != null) {
             SharedPreferencesHelper.resetAnimalNotificationCount(context,
-                    onNotificationListener.getId());
+                    onNotificationListener.getAnimalId());
         }
 
         notificationManager.cancel(NOTIFICATION_ID);
@@ -105,7 +113,7 @@ abstract public class NotificationHelper {
 
     private static boolean checkAnimalActivityOnScreen(long animalId) {
         return onNotificationListener == null ||
-                onNotificationListener.getId() != animalId;
+                onNotificationListener.getAnimalId() != animalId;
     }
 
     public static void registerListener(OnNotificationListener onNotificationListener) {
