@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    tools:context="com.globallogic.zoo.fragments.AnimalDetailFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/animaldetailsactivity_load"
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+
+        <ImageView
+            android:id="@+id/animaldetailsactivity_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="15dp"/>
+
+        <ImageView
+            android:id="@+id/animaldetailsactivity_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/state_list_photo"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:layout_toRightOf="@+id/animaldetailsactivity_img"/>
+
+        <com.globallogic.zoo.custom.views.FavoriteView
+            android:id="@+id/animaldetailsactivity_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:displayText="false"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/animaldetailsactivity_img"
+            android:layout_below="@+id/animaldetailsactivity_photo"/>
+
+        <TextView
+            android:id="@+id/animaldetailsactivity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMain"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/animaldetailsactivity_specie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecundary"
+            android:layout_below="@+id/animaldetailsactivity_name"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/animaldetailsactivity_description"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextSecundary"
+            android:layout_below="@+id/animaldetailsactivity_img"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="25dp"/>
+
+        <Button
+            android:id="@+id/animaldetailsactivity_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/animaldetailsactivity_more"
+            android:layout_below="@id/animaldetailsactivity_description"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/animaldetailsactivity_attractions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/animaldetailsactivity_more"
+            android:text="@string/animaldetailsactivity_attractions"/>
+
+        <TableLayout
+            android:id="@+id/animaldetailsactivity_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/animaldetailsactivity_attractions"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <TableRow>
+                <TextView
+                    android:text="@string/animaldetailsactivity_name"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:text="@string/animaldetailsactivity_initialhour"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:text="@string/animaldetailsactivity_endhour"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+</FrameLayout>

@@ -1,5 +1,6 @@
 package com.globallogic.zoo.activities;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.adapters.AnimalAdapter;
 import com.globallogic.zoo.asynctask.OnAsyncTaskListener;
 import com.globallogic.zoo.asynctask.ParseAnimalJsonTask;
+import com.globallogic.zoo.fragments.AnimalListFragment;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
 import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.models.Animal;
@@ -31,18 +33,11 @@ import com.globallogic.zoo.helpers.NotificationHelper;
 import java.util.List;
 
 
-public class WelcomeActivity extends BaseActivity implements
-        AnimalAdapter.OnAnimalClickListener,
-        OnAsyncTaskListener<List<Animal>> {
-
-    public static final String USER = "USER";
+public class WelcomeActivity extends BaseActivity implements AnimalListFragment.OnAnimalClickListener {
 
     private Button signout;
     private TextView welcome;
     private ImageView maps;
-    private RecyclerView recyclerView;
-    private AnimalAdapter animalAdapter;
-    private ProgressBar load;
 
     private String userName;
 
@@ -52,8 +47,6 @@ public class WelcomeActivity extends BaseActivity implements
         setContentView(R.layout.activity_welcome);
 
         bindViews();
-        new ParseAnimalJsonTask(this, this).execute();
-
         setUpActionBar();
 
         signout.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +63,9 @@ public class WelcomeActivity extends BaseActivity implements
             }
         });
 
-        bindRecyclerView();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.welcomeactivity_fragment, new AnimalListFragment());
+        ft.commit();
     }
 
     @Override
@@ -78,7 +73,6 @@ public class WelcomeActivity extends BaseActivity implements
         super.onStart();
 
         userName = SharedPreferencesHelper.getUserName(this);
-
         welcome.setText(makeWelcomeMessage(userName));
     }
 
@@ -101,13 +95,6 @@ public class WelcomeActivity extends BaseActivity implements
     }
 
     @Override
-    public void onAnimalClick(Animal animal) {
-        Intent intent = new Intent(this, AnimalDetailsActivity.class);
-        intent.putExtra(AnimalDetailsActivity.ANIMAL, animal.getId());
-        startActivity(intent);
-    }
-
-    @Override
     protected void setUpActionBar() {
         super.setUpActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
@@ -124,16 +111,6 @@ public class WelcomeActivity extends BaseActivity implements
         }
     }
 
-    private void bindRecyclerView() {
-        recyclerView = (RecyclerView) findViewById(R.id.welcomeactivity_recycleview);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
-        animalAdapter = new AnimalAdapter(this, this);
-
-        recyclerView.setAdapter(animalAdapter);
-        registerForContextMenu(recyclerView);
-    }
-
     private String makeWelcomeMessage(String name) {
         return String.format(getResources().getString(R.string.welcomeactivity_welcome), name);
     }
@@ -142,32 +119,21 @@ public class WelcomeActivity extends BaseActivity implements
         signout = (Button) findViewById(R.id.welcomeactivity_signout);
         welcome = (TextView) findViewById(R.id.welcomeactivity_welcome);
         maps = (ImageView) findViewById(R.id.welcomeactivity_maps);
-        load = (ProgressBar) findViewById(R.id.welcomeactivity_load);
     }
 
     public static Intent getIntent(Context context) {
         return new Intent(context, WelcomeActivity.class);
     }
 
-    @Override
-    public void onPostExecute(List<Animal> animals) {
-        if (! animals.isEmpty()) {
-            ZooDatabaseHelper db = new ZooDatabaseHelper(this);
-            db.insertAnimals(animals);
-
-            animalAdapter.setAnimals(animals);
-            animalAdapter.notifyDataSetChanged();
-        }
-        load.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onPreExecute() {
-        load.setVisibility(View.VISIBLE);
-    }
-
     private void logout() {
         SharedPreferencesHelper.clearUserName(this);
         finish();
+    }
+
+    @Override
+    public void OnAnimalClick(Animal animal) {
+        Intent intent = new Intent(this, AnimalDetailsActivity.class);
+        intent.putExtra(AnimalDetailsActivity.ANIMAL, animal.getId());
+        startActivity(intent);
     }
 }
