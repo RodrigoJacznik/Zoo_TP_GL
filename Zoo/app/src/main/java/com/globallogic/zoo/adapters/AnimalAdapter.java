@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
-import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.models.Animal;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -25,7 +24,7 @@ import java.util.List;
  */
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
 
-    private List<Animal> animals;
+    private List<Animal> animals = new ArrayList<>();
 
     private OnAnimalClickListener callbackObject;
     private List<ViewHolder> viewHoldersPressed = new ArrayList<>();
@@ -125,8 +124,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public AnimalAdapter(Context context) {
         super();
-        ZooDatabaseHelper db = new ZooDatabaseHelper(context);
-        this.animals = db.getAnimals();
         actionModeCallback = new ActionModeCallback(AnimalAdapter.this, context);
     }
 
@@ -137,15 +134,15 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     @Override
     public AnimalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.animal_row,
                 parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        final Animal animalSelected = animals.get(i);
-        viewHolder.load(animalSelected);
+        Animal animal = animals.get(i);
+        viewHolder.load(animal);
     }
 
     public void remove(Animal animal) {
@@ -181,5 +178,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public void setAnimals(List<Animal> animals) {
         this.animals = animals;
+        notifyDataSetChanged();
     }
 }
