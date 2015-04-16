@@ -1,11 +1,8 @@
 package com.globallogic.zoo.fragments;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,22 +11,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.activities.AnimalDetailsActivity;
 import com.globallogic.zoo.adapters.AnimalAdapter;
-import com.globallogic.zoo.asynctask.OnAsyncTaskListener;
-import com.globallogic.zoo.asynctask.ParseAnimalJsonTask;
 import com.globallogic.zoo.helpers.ZooDatabaseHelper;
+import com.globallogic.zoo.network.API;
 import com.globallogic.zoo.models.Animal;
+import com.globallogic.zoo.data.AnimalRepository;
 
 import java.util.List;
 
-/**
- * Created by GL on 15/04/2015.
- */
-public class AnimalListFragment extends Fragment implements AnimalAdapter.OnAnimalClickListener,
-        OnAsyncTaskListener<List<Animal>> {
+
+public class AnimalListFragment extends Fragment implements
+        AnimalAdapter.OnAnimalClickListener,
+        API.OnRequestListListener<Animal> {
+
+    public static final String TAG = "AnimalListFragment";
 
     public interface OnAnimalClickListener {
         public void OnAnimalClick(Animal animal);
@@ -38,7 +36,6 @@ public class AnimalListFragment extends Fragment implements AnimalAdapter.OnAnim
     private ProgressBar load;
     private RecyclerView recyclerView;
     private AnimalAdapter animalAdapter;
-    private ParseAnimalJsonTask parseAnimalJsonTask;
     private OnAnimalClickListener onAnimalClickListener;
 
     public AnimalListFragment() {
@@ -56,38 +53,29 @@ public class AnimalListFragment extends Fragment implements AnimalAdapter.OnAnim
         }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        parseAnimalJsonTask = new ParseAnimalJsonTask(getActivity(), this);
-        parseAnimalJsonTask.execute();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_animal_list, container, false);
         load = (ProgressBar) v.findViewById(R.id.welcomeactivity_load);
-        bindRecyclerView(v);
+        AnimalRepository.getAllAnimals(this, getActivity());
+        animalAdapter = new AnimalAdapter(getActivity(), this);
         return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (parseAnimalJsonTask.getStatus().equals(AsyncTask.Status.RUNNING)) {
-            load.setVisibility(View.VISIBLE);
-        }
+        bindRecyclerView();
     }
 
-    private void bindRecyclerView(View v) {
+    private void bindRecyclerView() {
         Context context = getActivity();
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.welcomeactivity_recycleview);
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.welcomeactivity_recycleview);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
-        animalAdapter = new AnimalAdapter(context, this);
         recyclerView.setAdapter(animalAdapter);
         registerForContextMenu(recyclerView);
     }
@@ -98,18 +86,23 @@ public class AnimalListFragment extends Fragment implements AnimalAdapter.OnAnim
     }
 
     @Override
-    public void onPostExecute(List<Animal> animals) {
-        if (! animals.isEmpty()) {
+    public void onFail(int code) {
+        if (code == API.NOT_FOUND) {
+            Toast.makeText(getActivity(), "Sin animales. Conectese a internet",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onSuccess(List<Animal> animals) {
+        if (!animals.isEmpty()) {
+
+            // TODO: Arreglar esto mediante repositorio
             ZooDatabaseHelper db = new ZooDatabaseHelper(getActivity());
             db.insertAnimals(animals);
-
             animalAdapter.setAnimals(animals);
             animalAdapter.notifyDataSetChanged();
         }
         load.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onPreExecute() {
     }
 }

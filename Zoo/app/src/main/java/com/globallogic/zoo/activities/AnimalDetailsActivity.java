@@ -37,9 +37,11 @@ public class AnimalDetailsActivity extends BaseActivity implements
 
         long animalId = getIntent().getLongExtra(ANIMAL, -1);
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.animaldetailsactivity_frame, AnimalDetailFragment.newInstance(animalId));
-        ft.commit();
+        if (savedInstanceState == null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.animaldetailsactivity_frame, AnimalDetailFragment.newInstance(animalId));
+            ft.commit();
+        }
     }
 
     @Override

@@ -1,36 +1,26 @@
 package com.globallogic.zoo.activities;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.adapters.AnimalAdapter;
-import com.globallogic.zoo.asynctask.OnAsyncTaskListener;
-import com.globallogic.zoo.asynctask.ParseAnimalJsonTask;
 import com.globallogic.zoo.fragments.AnimalListFragment;
+import com.globallogic.zoo.fragments.ShowListFragment;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
-import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.helpers.HttpConnectionHelper;
-import com.globallogic.zoo.helpers.NotificationHelper;
-
-import java.util.List;
 
 
 public class WelcomeActivity extends BaseActivity implements AnimalListFragment.OnAnimalClickListener {
@@ -47,7 +37,6 @@ public class WelcomeActivity extends BaseActivity implements AnimalListFragment.
         setContentView(R.layout.activity_welcome);
 
         bindViews();
-        setUpActionBar();
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,9 +52,11 @@ public class WelcomeActivity extends BaseActivity implements AnimalListFragment.
             }
         });
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.welcomeactivity_fragment, new AnimalListFragment());
-        ft.commit();
+        if (savedInstanceState == null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(R.id.welcomeactivity_fragment, new AnimalListFragment(), AnimalListFragment.TAG);
+            ft.commit();
+        }
     }
 
     @Override
@@ -94,11 +85,6 @@ public class WelcomeActivity extends BaseActivity implements AnimalListFragment.
         }
     }
 
-    @Override
-    protected void setUpActionBar() {
-        super.setUpActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
-    }
 
     private void viewPositionInMaps() {
         Intent mapsIntent = new Intent(Intent.ACTION_VIEW);
@@ -126,8 +112,11 @@ public class WelcomeActivity extends BaseActivity implements AnimalListFragment.
     }
 
     private void logout() {
-        SharedPreferencesHelper.clearUserName(this);
-        finish();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.welcomeactivity_fragment, new ShowListFragment());
+        ft.addToBackStack(null);
+        ft.setTransition(ft.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
     }
 
     @Override
@@ -135,5 +124,15 @@ public class WelcomeActivity extends BaseActivity implements AnimalListFragment.
         Intent intent = new Intent(this, AnimalDetailsActivity.class);
         intent.putExtra(AnimalDetailsActivity.ANIMAL, animal.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

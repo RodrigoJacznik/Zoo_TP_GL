@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,14 +24,17 @@ import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.activities.MoreInfoActivity;
+import com.globallogic.zoo.activities.SettingsActivity;
 import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
 import com.globallogic.zoo.helpers.AnimalHelper;
-import com.globallogic.zoo.helpers.HttpConnectionHelper;
+import com.globallogic.zoo.network.API;
+import com.globallogic.zoo.network.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.NotificationHelper;
 import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.listeners.onTableRowClickListener;
 import com.globallogic.zoo.models.Animal;
+import com.globallogic.zoo.data.AnimalRepository;
 import com.globallogic.zoo.models.Schedule;
 import com.globallogic.zoo.models.Show;
 import com.koushikdutta.async.future.FutureCallback;
@@ -38,7 +42,8 @@ import com.koushikdutta.ion.Ion;
 
 public class AnimalDetailFragment extends Fragment implements
         NotificationHelper.OnNotificationListener,
-        FavoriteView.OnFavoriteClickListener {
+        FavoriteView.OnFavoriteClickListener,
+        API.OnRequestObjectListener<Animal> {
 
     public interface AnimalDetailCallback {
         public void onTakePhoto(Animal animal);
@@ -46,6 +51,7 @@ public class AnimalDetailFragment extends Fragment implements
 
     public static final String ANIMAL_ID = "ANIMAL_ID";
     public static final int REQUEST_CAMERA = 0;
+    private static final String TAG = "AnimalDetailFragment";
 
     private TextView name;
     private TextView specie;
@@ -59,6 +65,7 @@ public class AnimalDetailFragment extends Fragment implements
     private AnimalDetailCallback callback;
 
     private Animal animal;
+    private long animalId;
 
     public AnimalDetailFragment() {
         super();
@@ -86,10 +93,8 @@ public class AnimalDetailFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long animalId = getArguments().getLong(ANIMAL_ID);
+        animalId = getArguments().getLong(ANIMAL_ID);
 
-        ZooDatabaseHelper db = new ZooDatabaseHelper(getActivity());
-        animal = db.getAnimalById(animalId);
         setHasOptionsMenu(true);
     }
 
@@ -117,8 +122,7 @@ public class AnimalDetailFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initAnimalViews();
-        populateScheduleTable();
+        AnimalRepository.getAnimalById(this, getActivity(), animalId);
     }
 
     @Override
@@ -155,11 +159,16 @@ public class AnimalDetailFragment extends Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menuanimal_settings:
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                break;
             case R.id.menuanimal_share:
                 share();
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initAnimalViews() {
@@ -175,6 +184,9 @@ public class AnimalDetailFragment extends Fragment implements
                     @Override
                     public void onCompleted(Exception e, ImageView result) {
                         load.setVisibility(View.INVISIBLE);
+                        if (result == null) {
+                            animalThumb.setImageResource(R.drawable.android);
+                        }
                     }
                 });
     }
@@ -235,7 +247,7 @@ public class AnimalDetailFragment extends Fragment implements
 
     @Override
     public long getAnimalId() {
-        return animal.getId();
+        return animalId;
     }
 
     @Override
@@ -245,5 +257,17 @@ public class AnimalDetailFragment extends Fragment implements
         db.insertOrUpdateAnimal(animal);
 
         AlarmBroadcastReceiver.sendVibrateBroadcast(getActivity(), 20, animal.getId());
+    }
+
+    @Override
+    public void onFail(int code) {
+        Log.d(TAG, "Faaail");
+    }
+
+    @Override
+    public void onSuccess(Animal animal) {
+        this.animal = animal;
+        initAnimalViews();
+        populateScheduleTable();
     }
 }
