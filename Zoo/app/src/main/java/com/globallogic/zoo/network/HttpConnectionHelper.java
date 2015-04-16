@@ -25,35 +25,34 @@ import java.util.List;
  */
 public class HttpConnectionHelper {
 
-    public interface OnRequestListListener<T> {
-        public void onFail(int code);
-        public void onSuccess(List<T> list);
-    }
-
     private static final String LOG_TAG = "HttpConnectionManager";
-    private static final String LOGIN_URL = "http://rodjacznik.pythonanywhere.com/api/v1.0/login";
-
-    public static final String GET = "GET";
 
     private static final int CONNECT_TIMEOUT = 10000;
     private static final int READ_TIMEOUT = 10000;
 
-    private static HttpURLConnection connection;
+    private HttpURLConnection connection;
 
-    private static void setupConnection(Context context, String anUrl, String method) {
+    public HttpConnectionHelper(Context context, String url, String method) {
+        this.connection = setupConnection(context, url, method);
+    }
+
+    private HttpURLConnection setupConnection(Context context, String anUrl, String method) {
+        HttpURLConnection conn = null;
         try {
             URL url = new URL(anUrl);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Authorization", getEncodeUserAndPass(context));
-            connection.setConnectTimeout(CONNECT_TIMEOUT);
-            connection.setReadTimeout(READ_TIMEOUT);
-            connection.setRequestMethod(method);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Authorization", getEncodeUserAndPass(context));
+            conn.setConnectTimeout(CONNECT_TIMEOUT);
+            conn.setReadTimeout(READ_TIMEOUT);
+            conn.setRequestMethod(method);
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         } catch (IOException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
+
+        return conn;
     }
 
     private static String getEncodeUserAndPass(Context context) {
@@ -66,20 +65,21 @@ public class HttpConnectionHelper {
         return "Basic " + Base64.encodeToString((user + ":" + pass).getBytes(), Base64.DEFAULT);
     }
 
-    private static void connect() {
+    public void setUserAndPassToHTTPHeader(String user, String pass) {
+        connection.setRequestProperty("Authorization", getEncodeUserAndPass(user, pass));
+    }
+
+    public void connect() {
         try {
             connection.connect();
-        } catch (SocketException e){
+        } catch (SocketException | SocketTimeoutException e){
             Log.e(LOG_TAG, e.getMessage(), e);
-        }catch (SocketTimeoutException e){
-            Log.e(LOG_TAG, e.getMessage(), e);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
     }
 
-    public static int getResponseCode() {
+    public int getResponseCode() {
         int code = -1;
         try {
             code = connection.getResponseCode();
@@ -90,13 +90,13 @@ public class HttpConnectionHelper {
         return code;
     }
 
-    private static String getData() {
+    public String getData() {
         InputStream is = getRawData();
         String data = convertStreamToString(is);
         return data;
     }
 
-    private static InputStream getRawData() {
+    private InputStream getRawData() {
         InputStream is = null;
         try {
             is = connection.getInputStream();
@@ -113,29 +113,6 @@ public class HttpConnectionHelper {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         return (networkInfo != null && networkInfo.isConnected());
-    }
-
-    public static void makeRequest(final Context context, final OnRequestListListener onRequestListListener,
-                                     String url, String method) {
-
-        setupConnection(context, url, method);
-        if (checkConnection(context)) {
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    connect();
-                    int response = getResponseCode();
-                    if  (response == HttpURLConnection.HTTP_OK) {
-                        onRequestListListener.onSuccess(getData());
-                    } else {
-                        onRequestListListener.onFail(response);
-                    }
-                }
-            }).start();
-        } else {
-            onRequestListListener.onFail(HttpURLConnection.HTTP_CLIENT_TIMEOUT);
-        }
     }
 
     public static String convertStreamToString(InputStream is) {
@@ -157,18 +134,5 @@ public class HttpConnectionHelper {
             }
         }
         return sb.toString();
-    }
-
-    public static boolean login(Context context, String user, String pass) {
-        setupConnection(context, LOGIN_URL, GET);
-        connection.setRequestProperty("Authorization", getEncodeUserAndPass(user, pass));
-
-        if (checkConnection(context)) {
-            connect();
-            if (getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return true;
-            }
-        }
-        return false;
     }
 }
