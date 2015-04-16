@@ -1,4 +1,4 @@
-package com.globallogic.zoo.models.dao;
+package com.globallogic.zoo.data.dao;
 
 
 import android.content.ContentValues;
@@ -34,6 +34,8 @@ public class ShowDAO {
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
+    public static final String[] ALL = {"*"};
+
     public static void insert(ZooDatabaseHelper dbHelper, Show show) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -60,7 +62,7 @@ public class ShowDAO {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
-                new String[] {"*"},
+                ALL,
                 KEY_ID + " = ?",
                 new String[] {String.valueOf(showId)}, null, null, null);
 
@@ -69,9 +71,9 @@ public class ShowDAO {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             show = createShowFromCursor(cursor);
-            cursor.close();
         }
 
+        cursor.close();
         db.close();
         return show;
     }
@@ -80,7 +82,6 @@ public class ShowDAO {
         Show show;
         show = new Show(cursor.getLong(KEY_ID_INDEX), cursor.getString(KEY_NAME_INDEX),
                 cursor.getString(KEY_SCHEDULES_INDEX), cursor.getString(KEY_DURATION_INDEX));
-        cursor.close();
         return show;
     }
 
@@ -109,13 +110,27 @@ public class ShowDAO {
         Cursor cursor = db.rawQuery(rawQuery, null);
 
         List<Show> shows = new ArrayList<>();
-        if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                shows.add(createShowFromCursor(cursor));
-            }
-            cursor.close();
+
+        while (cursor.moveToNext()) {
+            shows.add(createShowFromCursor(cursor));
+        }
+        cursor.close();
+
+        db.close();
+        return shows;
+    }
+
+    public static List<Show> getAll(ZooDatabaseHelper dbHelper) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, ALL, null, null, null, null, null);
+
+        List<Show> shows = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            shows.add(createShowFromCursor(cursor));
         }
 
+        cursor.close();
         db.close();
         return shows;
     }

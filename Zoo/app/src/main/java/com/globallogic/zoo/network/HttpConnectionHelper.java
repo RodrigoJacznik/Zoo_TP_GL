@@ -1,12 +1,13 @@
-package com.globallogic.zoo.helpers;
+package com.globallogic.zoo.network;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
+
+import com.globallogic.zoo.helpers.SharedPreferencesHelper;
+import com.globallogic.zoo.models.Animal;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,26 +18,29 @@ import java.net.MalformedURLException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by GL on 10/04/2015.
  */
 public class HttpConnectionHelper {
 
-    private static final String LOG_TAG = "HttpConnectionManager";
-    private static final String ALL_ANIMALS_URL = "http://rodjacznik.pythonanywhere.com/api/v1.0/animals";
-    public static final int ALL_ANIMALS = 0;
+    public interface OnRequestListListener<T> {
+        public void onFail(int code);
+        public void onSuccess(List<T> list);
+    }
 
+    private static final String LOG_TAG = "HttpConnectionManager";
     private static final String LOGIN_URL = "http://rodjacznik.pythonanywhere.com/api/v1.0/login";
-    public static final int LOGIN = 1;
 
     public static final String GET = "GET";
 
     private static final int CONNECT_TIMEOUT = 10000;
     private static final int READ_TIMEOUT = 10000;
-    private HttpURLConnection connection;
 
-    public HttpConnectionHelper(Context context, String anUrl, String method) {
+    private static HttpURLConnection connection;
+
+    private static void setupConnection(Context context, String anUrl, String method) {
         try {
             URL url = new URL(anUrl);
             connection = (HttpURLConnection) url.openConnection();
@@ -62,7 +66,7 @@ public class HttpConnectionHelper {
         return "Basic " + Base64.encodeToString((user + ":" + pass).getBytes(), Base64.DEFAULT);
     }
 
-    public void connect() {
+    private static void connect() {
         try {
             connection.connect();
         } catch (SocketException e){
@@ -75,7 +79,7 @@ public class HttpConnectionHelper {
         }
     }
 
-    public int getResponseCode() {
+    public static int getResponseCode() {
         int code = -1;
         try {
             code = connection.getResponseCode();
@@ -86,13 +90,13 @@ public class HttpConnectionHelper {
         return code;
     }
 
-    public String getData() {
+    private static String getData() {
         InputStream is = getRawData();
         String data = convertStreamToString(is);
         return data;
     }
 
-    public InputStream getRawData() {
+    private static InputStream getRawData() {
         InputStream is = null;
         try {
             is = connection.getInputStream();
@@ -111,18 +115,26 @@ public class HttpConnectionHelper {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    public static String getAllAnimals(Context context) {
-        HttpConnectionHelper conn = new HttpConnectionHelper(context, ALL_ANIMALS_URL, GET);
+    public static void makeRequest(final Context context, final OnRequestListListener onRequestListListener,
+                                     String url, String method) {
+
+        setupConnection(context, url, method);
         if (checkConnection(context)) {
-            conn.connect();
-            int response = conn.getResponseCode();
-            if  (response == 200) {
-                return conn.getData();
-            } else {
-                return null;
-            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    connect();
+                    int response = getResponseCode();
+                    if  (response == HttpURLConnection.HTTP_OK) {
+                        onRequestListListener.onSuccess(getData());
+                    } else {
+                        onRequestListListener.onFail(response);
+                    }
+                }
+            }).start();
         } else {
-            return null;
+            onRequestListListener.onFail(HttpURLConnection.HTTP_CLIENT_TIMEOUT);
         }
     }
 
@@ -148,29 +160,15 @@ public class HttpConnectionHelper {
     }
 
     public static boolean login(Context context, String user, String pass) {
-        HttpConnectionHelper conn = new HttpConnectionHelper(context, LOGIN_URL, GET);
-        conn.connection.setRequestProperty("Authorization", getEncodeUserAndPass(user, pass));
+        setupConnection(context, LOGIN_URL, GET);
+        connection.setRequestProperty("Authorization", getEncodeUserAndPass(user, pass));
 
         if (checkConnection(context)) {
-            conn.connect();
-            if (conn.getResponseCode() == 200) {
+            connect();
+            if (getResponseCode() == HttpURLConnection.HTTP_OK) {
                 return true;
             }
         }
         return false;
-    }
-
-    public static Bitmap fetchImg(Context context, String url) {
-        HttpConnectionHelper conn = new HttpConnectionHelper(context, url, GET);
-        Bitmap img = null;
-        if (checkConnection(context)) {
-            conn.connect();
-            if (conn.getResponseCode() == 200) {
-                InputStream is = conn.getRawData();
-                img = BitmapFactory.decodeStream(is);
-            }
-        }
-
-        return img;
     }
 }

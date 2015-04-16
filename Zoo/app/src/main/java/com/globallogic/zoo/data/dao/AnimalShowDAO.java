@@ -1,4 +1,4 @@
-package com.globallogic.zoo.models.dao;
+package com.globallogic.zoo.data.dao;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;

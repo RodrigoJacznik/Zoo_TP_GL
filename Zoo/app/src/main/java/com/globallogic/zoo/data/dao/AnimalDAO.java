@@ -1,4 +1,4 @@
-package com.globallogic.zoo.models.dao;
+package com.globallogic.zoo.data.dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -81,12 +81,11 @@ public class AnimalDAO {
                 KEY_ID + " = ?", new String[] {String.valueOf(animalId)}, null, null, null);
 
         Animal animal = null;
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             animal = getAnimalFromCursor(dbHelper, cursor);
-            cursor.close();
         }
 
+        cursor.close();
         db.close();
         return animal;
     }
