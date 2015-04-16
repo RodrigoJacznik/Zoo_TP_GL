@@ -16,18 +16,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.helpers.HttpConnectionHelper;
+import com.globallogic.zoo.network.API;
+import com.globallogic.zoo.network.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
 import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 
 
-public class LoginActivity extends BaseActivity implements TextWatcher {
+public class LoginActivity extends BaseActivity implements TextWatcher, API.OnLoginRequestListener {
 
     private EditText pass;
     private EditText user;
     private Button signin;
     private TextView error;
     private ProgressBar load;
+    private String passInput;
+    private String userInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LoginTask().execute();
+                login();
             }
         });
     }
@@ -102,44 +105,33 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         load = (ProgressBar) findViewById(R.id.mainactivity_load);
     }
 
-    private void login(String userInput, String passInput) {
+    private void successlogin(String userInput, String passInput) {
         Intent intent = WelcomeActivity.getIntent(LoginActivity.this);
         SharedPreferencesHelper.setUserNameAndPass(this, userInput, passInput);
         startActivity(intent);
         finish();
     }
 
-    private class LoginTask extends AsyncTask<Void, Void, Boolean> {
+    private void login() {
+        passInput = pass.getText().toString();
+        userInput = user.getText().toString();
+        load.setVisibility(View.VISIBLE);
+        signin.setEnabled(false);
+        error.setVisibility(View.INVISIBLE);
+        API.login(this, this, userInput, passInput);
+    }
 
-        String passInput;
-        String userInput;
+    @Override
+    public void onSuccess() {
+        load.setVisibility(View.INVISIBLE);
+        ZooDatabaseHelper db = new ZooDatabaseHelper(LoginActivity.this);
+        db.insertOrUpdateUser(userInput);
+        successlogin(userInput, passInput);
+    }
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            return HttpConnectionHelper.login(LoginActivity.this, userInput, passInput);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            passInput = pass.getText().toString();
-            userInput = user.getText().toString();
-            load.setVisibility(View.VISIBLE);
-            signin.setEnabled(false);
-            error.setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean userConnect) {
-            load.setVisibility(View.INVISIBLE);
-            if (userConnect) {
-                ZooDatabaseHelper db = new ZooDatabaseHelper(LoginActivity.this);
-                db.insertOrUpdateUser(userInput);
-                login(userInput, passInput);
-            } else {
-                error.setVisibility(View.VISIBLE);
-                signin.setEnabled(true);
-            }
-        }
+    @Override
+    public void onFail(int code) {
+        error.setVisibility(View.VISIBLE);
+        signin.setEnabled(true);
     }
 }
