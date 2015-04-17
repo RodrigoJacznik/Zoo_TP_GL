@@ -48,28 +48,8 @@ public class ZooDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(UserDAO.CREATE_TABLE);
     }
 
-    public void insertAnimal(Animal animal) {
-        AnimalDAO.getOrInsert(this, animal);
-    }
-
-    public void insertOrUpdateAnimal(Animal animal) { AnimalDAO.insertOrUpdate(this, animal); }
-
     public Animal getAnimalById(long animalId) {
         return AnimalDAO.get(this, animalId);
-    }
-
-    public void insertAnimals(final List<Animal> animals) {
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (Animal animal : animals) {
-                    insertAnimal(animal);
-                }
-            }
-        });
-
-        thread.start();
     }
 
     public void insertOrUpdateUser(String name) {

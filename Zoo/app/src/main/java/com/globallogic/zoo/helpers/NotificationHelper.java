@@ -2,13 +2,11 @@ package com.globallogic.zoo.helpers;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.activities.AnimalDetailsActivity;
 import com.globallogic.zoo.activities.WelcomeActivity;
 import com.globallogic.zoo.models.Animal;
 
@@ -39,7 +37,7 @@ abstract public class NotificationHelper {
 
         if (checkAnimalActivityOnScreen(animalId)) {
             if (notificationCount > 1) {
-                perpareMultipleNotification(context);
+                prepareMultipleNotification(context);
             } else {
                 prepareSimpleNotification(context, animal);
             }
@@ -69,7 +67,7 @@ abstract public class NotificationHelper {
         title = context.getString(R.string.notification_single_title);
     }
 
-    private static void perpareMultipleNotification(Context context) {
+    private static void prepareMultipleNotification(Context context) {
         pendingIntent = getWelcomeActivityPendingIntent(context);
         content = String.format(context.getString(R.string.notification_multi_content),
                 notificationCount);
@@ -79,14 +77,10 @@ abstract public class NotificationHelper {
 
 
     private static PendingIntent getAnimalDetailPendingIntent(Context context, long animalId) {
-        Intent resultIntent = new Intent(context, AnimalDetailsActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        Intent resultIntent = new Intent(context, WelcomeActivity.class);
+        resultIntent.putExtra(WelcomeActivity.ANIMAL, animalId);
 
-        stackBuilder.addParentStack(AnimalDetailsActivity.class);
-        stackBuilder.addNextIntent(resultIntent);
-        resultIntent.putExtra(AnimalDetailsActivity.ANIMAL, animalId);
-
-        return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(context, 0, resultIntent, 0);
     }
 
     private static PendingIntent getWelcomeActivityPendingIntent(Context context) {
