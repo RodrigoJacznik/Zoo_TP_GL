@@ -27,7 +27,6 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         vibrate(context, 1000);
 
         long animalId = intent.getLongExtra(ANIMAL_ID, -1);
-        Log.d("AlarmBroadcastReceiver", "Recibi " + String.valueOf(animalId));
         NotificationHelper.makeNotification(context, animalId);
     }
 
