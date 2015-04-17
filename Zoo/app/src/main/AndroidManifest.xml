@@ -34,14 +34,6 @@
             android:launchMode="singleTop" >
         </activity>
         <activity
-            android:name=".activities.AnimalDetailsActivity"
-            android:label="@string/title_activity_animal_detail"
-            android:parentActivityName=".activities.WelcomeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.WelcomeActivity"/>
-        </activity>
-        <activity
             android:name=".activities.MoreInfoActivity"
             android:label="@string/title_activity_more_info"
             android:parentActivityName=".activities.WelcomeActivity" >

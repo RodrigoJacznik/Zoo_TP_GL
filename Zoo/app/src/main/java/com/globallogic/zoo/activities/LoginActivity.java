@@ -1,14 +1,10 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.network.API;
-import com.globallogic.zoo.network.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
 import com.globallogic.zoo.helpers.ZooDatabaseHelper;
+import com.globallogic.zoo.network.API;
 
 
 public class LoginActivity extends BaseActivity implements TextWatcher, API.OnLoginRequestListener {
@@ -37,7 +32,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher, API.OnLo
         super.onCreate(savedInstanceState);
 
         if (SharedPreferencesHelper.isUserLogin(this)) {
-            Intent intent = WelcomeActivity.getIntent(LoginActivity.this);
+            Intent intent = WelcomeActivity.getWelcomeIntent(LoginActivity.this);
             startActivity(intent);
             finish();
         }
@@ -59,24 +54,6 @@ public class LoginActivity extends BaseActivity implements TextWatcher, API.OnLo
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menumain_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
     }
@@ -88,7 +65,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher, API.OnLo
 
     @Override
     public void afterTextChanged(Editable s) {
-        signin.setEnabled(! user.getText().toString().isEmpty() && ! pass.getText().toString().isEmpty());
+        signin.setEnabled(!user.getText().toString().isEmpty() && !pass.getText().toString().isEmpty());
     }
 
     @Override
@@ -106,7 +83,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher, API.OnLo
     }
 
     private void successlogin(String userInput, String passInput) {
-        Intent intent = WelcomeActivity.getIntent(LoginActivity.this);
+        Intent intent = WelcomeActivity.getWelcomeIntent(LoginActivity.this);
         SharedPreferencesHelper.setUserNameAndPass(this, userInput, passInput);
         startActivity(intent);
         finish();
