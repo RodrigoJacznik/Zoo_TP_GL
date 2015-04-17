@@ -4,12 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.models.Show;
 import com.globallogic.zoo.data.dao.AnimalDAO;
 import com.globallogic.zoo.data.dao.AnimalShowDAO;
 import com.globallogic.zoo.data.dao.ShowDAO;
 import com.globallogic.zoo.data.dao.UserDAO;
+import com.globallogic.zoo.models.Animal;
+import com.globallogic.zoo.models.Show;
 
 import java.util.List;
 
@@ -56,5 +56,7 @@ public class ZooDatabaseHelper extends SQLiteOpenHelper {
         UserDAO.insertOrUpdate(this, name);
     }
 
-    public List<Show> getShows() { return ShowDAO.getAll(this); }
+    public List<Show> getShows() {
+        return ShowDAO.getAll(this);
+    }
 }
