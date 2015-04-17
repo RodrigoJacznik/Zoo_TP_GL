@@ -69,7 +69,7 @@ public class SettingsActivity extends BaseActivity implements
 
     private void setThemeAndRestart() {
         int themeId = isExtraActivate ? R.style.AppTheme : R.style.ExtraTheme;
-        sTheme.setChecked(! isExtraActivate);
+        sTheme.setChecked(!isExtraActivate);
 
         SharedPreferencesHelper.setTheme(SettingsActivity.this, themeId);
         Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);

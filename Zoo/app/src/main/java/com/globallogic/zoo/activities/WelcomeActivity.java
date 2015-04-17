@@ -1,6 +1,5 @@
 package com.globallogic.zoo.activities;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;

@@ -1,12 +1,7 @@
 package com.globallogic.zoo.activities;
 
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,14 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.asynctask.FetchMailTask;
-import com.globallogic.zoo.asynctask.OnAsyncTaskListener;
 import com.globallogic.zoo.custom.views.ShareDialog;
+import com.globallogic.zoo.helpers.ContentProviderHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MailSelectorActivity extends BaseActivity implements OnAsyncTaskListener<List<String>> {
+public class MailSelectorActivity extends BaseActivity {
     public static final String EMAILS = "EMAILS";
 
     private List<String> emails = new ArrayList<>();
@@ -39,8 +33,7 @@ public class MailSelectorActivity extends BaseActivity implements OnAsyncTaskLis
 
         bindViews();
 
-        new FetchMailTask(this).execute();
-
+        new FetchMailTask().execute();
     }
 
     private void bindViews() {
@@ -66,20 +59,28 @@ public class MailSelectorActivity extends BaseActivity implements OnAsyncTaskLis
         emailsView.setAdapter(adapter);
     }
 
-    @Override
-    public void onPreExecute() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
+    final private class FetchMailTask extends AsyncTask<Void, Void, List<String>> {
 
-    @Override
-    public void onPostExecute(List<String> fetchEmails) {
-        progressBar.setVisibility(View.INVISIBLE);
-        if (! fetchEmails.isEmpty()) {
-            this.emails = fetchEmails;
-        } else {
-            error.setVisibility(View.VISIBLE);
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            return ContentProviderHelper.getContactsEmails(MailSelectorActivity.this);
         }
-        setUpListView();
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(List<String> fetchEmails) {
+            progressBar.setVisibility(View.INVISIBLE);
+            if (!fetchEmails.isEmpty()) {
+                emails = fetchEmails;
+            } else {
+                error.setVisibility(View.VISIBLE);
+            }
+            setUpListView();
+        }
     }
 }
 

@@ -1,12 +1,7 @@
 package com.globallogic.zoo.activities;
 
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,7 +9,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.broadcastreceivers.LowBatteryBroadcastReceiver;
 
 
 public class MoreInfoActivity extends BaseActivity {
