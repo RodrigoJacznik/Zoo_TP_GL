@@ -11,28 +11,30 @@ import java.util.List;
 
 public class AnimalSQLiteDataStore implements DataStore<Animal, Long> {
 
+    private ZooDatabaseHelper db;
 
+    public AnimalSQLiteDataStore(Context context) {
+        db = new ZooDatabaseHelper(context);
+    }
 
     @Override
-    public Long create(Context context, Animal animal) {
+    public void create(Animal animal) {
+        AnimalDAO.insertOrUpdate(db, animal);
+    }
+
+    @Override
+    public Long update(Animal animal) {
         return null;
     }
 
     @Override
-    public Long update(Context context, Animal animal) {
+    public Long delete(Animal animal) {
         return null;
     }
 
     @Override
-    public Long delete(Context context, Animal animal) {
-        return null;
-    }
+    public void getById(API.OnRequestObjectListener<Animal> onRequestObjectListener, Long animalId) {
 
-    @Override
-    public void getById(API.OnRequestObjectListener onRequestObjectListener,
-                        Context context, Long animalId) {
-
-        ZooDatabaseHelper db = new ZooDatabaseHelper(context);
         Animal animal = AnimalDAO.get(db, animalId);
         if (animal != null) {
             onRequestObjectListener.onSuccess(animal);
@@ -42,8 +44,7 @@ public class AnimalSQLiteDataStore implements DataStore<Animal, Long> {
     }
 
     @Override
-    public void getAll(API.OnRequestListListener onRequestListListener, Context context) {
-        ZooDatabaseHelper db = new ZooDatabaseHelper(context);
+    public void getAll(API.OnRequestListListener<Animal> onRequestListListener) {
         List<Animal> animals = AnimalDAO.getAll(db);
 
         if (! animals.isEmpty()) {
@@ -51,5 +52,9 @@ public class AnimalSQLiteDataStore implements DataStore<Animal, Long> {
         } else {
             onRequestListListener.onFail(API.NOT_FOUND);
         }
+    }
+
+    public void batchCreate(List<Animal> animals) {
+        AnimalDAO.insertAnimals(db, animals);
     }
 }

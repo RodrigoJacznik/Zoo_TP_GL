@@ -136,4 +136,18 @@ public class AnimalDAO {
         db.close();
         return animals;
     }
+
+    public static void insertAnimals(final ZooDatabaseHelper dbHelper, final List<Animal> animals) {
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Animal animal : animals) {
+                    getOrInsert(dbHelper, animal);
+                }
+            }
+        });
+
+        thread.start();
+    }
 }
