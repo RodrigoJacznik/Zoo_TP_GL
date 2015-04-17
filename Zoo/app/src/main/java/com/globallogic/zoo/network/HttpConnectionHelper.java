@@ -30,6 +30,11 @@ public class HttpConnectionHelper {
     private static final int CONNECT_TIMEOUT = 10000;
     private static final int READ_TIMEOUT = 10000;
 
+    public static final String AUTHORIZATION = "Authorization";
+    public static final String CONTENT_TYPE = "Content-Type";
+    public static final String IF_NONE_MATCH = "If-None-Match";
+    public static final String ETAG = "ETag";
+
     private HttpURLConnection connection;
 
     public HttpConnectionHelper(Context context, String url, String method) {
@@ -41,10 +46,12 @@ public class HttpConnectionHelper {
         try {
             URL url = new URL(anUrl);
             conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Authorization", getEncodeUserAndPass(context));
+            conn.setRequestProperty(CONTENT_TYPE, "application/json");
+            conn.setRequestProperty(AUTHORIZATION, getEncodeUserAndPass(context));
             conn.setConnectTimeout(CONNECT_TIMEOUT);
             conn.setReadTimeout(READ_TIMEOUT);
+            conn.setUseCaches(true);
+            conn.setDefaultUseCaches(true);
             conn.setRequestMethod(method);
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
@@ -88,6 +95,18 @@ public class HttpConnectionHelper {
         }
 
         return code;
+    }
+
+    public String getHeader(String tag) {
+        return connection.getHeaderField(tag);
+    }
+
+    public void setHeader(String tag, String value) {
+        connection.setRequestProperty(tag, value);
+    }
+
+    public String getUrl() {
+        return connection.getURL().toString();
     }
 
     public String getData() {
