@@ -27,7 +27,7 @@ public class ActionModeCallback implements ActionMode.Callback {
     @Override
     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
         MenuInflater inflater = actionMode.getMenuInflater();
-        inflater.inflate(R.menu.context_menu_welcome, menu);
+        inflater.inflate(R.menu.animal_list_context_menu, menu);
         return true;
     }
 
