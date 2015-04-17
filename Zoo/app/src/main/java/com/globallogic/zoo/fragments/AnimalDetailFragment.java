@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,19 +23,17 @@ import android.widget.Toast;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.activities.MoreInfoActivity;
-import com.globallogic.zoo.activities.SettingsActivity;
 import com.globallogic.zoo.broadcastreceivers.AlarmBroadcastReceiver;
 import com.globallogic.zoo.custom.views.FavoriteView;
+import com.globallogic.zoo.data.AnimalRepository;
 import com.globallogic.zoo.helpers.AnimalHelper;
-import com.globallogic.zoo.network.API;
-import com.globallogic.zoo.network.HttpConnectionHelper;
 import com.globallogic.zoo.helpers.NotificationHelper;
-import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.listeners.onTableRowClickListener;
 import com.globallogic.zoo.models.Animal;
-import com.globallogic.zoo.data.AnimalRepository;
 import com.globallogic.zoo.models.Schedule;
 import com.globallogic.zoo.models.Show;
+import com.globallogic.zoo.network.API;
+import com.globallogic.zoo.network.HttpConnectionHelper;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -63,6 +60,7 @@ public class AnimalDetailFragment extends Fragment implements
     private Button btnMoreInfo;
     private ProgressBar load;
     private AnimalDetailCallback callback;
+    private AnimalRepository repository;
 
     private Animal animal;
     private long animalId;
@@ -98,7 +96,6 @@ public class AnimalDetailFragment extends Fragment implements
         setHasOptionsMenu(true);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_animal_detail, container, false);
@@ -122,7 +119,8 @@ public class AnimalDetailFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        AnimalRepository.getAnimalById(this, getActivity(), animalId);
+        repository = new AnimalRepository(getActivity(), this);
+        repository.getAnimalById(animalId);
     }
 
     @Override
@@ -159,9 +157,6 @@ public class AnimalDetailFragment extends Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuanimal_settings:
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                break;
             case R.id.menuanimal_share:
                 share();
                 break;
@@ -253,9 +248,7 @@ public class AnimalDetailFragment extends Fragment implements
     @Override
     public void onFavoriteClick(boolean favorite, int color) {
         animal.setFavorite(favorite);
-        ZooDatabaseHelper db = new ZooDatabaseHelper(getActivity());
-        db.insertOrUpdateAnimal(animal);
-
+        repository.insertAnimal(animal);
         AlarmBroadcastReceiver.sendVibrateBroadcast(getActivity(), 20, animal.getId());
     }
 
