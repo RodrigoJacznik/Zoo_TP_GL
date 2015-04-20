@@ -7,21 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.globallogic.zoo.R;
 import com.globallogic.zoo.helpers.SharedPreferencesHelper;
 import com.globallogic.zoo.models.Animal;
-import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by GL on 25/03/2015.
- */
+
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
 
     private List<Animal> animals = new ArrayList<>();
@@ -43,7 +39,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         public ImageView photo;
         public TextView name;
         public TextView specie;
-        public ProgressBar load;
         public Animal animal;
         public TextView notificationCounter;
 
@@ -53,7 +48,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             photo = (ImageView) v.findViewById(R.id.animallistactivity_photo);
             name = (TextView) v.findViewById(R.id.animallistactivity_name);
             specie = (TextView) v.findViewById(R.id.animallistactivity_specie);
-            load = (ProgressBar) v.findViewById(R.id.animallistactivity_load);
             notificationCounter = (TextView) v.findViewById(R.id.animaldetailsactivity_noti_count);
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
@@ -61,16 +55,10 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
         public void load(Animal animal) {
             Context context = itemView.getContext();
-            Ion.with(context)
-                    .load(animal.getImage())
-                    .progressBar(load)
-                    .intoImageView(photo)
-                    .setCallback(new FutureCallback<ImageView>() {
-                        @Override
-                        public void onCompleted(Exception e, ImageView result) {
-                            load.setVisibility(View.INVISIBLE);
-                        }
-                    });
+            Ion.with(photo)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .placeholder(R.drawable.android)
+                    .load(animal.getImage());
 
             name.setText(animal.getName());
             specie.setText(animal.getSpecie());
@@ -116,7 +104,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             notificationCounter.setText("");
-            if (callbackObject != null && ! isActionModeActivate) {
+            if (callbackObject != null && !isActionModeActivate) {
                 callbackObject.onAnimalClick(animal);
             }
         }
@@ -152,7 +140,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     }
 
     public void remove() {
-        for (ViewHolder vh: viewHoldersPressed) {
+        for (ViewHolder vh : viewHoldersPressed) {
             remove(vh.animal);
         }
         setViewHoldersPressedState(false);
@@ -160,7 +148,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     }
 
     public void setViewHoldersPressedState(Boolean bool) {
-        for (ViewHolder vh: viewHoldersPressed) {
+        for (ViewHolder vh : viewHoldersPressed) {
             vh.itemView.setSelected(bool);
         }
         viewHoldersPressed.clear();

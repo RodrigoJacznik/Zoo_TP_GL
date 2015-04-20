@@ -1,7 +1,5 @@
 package com.globallogic.zoo.models;
 
-import com.globallogic.zoo.helpers.ZooDatabaseHelper;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,7 +119,7 @@ public class Animal {
         List<Show> shows = new ArrayList<>();
         JSONArray jShows = jAnimal.getJSONArray("shows");
         for (int i = 0; i < jShows.length(); i++) {
-            shows.add(Show.fromJson(jShows.get(i).toString()));
+            shows.add(Show.fromAnimalJson(jShows.get(i).toString()));
         }
         String moreInfo = jAnimal.getString("moreInfo");
 

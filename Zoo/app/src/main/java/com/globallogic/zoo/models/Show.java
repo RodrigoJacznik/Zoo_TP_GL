@@ -1,5 +1,7 @@
 package com.globallogic.zoo.models;
 
+import com.globallogic.zoo.helpers.ZooDatabaseHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,13 +19,20 @@ public class Show {
     private String name;
     private List<Schedule> schedules;
     private int duration;
-    private Calendar finalHour;
+    private String description;
+    private String imageUrl;
+    private List<String> animals;
+
+    public Show() {
+    }
 
     public Show(long id, String name, List<Schedule> schedules, int duration) {
         this.id = id;
         this.name = name;
         this.schedules = schedules;
         this.duration = duration;
+        this.description = null;
+        this.imageUrl = null;
     }
 
     public Show(long id, String name, String initialHours, String duration) {
@@ -38,10 +47,21 @@ public class Show {
             String initialHour = schedules[i];
             this.schedules.add(new Schedule(initialHour, this.duration));
         }
+
+        this.description = null;
+        this.imageUrl = null;
     }
 
-    public static Show fromJson(String str) throws JSONException {
-        JSONObject jShow = new JSONObject(str);
+    public Show(long id, String name, String initialHours, String duration, String description,
+                String imageUrl) {
+
+        this(id, name, initialHours, duration);
+        this.description = description;
+        this.imageUrl = imageUrl;
+    }
+
+    public static Show fromAnimalJson(String json) throws JSONException {
+        JSONObject jShow = new JSONObject(json);
         long id = jShow.getLong("id");
 
         String name = jShow.getString("name");
@@ -55,6 +75,26 @@ public class Show {
         }
 
         return new Show(id, name, schedules, duration);
+    }
+
+    public static Show fromJson(String json) throws JSONException {
+        Show show = fromAnimalJson(json);
+        JSONObject jShow = new JSONObject(json);
+        String description = jShow.getString("description");
+        String imageUrl = jShow.getString("imageUrl");
+        JSONArray jAnimals = jShow.getJSONArray("animals");
+
+        List<String> animals = new ArrayList<>();
+
+        for (int i = 0; i < jAnimals.length(); i++) {
+            animals.add(jAnimals.getString(i));
+        }
+
+        show.setDescription(description);
+        show.setImageUrl(imageUrl);
+        show.setAnimals(animals);
+
+        return show;
     }
 
     public long getId() {
@@ -91,5 +131,33 @@ public class Show {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public List<String> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(List<String> animals) {
+        this.animals = animals;
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.globallogic.zoo.helpers.JsonParserHelper;
 import com.globallogic.zoo.models.Animal;
+import com.globallogic.zoo.models.Show;
 
 import org.json.JSONException;
 
@@ -22,25 +23,27 @@ public class API {
 
     public static final String LOGIN_URL = "http://rodjacznik.pythonanywhere.com/api/v1.0/login/";
     public static final String ANIMALS_URL = "http://rodjacznik.pythonanywhere.com/api/v1.0/animals/";
-    public static final String SHOWS_URL = "http://rodjacznik.pythonanywhere.com/api/v1.0/shows/";
+    public static final String SHOWS_URL = "https://dl.dropboxusercontent.com/u/48706064/attraction.json";
 
     public static final String GET = "GET";
-    public static final String HEAD = "HEAD";
 
     private static final Map<String, String> etags = new HashMap<>();
 
     public interface OnRequestListListener<T> {
         public void onSuccess(List<T> list);
+
         public void onFail(int code);
     }
 
     public interface OnRequestObjectListener<T> {
         public void onSuccess(T t);
+
         public void onFail(int code);
     }
 
     public interface OnLoginRequestListener {
         public void onSuccess();
+
         public void onFail(int code);
     }
 
@@ -59,6 +62,16 @@ public class API {
 
         if (HttpConnectionHelper.checkConnection(context)) {
             new GetAnimal(callback, conn).execute();
+        } else {
+            callback.onFail(HttpURLConnection.HTTP_CLIENT_TIMEOUT);
+        }
+    }
+
+    public static void getAllShows(Context context, OnRequestListListener<Show> callback) {
+        HttpConnectionHelper conn = new HttpConnectionHelper(context, SHOWS_URL, GET);
+
+        if (HttpConnectionHelper.checkConnection(context)) {
+            new GetShowList(callback, conn).execute();
         } else {
             callback.onFail(HttpURLConnection.HTTP_CLIENT_TIMEOUT);
         }
@@ -123,7 +136,7 @@ public class API {
             responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 String data = conn.getData();
-                animals = JsonParserHelper.parseJson(data);
+                animals = JsonParserHelper.parseAnimalListJson(data);
             }
             return animals;
         }
@@ -181,4 +194,36 @@ public class API {
         }
     }
 
+    static final class GetShowList extends AsyncTask<Void, Void, List<Show>> {
+
+        private HttpConnectionHelper conn;
+        private OnRequestListListener<Show> callback;
+        private int responseCode;
+
+        public GetShowList(OnRequestListListener<Show> callback, HttpConnectionHelper conn) {
+            this.conn = conn;
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<Show> doInBackground(Void... params) {
+            conn.connect();
+            List<Show> shows = null;
+            responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String jShows = conn.getData();
+                shows = JsonParserHelper.parseShowListJson(jShows);
+            }
+            return shows;
+        }
+
+        @Override
+        protected void onPostExecute(List<Show> shows) {
+            if (shows != null) {
+                callback.onSuccess(shows);
+            } else {
+                callback.onFail(API.NOT_FOUND);
+            }
+        }
+    }
 }

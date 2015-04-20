@@ -21,7 +21,7 @@ public class ZooDatabaseHelper extends SQLiteOpenHelper {
 
 
     private static final String DB_NAME = "ZooDatabase";
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
 
     public ZooDatabaseHelper(Context context) {
         super(context, DB_NAME, null, VERSION);

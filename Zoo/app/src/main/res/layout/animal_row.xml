@@ -14,11 +14,6 @@
         style="?RecyclerViewRow"
         android:padding="5dp">
 
-        <ProgressBar
-            android:id="@+id/animallistactivity_load"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
-
         <ImageView
             android:id="@+id/animallistactivity_photo"
             android:layout_width="50dp"

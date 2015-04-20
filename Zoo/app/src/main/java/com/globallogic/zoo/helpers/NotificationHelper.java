@@ -10,9 +10,6 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.activities.WelcomeActivity;
 import com.globallogic.zoo.models.Animal;
 
-/**
- * Created by rodrigo on 4/11/15.
- */
 abstract public class NotificationHelper {
 
     public interface OnNotificationListener {
@@ -32,10 +29,11 @@ abstract public class NotificationHelper {
     private static OnNotificationListener onNotificationListener;
 
     public static void makeNotification(Context context, long animalId) {
-        ZooDatabaseHelper db = new ZooDatabaseHelper(context);
-        Animal animal = db.getAnimalById(animalId);
-
         if (checkAnimalActivityOnScreen(animalId)) {
+
+            ZooDatabaseHelper db = new ZooDatabaseHelper(context);
+            Animal animal = db.getAnimalById(animalId);
+
             if (notificationCount > 1) {
                 prepareMultipleNotification(context);
             } else {

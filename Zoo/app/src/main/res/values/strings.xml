@@ -59,4 +59,7 @@
     <string name="notification_multi_title">%1$s atracciones estan por comenzar</string>
     <string name="notification_multi_content">Apurate %1$s atracciones estan por comenzar</string>
     <string name="animaldetailsactivity_attractions_start">Una atraccion del %1$s esta por comenzar</string>
+
+    <string name="animallistfragment_title">Animales</string>
+    <string name="showlistfragment_title">Shows</string>
 </resources>

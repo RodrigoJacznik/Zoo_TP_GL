@@ -11,6 +11,7 @@ import com.globallogic.zoo.R;
 import com.globallogic.zoo.helpers.ZooDatabaseHelper;
 import com.globallogic.zoo.models.Show;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
 
-    private List<Show> shows;
+    private List<Show> shows = new ArrayList<>();
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
@@ -34,8 +35,6 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
     }
 
     public ShowAdapter(Context context) {
-        ZooDatabaseHelper db = new ZooDatabaseHelper(context);
-        shows = db.getShows();
     }
 
     @Override
@@ -52,5 +51,10 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return shows.size();
+    }
+
+    public void setShows(List<Show> shows) {
+        this.shows = shows;
+        notifyDataSetChanged();
     }
 }
