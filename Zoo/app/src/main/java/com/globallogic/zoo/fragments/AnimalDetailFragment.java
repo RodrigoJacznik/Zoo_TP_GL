@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -34,7 +33,6 @@ import com.globallogic.zoo.models.Schedule;
 import com.globallogic.zoo.models.Show;
 import com.globallogic.zoo.network.API;
 import com.globallogic.zoo.network.HttpConnectionHelper;
-import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 public class AnimalDetailFragment extends Fragment implements
@@ -58,7 +56,6 @@ public class AnimalDetailFragment extends Fragment implements
     private ImageView animalThumb;
     private ImageView takePhoto;
     private Button btnMoreInfo;
-    private ProgressBar load;
     private AnimalDetailCallback callback;
     private AnimalRepository repository;
 
@@ -120,7 +117,7 @@ public class AnimalDetailFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         repository = new AnimalRepository(getActivity(), this);
-        repository.getAnimalById(animalId);
+        repository.getAnimalById(animalId, null);
     }
 
     @Override
@@ -146,7 +143,6 @@ public class AnimalDetailFragment extends Fragment implements
 
         animalThumb = (ImageView) v.findViewById(R.id.animaldetailsactivity_img);
         takePhoto = (ImageView) v.findViewById(R.id.animaldetailsactivity_photo);
-        load = (ProgressBar) v.findViewById(R.id.animaldetailsactivity_load);
     }
 
     @Override
@@ -171,19 +167,10 @@ public class AnimalDetailFragment extends Fragment implements
         specie.setText(animal.getSpecie());
         description.setText(animal.getDescripcion());
         favoriteView.setFavoriteState(animal.isFavorite());
-        Ion.with(this)
-                .load(animal.getImage())
-                .progressBar(load)
-                .intoImageView(animalThumb)
-                .setCallback(new FutureCallback<ImageView>() {
-                    @Override
-                    public void onCompleted(Exception e, ImageView result) {
-                        load.setVisibility(View.INVISIBLE);
-                        if (result == null) {
-                            animalThumb.setImageResource(R.drawable.android);
-                        }
-                    }
-                });
+        Ion.with(animalThumb)
+                .error(android.R.drawable.ic_dialog_alert)
+                .placeholder(R.drawable.android)
+                .load(animal.getImage());
     }
 
     private void moreInfo() {
@@ -248,7 +235,7 @@ public class AnimalDetailFragment extends Fragment implements
     @Override
     public void onFavoriteClick(boolean favorite, int color) {
         animal.setFavorite(favorite);
-        repository.insertAnimal(animal);
+        repository.insertAnimal(animal, AnimalRepository.Access.DB);
         AlarmBroadcastReceiver.sendVibrateBroadcast(getActivity(), 20, animal.getId());
     }
 

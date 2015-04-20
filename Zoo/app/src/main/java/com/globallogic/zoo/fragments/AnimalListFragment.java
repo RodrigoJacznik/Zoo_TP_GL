@@ -6,10 +6,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
@@ -25,16 +27,17 @@ public class AnimalListFragment extends Fragment implements
         AnimalAdapter.OnAnimalClickListener,
         API.OnRequestListListener<Animal> {
 
-    public static final String TAG = "AnimalListFragment";
-
     public interface OnAnimalClickListener {
         public void OnAnimalClick(long animalId);
     }
 
+    public static final String TAG = "AnimalListFragment";
+
+
     private ProgressBar load;
-    private RecyclerView recyclerView;
     private AnimalAdapter animalAdapter;
     private OnAnimalClickListener onAnimalClickListener;
+    private TextView error;
 
     public AnimalListFragment() {
         super();
@@ -53,13 +56,21 @@ public class AnimalListFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_animal_list, container, false);
-        load = (ProgressBar) v.findViewById(R.id.welcomeactivity_load);
+        View rootView = inflater.inflate(R.layout.fragment_animal_list, container, false);
+
+        load = (ProgressBar) rootView.findViewById(R.id.welcomeactivity_load);
+        error = (TextView) rootView.findViewById(R.id.welcomeactivity_error);
         animalAdapter = new AnimalAdapter(getActivity(), this);
 
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        load.setVisibility(View.VISIBLE);
         AnimalRepository repository = new AnimalRepository(getActivity(), this);
-        repository.getAllAnimals();
-        return v;
+        repository.getAllAnimals(null);
     }
 
     @Override
@@ -71,7 +82,7 @@ public class AnimalListFragment extends Fragment implements
     private void bindRecyclerView() {
         Context context = getActivity();
 
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.welcomeactivity_recycleview);
+        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.welcomeactivity_recycleview);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -86,6 +97,7 @@ public class AnimalListFragment extends Fragment implements
 
     @Override
     public void onFail(int code) {
+        // TODO: mejorar error
         if (code == API.NOT_FOUND) {
             Toast.makeText(getActivity(), "Sin animales. Conectese a internet",
                     Toast.LENGTH_SHORT).show();
@@ -94,7 +106,7 @@ public class AnimalListFragment extends Fragment implements
 
     @Override
     public void onSuccess(List<Animal> animals) {
-        if (!animals.isEmpty()) {
+        if (! animals.isEmpty()) {
             animalAdapter.setAnimals(animals);
         }
         load.setVisibility(View.INVISIBLE);

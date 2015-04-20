@@ -2,7 +2,6 @@ package com.globallogic.zoo.activities;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -10,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
@@ -19,9 +19,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
+import com.globallogic.zoo.adapters.PagerAdapter;
 import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.fragments.AnimalDetailFragment;
 import com.globallogic.zoo.fragments.AnimalListFragment;
+import com.globallogic.zoo.fragments.PagerFragment;
 import com.globallogic.zoo.fragments.ShowListFragment;
 import com.globallogic.zoo.helpers.AnimalHelper;
 import com.globallogic.zoo.helpers.FileHelper;
@@ -39,7 +41,6 @@ public class WelcomeActivity extends BaseActivity implements
     public static final int REQUEST_CAMERA = 0;
     private Animal animal;
     private File animalPhotoFile;
-    private Fragment firstFragment;
     private ActionBarDrawerToggle toggle;
 
     @Override
@@ -51,10 +52,10 @@ public class WelcomeActivity extends BaseActivity implements
 
         if (savedInstanceState == null) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.welcomeactivity_fragment, new AnimalListFragment(), AnimalListFragment.TAG);
+            ft.replace(R.id.welcomeactivity_fragment, new PagerFragment());
             ft.commit();
-            checkNotification();
         }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -66,10 +67,7 @@ public class WelcomeActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return toggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     private void checkNotification() {
@@ -90,7 +88,7 @@ public class WelcomeActivity extends BaseActivity implements
         String[] options = getResources().getStringArray(R.array.themes);
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.welcomeactivity_drawer_layout);
 
-        ListView drawerList = (ListView) findViewById(R.id.welcomeactivity_drawer_list);
+        ListView drawerList = (ListView) findViewById(R.id.welcomeactivity_drawer_options);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name) {
             @Override
@@ -132,7 +130,7 @@ public class WelcomeActivity extends BaseActivity implements
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.welcomeactivity_fragment, new ShowListFragment());
         ft.addToBackStack(null);
-        ft.setTransition(ft.TRANSIT_FRAGMENT_OPEN);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
     }
 
@@ -141,7 +139,7 @@ public class WelcomeActivity extends BaseActivity implements
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.welcomeactivity_fragment, AnimalDetailFragment.newInstance(animalId));
         ft.addToBackStack(null);
-        ft.setTransition(ft.TRANSIT_FRAGMENT_OPEN);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
     }
 
