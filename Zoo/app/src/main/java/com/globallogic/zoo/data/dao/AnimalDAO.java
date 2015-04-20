@@ -50,7 +50,7 @@ public class AnimalDAO {
 
         for (Show animal_show: animal.getShows()) {
             Show show = ShowDAO.getOrInsert(dbHelper, animal_show);
-            AnimalShowDAO.insertItem(dbHelper, animal.getId(), show.getId());
+            AnimalShowDAO.insert(dbHelper, animal.getId(), show.getId());
         }
     }
 
@@ -98,6 +98,7 @@ public class AnimalDAO {
                 cursor.getString(KEY_IMAGE_INDEX), cursor.getString(KEY_MORE_INFO_INDEX),
                 cursor.getInt(KEY_IS_FAVORITE_INDEX));
 
+        // TODO: no usar el dato directamente
         List<Show> shows = ShowDAO.getAnimalShows(dbHelper, animalId);
         animal.setShows(shows);
         return animal;

@@ -41,29 +41,37 @@ public class AnimalRepository implements
         this.onRequestObjectListener = onRequestObjectListener;
     }
 
-    private void initDefaultDataStore(Context context) {
-        if (HttpConnectionHelper.checkConnection(context)) {
-            dataStore = new AnimalNetworkDataStore(context);
-        } else {
-            dataStore = new AnimalSQLiteDataStore(context);
+    private void initDataStore(Context context, Access access) {
+        if (access == null) {
+            access = Access.NETWORK;
+        }
+        switch (access) {
+            default:
+            case NETWORK:
+                if (HttpConnectionHelper.checkConnection(context)) {
+                    dataStore = new AnimalNetworkDataStore(context);
+                    break;
+                }
+            case DB:
+                dataStore = new AnimalSQLiteDataStore(context);
         }
     }
 
-    public void getAllAnimals() {
-        initDefaultDataStore(context);
+    public void getAllAnimals(Access access) {
+        initDataStore(context, access);
         request = Request.ALL;
         dataStore.getAll(this);
     }
 
-    public void getAnimalById(long animalId) {
-        initDefaultDataStore(context);
+    public void getAnimalById(long animalId, Access access) {
+        initDataStore(context, access);
         request = Request.ONE;
         this.animalId = animalId;
         dataStore.getById(this, animalId);
     }
 
-    public void insertAnimal(Animal animal) {
-        dataStore = new AnimalSQLiteDataStore(context);
+    public void insertAnimal(Animal animal, Access access) {
+        initDataStore(context, access);
         request = Request.INSERT;
         dataStore.create(animal);
     }
@@ -84,10 +92,10 @@ public class AnimalRepository implements
         Log.d(TAG, "not-modified, resend to db");
         switch (request) {
             case ONE:
-                getAnimalById(animalId);
+                getAnimalById(animalId, Access.DB);
                 break;
             case ALL:
-                getAllAnimals();
+                getAllAnimals(Access.DB);
                 break;
             default:
                 break;
@@ -97,18 +105,26 @@ public class AnimalRepository implements
     @Override
     public void onSuccess(Animal animal) {
         if (dataStore instanceof AnimalNetworkDataStore) {
-            DataStore<Animal, Long> sqlDataStore = new AnimalSQLiteDataStore(context);
-            sqlDataStore.create(animal);
+            updateDB(animal);
         }
         onRequestObjectListener.onSuccess(animal);
     }
 
     @Override
-    public void onSuccess(List<Animal> list) {
+    public void onSuccess(List<Animal> animals) {
         if (dataStore instanceof AnimalNetworkDataStore) {
-            DataStore<Animal, Long> sqlDataStore = new AnimalSQLiteDataStore(context);
-            sqlDataStore.batchCreate(list);
+            updateDB(animals);
         }
-        onRequestListListener.onSuccess(list);
+        onRequestListListener.onSuccess(animals);
+    }
+
+    private void updateDB(Animal animal) {
+        DataStore<Animal, Long> sqlDataStore = new AnimalSQLiteDataStore(context);
+        sqlDataStore.create(animal);
+    }
+
+    private void updateDB(List<Animal> animals) {
+        DataStore<Animal, Long> sqlDataStore = new AnimalSQLiteDataStore(context);
+        sqlDataStore.batchCreate(animals);
     }
 }

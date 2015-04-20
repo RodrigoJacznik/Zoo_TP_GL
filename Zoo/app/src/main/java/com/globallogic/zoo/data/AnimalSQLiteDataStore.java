@@ -48,7 +48,7 @@ public class AnimalSQLiteDataStore implements DataStore<Animal, Long> {
         List<Animal> animals = AnimalDAO.getAll(db);
 
         if (! animals.isEmpty()) {
-            onRequestListListener.onSuccess(AnimalDAO.getAll(db));
+            onRequestListListener.onSuccess(animals);
         } else {
             onRequestListListener.onFail(API.NOT_FOUND);
         }

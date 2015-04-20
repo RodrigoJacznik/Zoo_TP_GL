@@ -24,7 +24,7 @@ public class AnimalShowDAO {
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
 
-    public static void insertItem(ZooDatabaseHelper dbHelper, long animal_id, long show_id) {
+    public static void insert(ZooDatabaseHelper dbHelper, long animal_id, long show_id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();

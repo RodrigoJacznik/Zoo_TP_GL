@@ -19,9 +19,7 @@ public class AnimalNetworkDataStore implements DataStore<Animal, Long> {
     }
 
     @Override
-    public void create(Animal animal) {
-        return ;
-    }
+    public void create(Animal animal) {}
 
     @Override
     public Long update(Animal animal) {
