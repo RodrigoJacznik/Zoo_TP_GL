@@ -2,16 +2,16 @@ package com.globallogic.zoo.activities;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,11 +19,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.globallogic.zoo.R;
-import com.globallogic.zoo.adapters.PagerAdapter;
 import com.globallogic.zoo.custom.views.ShareDialog;
 import com.globallogic.zoo.fragments.AnimalDetailFragment;
 import com.globallogic.zoo.fragments.AnimalListFragment;
 import com.globallogic.zoo.fragments.PagerFragment;
+import com.globallogic.zoo.fragments.ShowDetailFragment;
 import com.globallogic.zoo.fragments.ShowListFragment;
 import com.globallogic.zoo.helpers.AnimalHelper;
 import com.globallogic.zoo.helpers.FileHelper;
@@ -35,7 +35,8 @@ import java.io.File;
 public class WelcomeActivity extends BaseActivity implements
         AnimalListFragment.OnAnimalClickListener,
         ShareDialog.NoticeShareDialogListener,
-        AnimalDetailFragment.AnimalDetailCallback {
+        AnimalDetailFragment.AnimalDetailCallback,
+        ShowListFragment.OnShowClickListener {
 
     public final static String ANIMAL = "ANIMAL";
     public static final int REQUEST_CAMERA = 0;
@@ -51,7 +52,7 @@ public class WelcomeActivity extends BaseActivity implements
         makeDrawerLayout();
 
         if (savedInstanceState == null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.welcomeactivity_fragment, new PagerFragment());
             ft.commit();
         }
@@ -74,7 +75,7 @@ public class WelcomeActivity extends BaseActivity implements
         Intent intent = getIntent();
         long animalId = intent.getLongExtra(ANIMAL, -1);
         if (animalId != -1) {
-            FragmentManager fm = getFragmentManager();
+            FragmentManager fm = getSupportFragmentManager();
             if (fm.executePendingTransactions()) {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.addToBackStack(null);
@@ -127,7 +128,7 @@ public class WelcomeActivity extends BaseActivity implements
 
 
     private void logout() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.welcomeactivity_fragment, new ShowListFragment());
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -136,7 +137,7 @@ public class WelcomeActivity extends BaseActivity implements
 
     @Override
     public void OnAnimalClick(long animalId) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.welcomeactivity_fragment, AnimalDetailFragment.newInstance(animalId));
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -145,7 +146,7 @@ public class WelcomeActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
         } else {
@@ -207,5 +208,15 @@ public class WelcomeActivity extends BaseActivity implements
 
     public static Intent getWelcomeIntent(Context context) {
         return new Intent(context, WelcomeActivity.class);
+    }
+
+    @Override
+    public void onShowClick(long showId) {
+        Log.d("Welcome", "show");
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.welcomeactivity_fragment, ShowDetailFragment.newInstance(showId),
+                ShowDetailFragment.TAG);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

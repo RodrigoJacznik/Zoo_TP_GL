@@ -1,7 +1,10 @@
 package com.globallogic.zoo.fragments;
 
-import android.app.Fragment;
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,19 +21,31 @@ import com.globallogic.zoo.network.API;
 import java.util.List;
 
 
-public class ShowListFragment extends Fragment implements API.OnRequestListListener<Show> {
+public class ShowListFragment extends Fragment implements
+        API.OnRequestListListener<Show>,
+        ShowAdapter.OnShowClickListener {
 
     public static final String TAG = "ShowListFragment";
 
-    private ShowAdapter showAdapter;
+    public interface OnShowClickListener {
+        public void onShowClick(long showId);
+    }
 
-    public ShowListFragment() {
-        super();
+    private ShowAdapter showAdapter;
+    private OnShowClickListener onShowClickListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            onShowClickListener = (OnShowClickListener) activity;
+        } catch (ClassCastException e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
         showAdapter = new ShowAdapter(getActivity());
@@ -41,7 +56,6 @@ public class ShowListFragment extends Fragment implements API.OnRequestListListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
         View v = inflater.inflate(R.layout.fragment_show_list, container, false);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -63,5 +77,10 @@ public class ShowListFragment extends Fragment implements API.OnRequestListListe
         if (! shows.isEmpty()) {
             showAdapter.setShows(shows);
         }
+    }
+
+    @Override
+    public void onShowClick(long showId) {
+        onShowClickListener.onShowClick(showId);
     }
 }

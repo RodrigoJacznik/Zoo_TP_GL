@@ -1,14 +1,14 @@
 package com.globallogic.zoo.adapters;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.globallogic.zoo.fragments.AnimalListFragment;
 import com.globallogic.zoo.fragments.ShowListFragment;
 
 
-public class PagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
     private static int NUM_ITEMS = 2;
 
     public PagerAdapter(FragmentManager fragmentManager) {
