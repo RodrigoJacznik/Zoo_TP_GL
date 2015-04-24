@@ -38,7 +38,7 @@ public class WelcomeActivity extends BaseActivity implements
         AnimalDetailFragment.AnimalDetailCallback,
         ShowListFragment.OnShowClickListener {
 
-    public final static String ANIMAL = "ANIMAL";
+    public static final String ANIMAL = "ANIMAL";
     public static final int REQUEST_CAMERA = 0;
     private Animal animal;
     private File animalPhotoFile;
@@ -55,6 +55,7 @@ public class WelcomeActivity extends BaseActivity implements
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.welcomeactivity_fragment, new PagerFragment());
             ft.commit();
+            checkNotification();
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -212,7 +213,6 @@ public class WelcomeActivity extends BaseActivity implements
 
     @Override
     public void onShowClick(long showId) {
-        Log.d("Welcome", "show");
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.welcomeactivity_fragment, ShowDetailFragment.newInstance(showId),
                 ShowDetailFragment.TAG);
