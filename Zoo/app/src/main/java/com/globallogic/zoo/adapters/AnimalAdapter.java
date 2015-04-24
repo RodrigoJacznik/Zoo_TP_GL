@@ -104,7 +104,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             notificationCounter.setText("");
-            if (callbackObject != null && !isActionModeActivate) {
+            if (callbackObject != null && ! isActionModeActivate) {
                 callbackObject.onAnimalClick(animal);
             }
         }
