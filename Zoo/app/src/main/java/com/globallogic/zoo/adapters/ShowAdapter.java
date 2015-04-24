@@ -52,8 +52,9 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            Log.d("ShowAdapter", "click");
-            onShowClickListener.onShowClick(this.showId);
+            if (onShowClickListener != null) {
+                onShowClickListener.onShowClick(this.showId);
+            }
         }
     }
 
@@ -79,5 +80,9 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
     public void setShows(List<Show> shows) {
         this.shows = shows;
         notifyDataSetChanged();
+    }
+
+    public void setOnShowClickListener(OnShowClickListener onShowClickListener) {
+        this.onShowClickListener = onShowClickListener;
     }
 }

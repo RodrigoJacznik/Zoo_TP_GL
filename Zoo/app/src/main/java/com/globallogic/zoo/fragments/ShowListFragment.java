@@ -1,10 +1,8 @@
 package com.globallogic.zoo.fragments;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,6 +47,7 @@ public class ShowListFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         showAdapter = new ShowAdapter(getActivity());
+        showAdapter.setOnShowClickListener(this);
         ShowRepository repository = new ShowRepository(getActivity(), this);
         repository.getAllShows(null);
     }
@@ -74,7 +73,7 @@ public class ShowListFragment extends Fragment implements
 
     @Override
     public void onSuccess(List<Show> shows) {
-        if (! shows.isEmpty()) {
+        if (!shows.isEmpty()) {
             showAdapter.setShows(shows);
         }
     }
