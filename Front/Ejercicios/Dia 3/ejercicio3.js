@@ -1,9 +1,9 @@
-function Invoce(client, elements) {
+function Invoice(client, elements) {
   this.client = client;
   this.elements = elements;
 }
 
-Invoce.prototype.getTotal = function () {
+Invoice.prototype.getTotal = function () {
   return this.elements
     .map(function (element) {
       return element.value * element.amount;
@@ -26,6 +26,6 @@ function Client(name, type) {
 
 var elements = [new Element(10, "vasos", 15.50), new Element(3, "platos", 30), new Element(5, "tenedores", 5.75)];
 var client = new Client("pepe", "inscripto");
-var invoce = new Invoce(client, elements);
+var invoice = new Invoice(client, elements);
 
-console.log(invoce.getTotal());
+console.log(invoice.getTotal());
