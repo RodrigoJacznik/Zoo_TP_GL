@@ -39,11 +39,6 @@ public class AnimalListFragment extends Fragment implements
     private OnAnimalClickListener onAnimalClickListener;
     private TextView error;
 
-    public AnimalListFragment() {
-        super();
-        Log.d(TAG, "CreateCreateCreateCreateCreateCreateCreate");
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
