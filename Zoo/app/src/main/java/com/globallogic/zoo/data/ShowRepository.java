@@ -52,7 +52,7 @@ public class ShowRepository implements
 
     public void getAllShows(Access access) {
         initDataStore(access);
-        dataStore.getAll(onRequestListListener);
+        dataStore.getAll(this);
         request = Request.ALL;
     }
 
@@ -66,14 +66,12 @@ public class ShowRepository implements
     public void onSuccess(List<Show> shows) {
         if (dataStore instanceof ShowNetworkDataStore) {
             updateDB(shows);
-        } else {
-            onRequestListListener.onSuccess(shows);
         }
+        onRequestListListener.onSuccess(shows);
     }
 
     @Override
     public void onSuccess(Show show) {
-        // TODO: update db
         onRequestObjectListener.onSuccess(show);
     }
 

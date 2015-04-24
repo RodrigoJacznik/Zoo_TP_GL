@@ -33,8 +33,13 @@ public class ShowSQLiteDataStore implements DataStore<Show, Long> {
     }
 
     @Override
-    public void getById(API.OnRequestObjectListener<Show> onRequestListListener, Long aLong) {
-
+    public void getById(API.OnRequestObjectListener<Show> onRequestObjectListener, Long aLong) {
+        Show show = ShowDAO.get(dbHelper, aLong);
+        if (show != null) {
+            onRequestObjectListener.onSuccess(show);
+        } else {
+            onRequestObjectListener.onFail(-1); // TODO: crear constantes
+        }
     }
 
     @Override
