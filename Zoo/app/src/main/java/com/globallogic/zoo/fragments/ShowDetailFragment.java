@@ -49,10 +49,11 @@ public class ShowDetailFragment extends Fragment implements API.OnRequestObjectL
         title = (TextView) v.findViewById(R.id.fragmentshowdetail_title);
         description = (TextView) v.findViewById(R.id.fragmentshowdetail_description);
         image = (ImageView) v.findViewById(R.id.fragmentshowdetail_image);
+        fillShowData();
         return v;
     }
 
-    private void fillShowData(Show show) {
+    private void fillShowData() {
         title.setText(show.getName());
         description.setText(show.getDescription());
         Ion.with(image).load(show.getImageUrl());
@@ -61,11 +62,10 @@ public class ShowDetailFragment extends Fragment implements API.OnRequestObjectL
     @Override
     public void onSuccess(Show show) {
         this.show = show;
-        fillShowData(show);
     }
 
     @Override
     public void onFail(int code) {
-
+        int a = 0;
     }
 }
