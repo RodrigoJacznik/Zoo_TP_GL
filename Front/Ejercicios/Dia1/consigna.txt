@@ -1,0 +1,5 @@
+1) Agregar titulos
+2) Agregar titulos adecuados a "Top, Right, Bottom, Left y Opacity Zero"
+3) Agregar las etiquetas adecuadas a la seccion Bio y Tour Dates
+4) Agregar marcado de lista para miembros
+5) Agregar marcado de lista para los temas dentro de Opacity Zero

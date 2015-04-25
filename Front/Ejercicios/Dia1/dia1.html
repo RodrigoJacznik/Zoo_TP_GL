@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html ng-app="Escuelita">
+  <head>
+    <title>Open Source Recors - The Prependers</title>
+    <link rel="stylesheet" href="css/normalize.css">  
+    <link rel="stylesheet" href="css/skeleton.css">
+
+    <script type="application/javascript" src="js/jquery-2.1.3.js"></script>
+    <script type="application/javascript" src="js/angular.js"></script>
+      <style>
+        body {
+          background: aliceblue;
+          width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 1em;
+        }
+
+        table {
+          border-collapse: collapse;
+        }
+        
+        a {
+          color: #ccc;
+        }
+        
+        #dos a {
+          color: green;
+        }
+        
+        a.tres {
+          color: red;
+          font-size: 20px;
+        }
+        
+        #dos +  a {
+          color: yellow;
+        }
+        
+      </style>
+      
+      <scritp type="text/javascript">
+        
+      </scritp>
+  </head>
+  <body ng-controller="prueba as ctr">
+    <h1>Open Source Records</h1>
+
+    <h2>The Prependers</h2>
+
+    <h3>Bio</h3>
+    
+    <p>The Prependers are a quirky four-piece from Orlando, FL.
+    Critics have hailed them as the greatest post-garage-rock
+    band of the last decade.</p>
+    
+    <p>They are currently writing a full length album that's a
+    follow-up to their breakout 2011 album, Top Right Bottom Left,
+    and their critically acclaimed EP, Opacity Zero.</p>
+    
+    <h3>Members</h3>
+
+    <ul>
+      <li>Jack Smith - Vocals</li>
+      <li>Sarah Quan - Guitar</li>
+      <li>Laverne Butlet - Bass</li>
+      <li>Simon St. Hollister - Drums</li>
+    </ul>
+    
+    <h3>Albums</h3>
+
+    <h4>Top, Right, Bottom, Left</h4>
+
+    <h4>Opacity Zero</h4>
+    
+    <ol>
+      <li>Visible/Invisible</li>
+      <li>Car Trip</li>
+      <li>AFK</li>
+      <li>Up and Up</li>
+    </ol>
+    
+    <h3>Tour Dates</h3>
+
+    <p>The Prependers are not currently on tour because they
+    are recording their new album. Check back later!</p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Altura</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="it in ctr.items">
+          <td>{{ it.name }}</td>
+          <td>{{ it.altura }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>Lo que quiero decir es: <b>{{ mensaje }}</b></p>
+    <input type="text" ng-model="mensaje" placeholder="escribí">
+
+    </br>
+
+    <a href="" id="uno">Link 1</a>
+    <div id="dos">
+      <a href="" class="tres">Link 2</a>
+    </div>
+    <a href="" class="tres" style="color: blue;">Link 3</a>
+    
+    <script>
+      var app = angular.module('Escuelita', []);
+        
+      app.controller('prueba', ['service', function(service) {
+        this.items = service;
+      }]);
+      
+      app.factory('service', [function() {
+        console.log('service');
+        
+        return [
+          {name: "juan", altura: 1.79},
+          {name: "pepe", altura: 1.50},
+          {name: "pepe2", altura: 1.88},
+          {name: "lala", altura: 1.60}
+        ];
+      }]);
+    </script>
+  </body>
+</html>
